@@ -29,7 +29,7 @@ public final class DatabaseConnection {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-    };
+    }
 
     public static void resetDatabase(Connection connection) throws SQLException
     {
