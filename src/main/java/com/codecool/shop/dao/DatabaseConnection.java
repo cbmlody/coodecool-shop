@@ -25,13 +25,6 @@ public final class DatabaseConnection {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:src/main/database.db");
             System.out.println("Connection established...");
-
-            Statement stmt = connection.createStatement();
-            stmt.executeUpdate("DROP TABLE IF EXISTS `products`");
-            stmt.executeUpdate("DROP TABLE IF EXISTS `suppliers`");
-            stmt.executeUpdate("DROP TABLE IF EXISTS `product_categories`");
-            stmt.executeUpdate("DROP TABLE IF EXISTS `cart_products`");
-
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
