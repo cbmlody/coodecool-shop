@@ -13,7 +13,7 @@ public final class DatabaseConnection {
 
     public void openConnection() {
         try {
-//            Class.forName("org.sqlite.JDBC");
+            Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:src/main/database.db");
             System.out.println("Connection established...");
 
@@ -23,24 +23,23 @@ public final class DatabaseConnection {
             stmt.executeUpdate("DROP TABLE IF EXISTS `product_categories`");
             stmt.executeUpdate("DROP TABLE IF EXISTS `cart_products`");
 
-//            String pathToSqlScript = "src/main/java/com.codecool.shop/dao/script.sql";
-
-            resetDatabase(connection, stmt);
-
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     };
 
-    public static void resetDatabase(Connection connection, Statement stmt) throws SQLException
+    public static void resetDatabase(Connection connection) throws SQLException
     {
         String s            = new String();
         StringBuffer sb = new StringBuffer();
+        Statement state = connection.createStatement();
 
         try
         {
-            FileReader fr = new FileReader(new File("script.sql"));
+            String filePath = "script.sql"
+;           File scriptSql = new File(filePath);
+            FileReader fr = new FileReader(scriptSql.getAbsolutePath());
             // be sure to not have line starting with "--" or "/*" or any other non aplhabetical character
 
             BufferedReader br = new BufferedReader(fr);
@@ -60,7 +59,7 @@ public final class DatabaseConnection {
                 // we ensure that there is no spaces before or after the request string
                 // in order to not execute empty statements
                 if (!anInst.trim().equals("")) {
-                    stmt.executeUpdate(anInst);
+                    state.executeUpdate(anInst);
                     System.out.println(">>" + anInst);
                 }
             }
@@ -78,9 +77,10 @@ public final class DatabaseConnection {
 
     }
 
-    void closeConnection() {
+    public void closeConnection() {
         try {
             connection.close();
+            System.out.println("Connection terminated...");
         } catch (SQLException e) {
             e.printStackTrace();
         }
