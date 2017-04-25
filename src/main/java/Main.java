@@ -4,14 +4,13 @@ import java.sql.SQLException;
 public class Main {
 
     public static void main(String[] args) {
-        DatabaseConnection dbConn = new DatabaseConnection();
-        dbConn.openConnection();
+        DatabaseConnection.getInstance().openConnection();
         try {
-            DatabaseConnection.resetDatabase(dbConn.getConnection());
+            DatabaseConnection.getInstance().resetDatabase();
         } catch (SQLException e) {
             e.printStackTrace();
-            dbConn.closeConnection();
+            DatabaseConnection.getInstance().closeConnection();
         }
-        dbConn.closeConnection();
+        DatabaseConnection.getInstance().closeConnection();
     }
 }
