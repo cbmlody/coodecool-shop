@@ -34,7 +34,7 @@ public final class DatabaseConnection {
     public void resetDatabase() throws SQLException {
         String string;
         StringBuilder stringBuilder = new StringBuilder();
-        statement = DatabaseConnection.getInstance().connection.createStatement();
+        statement = connection.createStatement();
 
         try {
             FileReader fileReader = new FileReader(new File("src/main/resources/script.sql"));
