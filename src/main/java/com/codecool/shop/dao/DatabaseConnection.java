@@ -9,7 +9,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public final class DatabaseConnection {
+    private static final DatabaseConnection INSTANCE = new DatabaseConnection();
     private Connection connection = null;
+    private Statement statement = null;
+
+    private DatabaseConnection() {
+    }
+
+    public static DatabaseConnection getInstance() {
+        return INSTANCE;
+    }
 
     public void openConnection() {
         try {
