@@ -31,52 +31,37 @@ public final class DatabaseConnection {
         }
     }
 
-    public static void resetDatabase(Connection connection) throws SQLException
-    {
-        String s            = new String();
-        StringBuffer sb = new StringBuffer();
-        Statement state = connection.createStatement();
+    public void resetDatabase() throws SQLException {
+        String string;
+        StringBuilder stringBuilder = new StringBuilder();
+        statement = DatabaseConnection.getInstance().connection.createStatement();
 
-        try
-        {
-            String filePath = "script.sql"
-;           File scriptSql = new File(filePath);
-            FileReader fr = new FileReader(scriptSql.getAbsolutePath());
-            // be sure to not have line starting with "--" or "/*" or any other non aplhabetical character
+        try {
+            FileReader fileReader = new FileReader(new File("src/main/resources/script.sql"));
 
-            BufferedReader br = new BufferedReader(fr);
-
-            while((s = br.readLine()) != null)
-            {
-                sb.append(s);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while ((string = bufferedReader.readLine()) != null) {
+                stringBuilder.append(string);
             }
-            br.close();
+            bufferedReader.close();
 
-            // here is our splitter ! We use ";" as a delimiter for each request
-            // then we are sure to have well formed statements
-            String[] inst = sb.toString().split(";");
+            String[] queries = stringBuilder.toString().split(";");
 
-
-            for (String anInst : inst) {
-                // we ensure that there is no spaces before or after the request string
-                // in order to not execute empty statements
-                if (!anInst.trim().equals("")) {
-                    state.executeUpdate(anInst);
-                    System.out.println(">>" + anInst);
+            for (String query : queries) {
+                if (!query.trim().equals("")) {
+                    statement.executeUpdate(query);
+                    System.out.println(">>" + query);
                 }
             }
 
-        }
-        catch(Exception e)
-        {
-            System.out.println("*** Error : "+e.toString());
+        } catch (Exception e) {
+            System.out.println("*** Error : " + e.toString());
             System.out.println("*** ");
             System.out.println("*** Error : ");
             e.printStackTrace();
             System.out.println("################################################");
-            System.out.println(sb.toString());
+            System.out.println(stringBuilder.toString());
         }
-
     }
 
     public void closeConnection() {
