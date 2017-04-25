@@ -72,8 +72,4 @@ public final class DatabaseConnection {
             e.printStackTrace();
         }
     }
-
-    public Connection getConnection() {
-        return connection;
-    }
 }
