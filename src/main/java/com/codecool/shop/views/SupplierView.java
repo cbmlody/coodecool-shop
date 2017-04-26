@@ -10,8 +10,12 @@ public class SupplierView implements View<Supplier> {
     }
 
     public void displayAll(List<Supplier> suppliers) {
-        for (Supplier supplier : suppliers) {
-            System.out.println(supplier);
+        if (suppliers.size() > 0) {
+            for (Supplier supplier : suppliers) {
+                System.out.println(supplier);
+            }
+        } else {
+            System.out.println("No items found...");
         }
     }
 }
