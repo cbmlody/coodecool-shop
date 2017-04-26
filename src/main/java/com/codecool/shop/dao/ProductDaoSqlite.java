@@ -120,6 +120,20 @@ public class ProductDaoSqlite implements ProductDao {
         return productList;
     }
 
+    private List<Product> getByHelper(String query) {
+        List<Product> productList = new ArrayList<>();
+        Statement statement = DatabaseConnection.getInstance().getStatement();
+        try {
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                productList.add(productFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
+    }
+
     private Product productFromResultSet (ResultSet resultSet) throws SQLException {
         ProductCategorySqlite productCategoryDaoSqlite = new ProductCategorySqlite();
         SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
