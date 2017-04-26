@@ -32,7 +32,7 @@ public class ProductDaoSqlite implements ProductDao {
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getFloat("defaultPrice"),
-                        resultSet.getString("currencyString"),
+                        resultSet.getString("currency"),
                         resultSet.getString("description"),
                         productCategoryDaoSqlite.find( resultSet.getInt("categoryId")),
                         supplierDaoSqlite.find(resultSet.getInt("supplierId")));
