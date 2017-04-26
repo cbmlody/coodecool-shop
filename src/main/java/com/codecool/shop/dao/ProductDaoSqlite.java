@@ -11,4 +11,7 @@ public class ProductDaoSqlite implements ProductDao {
 
     @Override
     public void add(Product product) {}
+
+    @Override
+    public void remove(int id) {}
 }
