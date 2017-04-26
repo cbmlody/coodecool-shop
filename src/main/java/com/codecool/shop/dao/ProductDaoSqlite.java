@@ -24,19 +24,18 @@ public class ProductDaoSqlite implements ProductDao {
         Statement statement = DatabaseConnection.getInstance().getStatement();
         ProductCategorySqlite productCategoryDaoSqlite = new ProductCategorySqlite();
         SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
-        String query = "SELECT *FROM `products` WHERE id = '" + id + "'";
+        String query = "SELECT * FROM `products` WHERE id = '" + id + "'";
         try {
             ResultSet resultSet = statement.executeQuery(query);
-            while (resultSet.next()) {
+                Integer id_supplier = resultSet.getInt("supplierId");
                 product = new Product(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getFloat("defaultPrice"),
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
-                        productCategoryDaoSqlite.find( resultSet.getInt("categoryId")),
-                        supplierDaoSqlite.find(resultSet.getInt("supplierId")));
-            }
+                        productCategoryDaoSqlite.find(resultSet.getInt("categoryId")),
+                        supplierDaoSqlite.find(id_supplier));
         } catch (SQLException e) {
             e.printStackTrace();
         }
