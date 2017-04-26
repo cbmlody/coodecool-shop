@@ -9,8 +9,8 @@ public class ProductCategoryView implements View<ProductCategory> {
         System.out.println(productCategory);
     }
 
-    public void displayAll(List<ProductCategory> productCategoryList) {
-        for (ProductCategory productCategory : productCategoryList) {
+    public void displayAll(List<ProductCategory> productCategories) {
+        for (ProductCategory productCategory : productCategories) {
             System.out.println(productCategory);
         }
     }
