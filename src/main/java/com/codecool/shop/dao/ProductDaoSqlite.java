@@ -4,8 +4,6 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
-import javax.swing.plaf.nimbus.State;
-import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -44,7 +42,7 @@ public class ProductDaoSqlite implements ProductDao {
         }
         return product;
     }
-    
+
     @Override
     public List<Product> getAll() {
         List<Product> productList = new ArrayList<>();
@@ -58,11 +56,37 @@ public class ProductDaoSqlite implements ProductDao {
                 Product product = new Product(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
-                        resultSet.getFloat("defaulPrice"),
+                        resultSet.getFloat("defaultPrice"),
                         resultSet.getString("currency"),
                         resultSet.getString("description"),
                         productCategoryDaoSqlite.find(resultSet.getInt("categoryId")),
-                       supplierDaoSqlite.find(resultSet.getInt("supplierId")));
+                        supplierDaoSqlite.find(resultSet.getInt("supplierId")));
+                productList.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
+    }
+
+    @Override
+    public List<Product> getBy(Supplier supplier) {
+        List<Product> productList = new ArrayList<>();
+        ProductCategorySqlite productCategoryDaoSqlite = new ProductCategorySqlite();
+        SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
+        Statement statement = DatabaseConnection.getInstance().getStatement();
+        String query = "SELECT *FROM `products` WHERE supplierId = '"+supplier.getId()+"'";
+        try {
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                Product product = new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getFloat("defaultPrice"),
+                        resultSet.getString("currency"),
+                        resultSet.getString("description"),
+                        productCategoryDaoSqlite.find(resultSet.getInt("categoryId")),
+                        supplierDaoSqlite.find(resultSet.getInt("supplierId")));
                 productList.add(product);
             }
         } catch (SQLException e) {
