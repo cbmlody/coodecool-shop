@@ -74,7 +74,7 @@ public final class DatabaseConnection {
         }
     }
 
-    public Statement getStatement() {
-        return statement;
+    public Connection getConnection() {
+        return connection;
     }
 }
