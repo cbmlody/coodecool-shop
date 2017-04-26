@@ -20,26 +20,17 @@ public class ProductDaoSqlite implements ProductDao {
 
     @Override
     public Product find(int id) {
-        Product product = null;
         Statement statement = DatabaseConnection.getInstance().getStatement();
         ProductCategorySqlite productCategoryDaoSqlite = new ProductCategorySqlite();
         SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
         String query = "SELECT * FROM `products` WHERE id = '" + id + "'";
         try {
             ResultSet resultSet = statement.executeQuery(query);
-                Integer id_supplier = resultSet.getInt("supplierId");
-                product = new Product(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getFloat("defaultPrice"),
-                        resultSet.getString("currency"),
-                        resultSet.getString("description"),
-                        productCategoryDaoSqlite.find(resultSet.getInt("categoryId")),
-                        supplierDaoSqlite.find(id_supplier));
+            return productFromResultSet(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return product;
+        return null;
     }
 
     @Override
