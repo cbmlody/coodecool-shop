@@ -17,7 +17,22 @@ public class ProductCategorySqlite implements ProductCategoryDao{
     public void remove(int id) {}
 
     @Override
-    public ProductCategory find(int id) { return  null; }
+    public ProductCategory find(int id) {
+        ProductCategory productCategory = null;
+        Statement statement = DatabaseConnection.getInstance().getStatement();
+        String query = "SELECT * FROM `product_categories` WHERE id = '" + id + "'";
+        try {
+            ResultSet result = statement.executeQuery(query);
+            productCategory = new ProductCategory(
+                    result.getInt("id"),
+                    result.getString("name"),
+                    result.getString("department"),
+                    result.getString("description"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productCategory;
+    }
 
     @Override
     public List<ProductCategory> getAll() {
