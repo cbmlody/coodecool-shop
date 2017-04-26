@@ -14,6 +14,7 @@ public final class DatabaseConnection {
     private Statement statement = null;
 
     private DatabaseConnection() {
+        this.openConnection();
     }
 
     public static DatabaseConnection getInstance() {
@@ -25,6 +26,7 @@ public final class DatabaseConnection {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:src/main/database.db");
             System.out.println("Connection established...");
+            statement = connection.createStatement();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
@@ -34,7 +36,6 @@ public final class DatabaseConnection {
     public void resetDatabase() throws SQLException {
         String string;
         StringBuilder stringBuilder = new StringBuilder();
-        statement = connection.createStatement();
 
         try {
             FileReader fileReader = new FileReader(new File("src/main/resources/script.sql"));
