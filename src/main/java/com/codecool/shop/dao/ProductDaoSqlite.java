@@ -21,7 +21,7 @@ public class ProductDaoSqlite implements ProductDao {
     @Override
     public List<Product> getAll() {
         List<Product> productList = new ArrayList<>();
-        ProductCategoryDaoSqlite productCategoryDaoSqlite = new ProductCategoryDaoSqlite();
+        ProductCategorySqlite productCategoryDaoSqlite = new ProductCategorySqlite();
         SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
         Statement statement = DatabaseConnection.getInstance().getStatement();
         String query = "SELECT *FROM `products`";
