@@ -119,4 +119,17 @@ public class ProductDaoSqlite implements ProductDao {
         }
         return productList;
     }
+
+    private Product productFromResultSet (ResultSet resultSet) throws SQLException {
+        ProductCategorySqlite productCategoryDaoSqlite = new ProductCategorySqlite();
+        SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
+        return  new Product(
+                resultSet.getInt("id"),
+                resultSet.getString("name"),
+                resultSet.getFloat("defaultPrice"),
+                resultSet.getString("currency"),
+                resultSet.getString("description"),
+                productCategoryDaoSqlite.find(resultSet.getInt("categoryId")),
+                supplierDaoSqlite.find(resultSet.getInt("supplierId")));
+    }
 }
