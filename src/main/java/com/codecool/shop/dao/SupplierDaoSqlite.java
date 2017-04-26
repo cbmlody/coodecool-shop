@@ -15,7 +15,12 @@ public class SupplierDaoSqlite implements SupplierDao {
     @Override
     public Supplier find(int id){
         Supplier supplier = null;
-        Statement statement = DatabaseConnection.getInstance().getStatement();
+        Statement statement = null;
+        try {
+            statement = DatabaseConnection.getInstance().getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         String query = "SELECT * FROM `suppliers` WHERE id = '" + id + "'";
         try {
             ResultSet resultSet = statement.executeQuery(query);
@@ -35,7 +40,12 @@ public class SupplierDaoSqlite implements SupplierDao {
     @Override
     public List<Supplier> getAll(){
         List<Supplier> supplierList = new ArrayList<Supplier>();
-        Statement statement = DatabaseConnection.getInstance().getStatement();
+        Statement statement = null;
+        try {
+            statement = DatabaseConnection.getInstance().getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         String query = "SELECT * FROM `suppliers`";
         try {
             ResultSet resultSet = statement.executeQuery(query);
