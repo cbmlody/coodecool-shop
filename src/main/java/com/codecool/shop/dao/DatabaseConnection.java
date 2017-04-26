@@ -75,6 +75,10 @@ public final class DatabaseConnection {
     }
 
     public Statement getStatement() {
-        return statement;
+        try {
+            return connection.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } return null;
     }
 }
