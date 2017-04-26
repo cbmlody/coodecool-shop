@@ -50,7 +50,7 @@ public final class DatabaseConnection {
 
             for (String query : queries) {
                 if (!query.trim().equals("")) {
-                    statement.executeUpdate(query);
+                    getStatement().executeUpdate(query);
                     System.out.println(">>" + query);
                 }
             }
