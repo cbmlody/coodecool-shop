@@ -4,6 +4,8 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
+import javax.swing.plaf.nimbus.State;
+import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,6 +20,31 @@ public class ProductDaoSqlite implements ProductDao {
     @Override
     public void remove(int id) {}
 
+    @Override
+    public Product find(int id) {
+        Product product = null;
+        Statement statement = DatabaseConnection.getInstance().getStatement();
+        ProductCategorySqlite productCategoryDaoSqlite = new ProductCategorySqlite();
+        SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
+        String query = "SELECT *FROM `products` WHERE id = '" + id + "'";
+        try {
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                product = new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getFloat("defaultPrice"),
+                        resultSet.getString("currencyString"),
+                        resultSet.getString("description"),
+                        productCategoryDaoSqlite.find( resultSet.getInt("categoryId")),
+                        supplierDaoSqlite.find(resultSet.getInt("supplierId")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
+    
     @Override
     public List<Product> getAll() {
         List<Product> productList = new ArrayList<>();
