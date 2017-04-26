@@ -6,6 +6,14 @@ import java.util.ArrayList;
 public class Cart {
     private ArrayList<CartItem> cartItems = new ArrayList<>();
 
+    public void add(Product product, Integer quantity){
+        cartItems.add(new CartItem(product, quantity));
+    }
+
+    public void add(Product product){
+        add(product, 1);
+    }
+
     //TODO: Not sure if it should be inner
     private class CartItem {
         Product product;
