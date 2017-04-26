@@ -8,4 +8,7 @@ import java.util.List;
 
 public class SupplierDaoSqlite implements SupplierDao {
 
+    @Override
+    public void add(Supplier supplier){}
+
 }
