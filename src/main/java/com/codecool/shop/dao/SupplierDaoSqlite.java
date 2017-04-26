@@ -14,7 +14,22 @@ public class SupplierDaoSqlite implements SupplierDao {
 
     @Override
     public Supplier find(int id){
-        return null;
+        Supplier supplier = null;
+        Statement statement = DatabaseConnection.getInstance().getStatement();
+        String query = "SELECT * FROM `suppliers` WHERE id = '" + id + "'";
+        try {
+            ResultSet result = statement.executeQuery(query);
+            supplier = new Supplier(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("description")
+            );
+
+            )
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return supplier;
     }
     @Override
     public void remove(int id){}
