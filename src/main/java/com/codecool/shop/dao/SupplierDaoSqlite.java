@@ -10,7 +10,7 @@ import java.util.List;
 public class SupplierDaoSqlite implements SupplierDao {
 
     @Override
-    public void add(Supplier supplier){}
+    public void add(Supplier supplier) {}
 
     @Override
     public Supplier find(int id){
@@ -18,14 +18,12 @@ public class SupplierDaoSqlite implements SupplierDao {
         Statement statement = DatabaseConnection.getInstance().getStatement();
         String query = "SELECT * FROM `suppliers` WHERE id = '" + id + "'";
         try {
-            ResultSet result = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(query);
             supplier = new Supplier(
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
                     resultSet.getString("description")
             );
-
-            )
         } catch (SQLException e) {
             e.printStackTrace();
         }
