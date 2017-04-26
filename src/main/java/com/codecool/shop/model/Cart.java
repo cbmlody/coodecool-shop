@@ -15,6 +15,9 @@ public class Cart implements Iterable<CartItem>{
         add(product, 1);
     }
 
+    public void remove(int cartItemIndex){
+        cartItems.remove(cartItemIndex);
+    }
     @Override
     public Iterator<CartItem> iterator() {
         return cartItems.iterator();
