@@ -10,22 +10,25 @@ import java.util.List;
 public class SupplierDaoSqlite implements SupplierDao {
 
     @Override
-    public void add(Supplier supplier){}
+    public void add(Supplier supplier) {}
 
     @Override
     public Supplier find(int id){
         Supplier supplier = null;
-        Statement statement = DatabaseConnection.getInstance().getStatement();
+        Statement statement = null;
+        try {
+            statement = DatabaseConnection.getInstance().getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         String query = "SELECT * FROM `suppliers` WHERE id = '" + id + "'";
         try {
-            ResultSet result = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(query);
             supplier = new Supplier(
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
                     resultSet.getString("description")
             );
-
-            )
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -37,7 +40,12 @@ public class SupplierDaoSqlite implements SupplierDao {
     @Override
     public List<Supplier> getAll(){
         List<Supplier> supplierList = new ArrayList<Supplier>();
-        Statement statement = DatabaseConnection.getInstance().getStatement();
+        Statement statement = null;
+        try {
+            statement = DatabaseConnection.getInstance().getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         String query = "SELECT * FROM `suppliers`";
         try {
             ResultSet resultSet = statement.executeQuery(query);
