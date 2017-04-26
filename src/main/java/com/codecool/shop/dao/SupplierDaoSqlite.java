@@ -4,6 +4,7 @@ import com.codecool.shop.model.Supplier;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierDaoSqlite implements SupplierDao {
@@ -20,6 +21,7 @@ public class SupplierDaoSqlite implements SupplierDao {
 
     @Override
     public List<Supplier> getAll(){
+        List<Supplier> supplierList = new ArrayList<Supplier>();
         Statement statement = DatabaseConnection.getInstance().getStatement();
         String query = "SELECT * FROM `suppliers`";
         try {
@@ -30,10 +32,11 @@ public class SupplierDaoSqlite implements SupplierDao {
                         resultSet.getString("name"),
                         resultSet.getString("description")
                 );
+                supplierList.add(supplier);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return supplier;
+        return supplierList;
     }
 }
