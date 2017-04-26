@@ -12,6 +12,11 @@ public class CartItem {
     Product getProduct() {
         return product;
     }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
     @Override
     public String toString() {
         return "CartItem{" +
