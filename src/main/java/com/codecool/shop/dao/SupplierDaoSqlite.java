@@ -15,5 +15,6 @@ public class SupplierDaoSqlite implements SupplierDao {
     public Supplier find(int id){
         return null;
     }
-
+    @Override
+    public void remove(int id){}
 }
