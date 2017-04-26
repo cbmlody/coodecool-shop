@@ -2,8 +2,10 @@ package com.codecool.shop.model;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Cart {
+public class Cart implements Iterable<CartItem>{
     private ArrayList<CartItem> cartItems = new ArrayList<>();
 
     public void add(Product product, Integer quantity){
@@ -18,6 +20,10 @@ public class Cart {
     private class CartItem {
         Product product;
         Integer quantity;
+    @Override
+    public Iterator<CartItem> iterator() {
+        return cartItems.iterator();
+    }
 
         CartItem(Product product, Integer quantity){
             this.product = product;
