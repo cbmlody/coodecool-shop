@@ -8,5 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDaoSqlite implements ProductDao {
-    
+
+    @Override
+    public void add(Product product) {}
 }
