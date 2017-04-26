@@ -18,6 +18,11 @@ public class Cart implements Iterable<CartItem>{
     public void remove(int cartItemIndex){
         cartItems.remove(cartItemIndex);
     }
+
+    public void changeQuantity(int cartItemIndex, int newQuantity){
+        cartItems.get(cartItemIndex).setQuantity(newQuantity);
+    }
+
     @Override
     public Iterator<CartItem> iterator() {
         return cartItems.iterator();
