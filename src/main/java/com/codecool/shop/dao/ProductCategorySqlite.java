@@ -19,7 +19,12 @@ public class ProductCategorySqlite implements ProductCategoryDao{
     @Override
     public ProductCategory find(int id) {
         ProductCategory productCategory = null;
-        Statement statement = DatabaseConnection.getInstance().getStatement();
+        Statement statement = null;
+        try {
+            statement = DatabaseConnection.getInstance().getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         String query = "SELECT * FROM `product_categories` WHERE id = '" + id + "'";
         try {
             ResultSet result = statement.executeQuery(query);
@@ -36,7 +41,12 @@ public class ProductCategorySqlite implements ProductCategoryDao{
 
     @Override
     public List<ProductCategory> getAll() {
-        Statement statement = DatabaseConnection.getInstance().getStatement();
+        Statement statement = null;
+        try {
+            statement = DatabaseConnection.getInstance().getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         String query = "SELECT * FROM `product_categories`";
         ArrayList<ProductCategory> categories = new ArrayList<>();
         try {
