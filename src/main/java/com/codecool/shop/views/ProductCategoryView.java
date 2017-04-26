@@ -10,8 +10,12 @@ public class ProductCategoryView implements View<ProductCategory> {
     }
 
     public void displayAll(List<ProductCategory> productCategories) {
-        for (ProductCategory productCategory : productCategories) {
-            System.out.println(productCategory);
+        if (productCategories.size() > 0) {
+            for (ProductCategory productCategory : productCategories) {
+                System.out.println(productCategory);
+            }
+        } else {
+            System.out.println("No items found...");
         }
     }
 }

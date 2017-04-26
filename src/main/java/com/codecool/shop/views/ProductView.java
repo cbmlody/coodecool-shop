@@ -12,8 +12,12 @@ public class ProductView implements View<Product> {
 
     @Override
     public void displayAll(List<Product> products) {
-        for (Product product : products) {
-            System.out.println(product);
+        if (products.size() > 0) {
+            for (Product product : products) {
+                System.out.println(product);
+            }
+        } else {
+            System.out.println("No items found...");
         }
     }
 }
