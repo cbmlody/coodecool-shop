@@ -93,7 +93,24 @@ public class MenuController {
                 quitProductMenu = true;
             } else if(choice == 1){
                 ProductController.getInstance().getAllProducts();
+            } else if(choice == 2){
+                showProductsByCategory();
+            }
             }
         }
+    private void showProductsByCategory(){
+        ProductCategoryController.getInstance().getAllProductCategories();
+
+        Integer categoryChoice = getUserChoice("Please enter product category id to see products");
+        ProductCategory chosenCat = categoryDao.find(categoryChoice);
+        while (chosenCat == null){
+            categoryChoice = getUserChoice("Error, incorrect category id, please try again");
+            chosenCat = categoryDao.find(categoryChoice);
+        }
+        MenuView.flashMessage("\nDisplaying products from category:");
+        categoryView.showTableHead();
+        categoryView.displayOne(chosenCat);
+        MenuView.flashMessage("\nPRODUCTS:");
+        ProductController.getInstance().getByProductCategory(chosenCat);
     }
 }
