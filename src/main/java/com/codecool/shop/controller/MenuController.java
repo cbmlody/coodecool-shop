@@ -1,6 +1,16 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.ProductCategoryDaoSqlite;
+import com.codecool.shop.dao.ProductDaoSqlite;
+import com.codecool.shop.dao.SupplierDaoSqlite;
+import com.codecool.shop.model.Cart;
+import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
+import com.codecool.shop.views.CartView;
 import com.codecool.shop.views.MenuView;
+import com.codecool.shop.views.ProductCategoryView;
+import com.codecool.shop.views.SupplierView;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
