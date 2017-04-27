@@ -22,8 +22,8 @@ public final class MenuView {
 
     public static void displayProducts() {
         System.out.println("PRODUCTS MENU\n" +
-                "  1. Show all products" +
-                "  1. Show product categories\n" +
+                "  1. Show all products\n" +
+                "  2. Show product categories\n" +
                 "  3. Show products from category\n" +
                 "  0. Back\n");
     }
@@ -47,6 +47,6 @@ public final class MenuView {
     public static void displayCheckout() {
         System.out.println("CHECKOUT\n" +
                 "  1. Payment\n" +
-                "  0. Back");
+                "  0. Back\n");
     }
 }
