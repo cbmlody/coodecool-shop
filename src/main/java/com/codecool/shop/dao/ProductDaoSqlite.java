@@ -21,7 +21,7 @@ public class ProductDaoSqlite implements ProductDao {
     @Override
     public Product find(int id) {
         Statement statement = DatabaseConnection.getInstance().getStatement();
-        ProductCategorySqlite productCategoryDaoSqlite = new ProductCategorySqlite();
+        ProductCategoryDaoSqlite productCategoryDaoSqlite = new ProductCategoryDaoSqlite();
         SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
         String query = "SELECT * FROM `products` WHERE id = '" + id + "'";
         try {
@@ -66,7 +66,7 @@ public class ProductDaoSqlite implements ProductDao {
     }
 
     private Product productFromResultSet (ResultSet resultSet) throws SQLException {
-        ProductCategorySqlite productCategoryDaoSqlite = new ProductCategorySqlite();
+        ProductCategoryDaoSqlite productCategoryDaoSqlite = new ProductCategoryDaoSqlite();
         SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
         return  new Product(
                 resultSet.getInt("id"),

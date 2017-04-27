@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductCategorySqlite implements ProductCategoryDao{
+public class ProductCategoryDaoSqlite implements ProductCategoryDao{
 
     @Override
     public void add(ProductCategory category) {}
