@@ -10,8 +10,7 @@ import java.sql.Statement;
 
 public final class DatabaseConnection {
     private static final DatabaseConnection INSTANCE = new DatabaseConnection();
-    private Connection connection = null;
-    private Statement statement = null;
+    private Connection connection;
 
     private DatabaseConnection() {
         this.openConnection();
@@ -26,7 +25,6 @@ public final class DatabaseConnection {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:src/main/database.db");
             System.out.println("Connection established...");
-            statement = connection.createStatement();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
@@ -51,7 +49,6 @@ public final class DatabaseConnection {
             for (String query : queries) {
                 if (!query.trim().equals("")) {
                     getStatement().executeUpdate(query);
-                    System.out.println(">>" + query);
                 }
             }
 
@@ -60,7 +57,7 @@ public final class DatabaseConnection {
             System.out.println("*** ");
             System.out.println("*** Error : ");
             e.printStackTrace();
-            System.out.println("################################################");
+            System.out.println("#########");
             System.out.println(stringBuilder.toString());
         }
     }
