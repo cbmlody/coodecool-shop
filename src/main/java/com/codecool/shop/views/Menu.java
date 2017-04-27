@@ -23,4 +23,13 @@ public final class Menu {
                 "  0. Back\n");
     }
 
+    public static void displayCart() {
+        System.out.println("CART MENU\n" +
+                "  1. Show items in cart\n" +
+                "  2. Change quantity\n" +
+                "  3. Remove item from cart\n" +
+                "  4. Checkout cart\n" +
+                "  0. Back\n");
+    }
+
 }
