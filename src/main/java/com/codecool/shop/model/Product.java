@@ -1,14 +1,14 @@
 package com.codecool.shop.model;
 
+import com.codecool.shop.utils.CurrencyCalculator;
 import java.util.Currency;
 
 public class Product extends BaseModel {
-
+    private static CurrencyCalculator currencyCalculator = new CurrencyCalculator(Currency.getInstance("PLN"));
     private float defaultPrice;
     private Currency defaultCurrency;
     private ProductCategory productCategory;
     private Supplier supplier;
-
 
     public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
         super(name, description);
@@ -22,6 +22,7 @@ public class Product extends BaseModel {
         this.setPrice(defaultPrice, currencyString);
         this.setSupplier(supplier);
         this.setProductCategory(productCategory);
+
     }
 
     public float getDefaultPrice() {
@@ -48,6 +49,19 @@ public class Product extends BaseModel {
         this.defaultPrice = price;
         this.defaultCurrency = Currency.getInstance(currency);
     }
+
+    public float getConvertedFloatPrice(){
+        return currencyCalculator.calculatePrice(this.defaultCurrency, this.defaultPrice);
+    }
+
+    public static Currency getBaseCurrency(){
+        return currencyCalculator.getBaseCurrency();
+    }
+
+    public static void changeBaseCurrency(Currency currency){
+        currencyCalculator.setCurrencyData(currency);
+    }
+
 
     public ProductCategory getProductCategory() {
         return productCategory;
