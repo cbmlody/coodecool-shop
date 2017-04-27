@@ -89,4 +89,14 @@ public class MenuController {
         MenuView.flashMessage(msg);
         return getUserChoice();
     }
+
+    private void productMenu(){
+        Boolean quitProductMenu = false;
+        while (!quitProductMenu) {
+            MenuView.displayProducts();
+            Integer choice = getUserChoice();
+            if (choice == 0) {
+                quitProductMenu = true;
+        }
+    }
 }
