@@ -91,6 +91,9 @@ public class MenuController {
             Integer choice = getUserChoice();
             if (choice == 0) {
                 quitProductMenu = true;
+            } else if(choice == 1){
+                ProductController.getInstance().getAllProducts();
+            }
         }
     }
 }
