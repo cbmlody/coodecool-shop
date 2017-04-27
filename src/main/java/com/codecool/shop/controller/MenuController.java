@@ -13,5 +13,14 @@ public class MenuController {
 
     private static MenuController getInstance() {
         return INSTANCE;
-    }g
+    }
+
+    public static Integer getUserChoice() {
+        System.out.print("Choice: ");
+        Scanner scanner = new Scanner(System.in);
+        if (scanner.hasNextInt())
+            return scanner.nextInt();
+        scanner.next();
+        return -1;
+    }
 }
