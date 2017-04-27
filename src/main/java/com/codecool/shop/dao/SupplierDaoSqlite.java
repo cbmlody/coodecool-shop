@@ -19,6 +19,9 @@ public class SupplierDaoSqlite implements SupplierDao {
         String query = "SELECT * FROM `suppliers` WHERE id = '" + id + "'";
         try {
             ResultSet resultSet = statement.executeQuery(query);
+            if (!resultSet.isBeforeFirst()){
+                return null;
+            }
             supplier = new Supplier(
                     resultSet.getInt("id"),
                     resultSet.getString("name"),

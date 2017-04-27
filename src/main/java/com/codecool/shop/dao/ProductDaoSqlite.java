@@ -26,6 +26,9 @@ public class ProductDaoSqlite implements ProductDao {
         String query = "SELECT * FROM `products` WHERE id = '" + id + "'";
         try {
             ResultSet resultSet = statement.executeQuery(query);
+            if (!resultSet.isBeforeFirst()){
+                return null;
+            }
             return productFromResultSet(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();

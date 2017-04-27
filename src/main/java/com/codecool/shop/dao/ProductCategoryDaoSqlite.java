@@ -23,6 +23,9 @@ public class ProductCategoryDaoSqlite implements ProductCategoryDao{
         String query = "SELECT * FROM `product_categories` WHERE id = '" + id + "'";
         try {
             ResultSet result = statement.executeQuery(query);
+            if (!result.isBeforeFirst()){
+                return null;
+            }
             productCategory = new ProductCategory(
                     result.getInt("id"),
                     result.getString("name"),
