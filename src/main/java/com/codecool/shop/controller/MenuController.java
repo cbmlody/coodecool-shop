@@ -95,6 +95,8 @@ public class MenuController {
                 ProductController.getInstance().getAllProducts();
             } else if(choice == 2){
                 showProductsByCategory();
+            } else if(choice == 3) {
+                showProductsBySupplier();
             }
             }
         }
@@ -113,4 +115,20 @@ public class MenuController {
         MenuView.flashMessage("\nPRODUCTS:");
         ProductController.getInstance().getByProductCategory(chosenCat);
     }
+
+    private void showProductsBySupplier(){
+        SupplierController.getInstance().getAllSuppliers();
+        Integer supplierChoice = getUserChoice("Please enter product supplier id to see products");
+        Supplier chosenSup = supplierDao.find(supplierChoice);
+        while (chosenSup == null){
+            supplierChoice = getUserChoice("Error, incorrect supplier id, please try again");
+            chosenSup = supplierDao.find(supplierChoice);
+        }
+        MenuView.flashMessage("\nDisplaying products from supplier:");
+        supplierView.showTableHead();
+        supplierView.displayOne(chosenSup);
+        MenuView.flashMessage("\nPRODUCTS:");
+        ProductController.getInstance().getBySupplier(chosenSup);
+    }
+
 }
