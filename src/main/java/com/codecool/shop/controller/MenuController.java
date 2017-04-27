@@ -98,8 +98,12 @@ public class MenuController {
             } else if(choice == 3) {
                 showProductsBySupplier();
             }
+            if (choice > 0 && choice < 4) {
+                backOrAddToBasket();
             }
         }
+    }
+
     private void showProductsByCategory(){
         ProductCategoryController.getInstance().getAllProductCategories();
 
@@ -129,6 +133,31 @@ public class MenuController {
         supplierView.displayOne(chosenSup);
         MenuView.flashMessage("\nPRODUCTS:");
         ProductController.getInstance().getBySupplier(chosenSup);
+    }
+
+    private void backOrAddToBasket(){
+        MenuView.backOrAddToBasket();
+        Integer actionChoice = getUserChoice();
+        if (actionChoice == 1){
+            addToBasketById();
+        }
+    }
+
+    private void addToBasketById(){
+        Integer productChoice = getUserChoice("Please enter product id to add products to cart");
+        Product chosenProd = productDao.find(productChoice);
+        while (chosenProd == null){
+            productChoice = getUserChoice("Error, incorrect product id, please try again");
+            chosenProd = productDao.find(productChoice);
+        }
+        Integer quantity = getUserChoice("How many items would you like to purchase?");
+        while (quantity<1){
+            quantity = getUserChoice("Error, quantity has to be positive integer! Please try again!");
+        }
+        cart.add(chosenProd, quantity);
+        MenuView.flashMessage("Product added to cart! \nYour actual cart:");
+        cartView.displayCart(cart);
+
     }
 
 }
