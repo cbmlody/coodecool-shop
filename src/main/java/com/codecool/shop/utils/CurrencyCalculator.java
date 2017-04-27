@@ -33,11 +33,8 @@ public class CurrencyCalculator {
             return price;
         }
         Float rate = rates.get(defaultCurrency);
-        if (rate > 1) {
-            return price / rate;
-        } else{
-            return price*rate;
-        }
+        return price / rate;
+
     }
 
     public void setCurrencyData(Currency chosenCurrency){
