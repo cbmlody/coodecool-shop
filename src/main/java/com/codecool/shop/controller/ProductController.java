@@ -10,7 +10,7 @@ import com.codecool.shop.views.ProductView;
 public class ProductController {
     private static final ProductController INSTANCE = new ProductController();
     private  ProductController(){}
-    public static ProductCategoryController getInstance() {
+    public static ProductController getInstance() {
         return INSTANCE;
     }
 
