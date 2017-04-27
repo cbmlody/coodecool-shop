@@ -1,9 +1,10 @@
 package com.codecool.shop.model;
 
+import com.codecool.shop.utils.CurrencyCalculator;
 import java.util.Currency;
 
 public class Product extends BaseModel {
-
+    private static CurrencyCalculator currencyCalculator = new CurrencyCalculator(Currency.getInstance("PLN"));
     private float defaultPrice;
     private Currency defaultCurrency;
     private ProductCategory productCategory;
