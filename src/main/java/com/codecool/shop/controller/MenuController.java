@@ -41,13 +41,7 @@ public class MenuController {
                     productMenu();
                     break;
                 case 2:
-                    while (quitCartMenu) {
-                        MenuView.displayCart();
-                        Integer choice = getUserChoice();
-                        if (choice == 0) {
-                            quitCartMenu = true;
-                        }
-                    }
+                    cartMenu();
                     break;
                 case 3:
                     while (quitSearchMenu) {
@@ -139,6 +133,20 @@ public class MenuController {
         }
     }
 
+    private void cartMenu() {
+        Boolean quitCartMenu = false;
+        while (!quitCartMenu) {
+            MenuView.displayCart();
+            Integer choice = getUserChoice();
+
+            if (choice > 0 & choice < 4) {
+                cartView.displayCart(cart);
+            }
+            if (choice == 0) {
+                quitCartMenu = true;
+            }
+        }
+    }
     private void addToBasketById(){
         Integer productChoice = getUserChoice("Please enter product id to add products to cart");
         Product chosenProd = productDao.find(productChoice);
