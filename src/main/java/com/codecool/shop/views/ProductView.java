@@ -7,14 +7,21 @@ import java.util.List;
 public class ProductView implements View<Product> {
 
     public void displayOne(Product product) {
-        System.out.println(product);
+        System.out.format("%-3d | %-75s | %-9.2f | %-3s | %-20s",
+                product.getId(),
+                product.getName(),
+                product.getDefaultPrice(),
+                product.getDefaultCurrency(),
+                product.getSupplier().getName());
     }
 
     @Override
     public void displayAll(List<Product> products) {
         if (products.size() > 0) {
+            System.out.format("%-3s | %-75s | %-9s | %-3s | %-20s\n", "ID", "NAME", "PRICE", "CUR", "SUPPLIER");
             for (Product product : products) {
-                System.out.println(product);
+                displayOne(product);
+                System.out.println();
             }
         } else {
             System.out.println("No items found...");
