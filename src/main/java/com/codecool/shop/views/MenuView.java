@@ -1,9 +1,9 @@
 package com.codecool.shop.views;
 
-public final class Menu {
-    private static final Menu MENU = new Menu();
-    private Menu() {}
-    public static Menu getInstance() {
+public final class MenuView {
+    private static final MenuView MENU = new MenuView();
+    private MenuView() {}
+    public static MenuView getInstance() {
         return MENU;
     }
 
