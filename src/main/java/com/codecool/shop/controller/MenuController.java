@@ -29,15 +29,6 @@ public class MenuController {
     private static Boolean quitSearchMenu = true;
 
 
-    public static Integer getUserChoice() {
-        System.out.print("Choice: ");
-        Scanner scanner = new Scanner(System.in);
-        if (scanner.hasNextInt())
-            return scanner.nextInt();
-        scanner.next();
-        return -1;
-    }
-
     public static void mainProgram() {
         Integer userChoice = null;
         while (quitProgram) {
@@ -84,4 +75,13 @@ public class MenuController {
             }
         }
     }
+    private Integer getUserChoice() {
+        System.out.print("Choice: ");
+        Scanner scanner = new Scanner(System.in);
+        if (scanner.hasNextInt())
+            return scanner.nextInt();
+        scanner.next();
+        return -1;
+    }
+
 }
