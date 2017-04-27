@@ -144,9 +144,43 @@ public class MenuController {
             }
             if (choice == 0) {
                 quitCartMenu = true;
+            } else if (choice == 2) {
+                changeQuantity();
+            } else if (choice == 3){
+                removeFromCart();
             }
         }
     }
+
+    private void changeQuantity(){
+        editCart(false);
+    }
+
+    private void removeFromCart(){
+        editCart(true);
+    }
+
+    private void editCart(Boolean remove){
+        if (cart.size() < 1) {
+            return;
+        }
+        Integer idChoice = getUserChoice("Please enter id of product you want to edit");
+        Integer cartItemIndex = cart.getIndexIfExists(idChoice);
+        if (cartItemIndex != null){
+            if (remove){
+                cart.remove(cartItemIndex);
+                MenuView.flashMessage("Item successfully deleted");
+            } else {
+                Integer quantity = getQuantity();
+                cart.changeQuantity(cartItemIndex, quantity);
+                MenuView.flashMessage("Quantity successfully updated");
+            }
+
+        } else {
+            MenuView.flashMessage("There's no item with id " + idChoice + " in your cart!");
+        }
+    }
+
     private void addToBasketById(){
         Integer productChoice = getUserChoice("Please enter product id to add products to cart");
         Product chosenProd = productDao.find(productChoice);
@@ -154,14 +188,19 @@ public class MenuController {
             productChoice = getUserChoice("Error, incorrect product id, please try again");
             chosenProd = productDao.find(productChoice);
         }
-        Integer quantity = getUserChoice("How many items would you like to purchase?");
-        while (quantity<1){
-            quantity = getUserChoice("Error, quantity has to be positive integer! Please try again!");
-        }
+        Integer quantity = getQuantity();
         cart.add(chosenProd, quantity);
         MenuView.flashMessage("Product added to cart! \nYour actual cart:");
         cartView.displayCart(cart);
 
+    }
+
+    private Integer getQuantity(){
+        Integer quantity = getUserChoice("How many items would you like to purchase?");
+        while (quantity<1){
+            quantity = getUserChoice("Error, quantity has to be positive integer! Please try again!");
+        }
+        return quantity;
     }
 
 }
