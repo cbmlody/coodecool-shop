@@ -23,6 +23,15 @@ public class Cart implements Iterable<CartItem>{
         cartItems.get(cartItemIndex).setQuantity(newQuantity);
     }
 
+    public Float getSum(){
+        Float sum = 0f;
+        for (CartItem i: cartItems){
+            System.out.println(i.getConvertedCost());
+            sum += i.getConvertedCost();
+        }
+        return sum;
+    }
+
     @Override
     public Iterator<CartItem> iterator() {
         return cartItems.iterator();
