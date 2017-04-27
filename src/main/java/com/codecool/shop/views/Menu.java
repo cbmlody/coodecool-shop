@@ -32,4 +32,11 @@ public final class Menu {
                 "  0. Back\n");
     }
 
+    public static void displaySearch() {
+        System.out.println("SEARCH MENU\n" +
+                "  1. Search by product category\n" +
+                "  2. Search by supplier\n" +
+                "  0. Back\n");
+    }
+
 }
