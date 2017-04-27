@@ -55,4 +55,10 @@ public final class MenuView {
                 "  1. Add product to basket\n" +
                 "  Enter: Back\n");
     }
+
+    public static void flashMessage(String msg){
+        System.out.println(msg);
+    }
+
+
 }
