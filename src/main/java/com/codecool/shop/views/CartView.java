@@ -1,5 +1,6 @@
 package com.codecool.shop.views;
 
+import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.CartItem;
 
 import java.util.List;
@@ -22,5 +23,15 @@ public class CartView implements View<CartItem> {
         } else {
             System.out.println("No items found...");
         }
+    }
+
+    public void displayCart(Cart cart){
+        System.out.format("%-3s | %-15s | %-10s | %-9s\n", "ID", "NAME", "SUPPLIER", "PRICE");
+        if (cart.size() > 0){
+            cart.forEach(this::displayOne);
+        } else {
+            System.out.println("No items found...");
+        }
+
     }
 }
