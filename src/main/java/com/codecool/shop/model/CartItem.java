@@ -9,8 +9,12 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    Product getProduct() {
+    public Product getProduct() {
         return product;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public void setQuantity(Integer quantity) {
