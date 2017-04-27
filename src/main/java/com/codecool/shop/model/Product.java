@@ -50,6 +50,10 @@ public class Product extends BaseModel {
         this.defaultCurrency = Currency.getInstance(currency);
     }
 
+    public float getConvertedFloatPrice(){
+        return currencyCalculator.calculatePrice(this.defaultCurrency, this.defaultPrice);
+    }
+
     public ProductCategory getProductCategory() {
         return productCategory;
     }
