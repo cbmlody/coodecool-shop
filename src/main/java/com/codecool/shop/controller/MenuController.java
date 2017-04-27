@@ -85,4 +85,8 @@ public class MenuController {
         return -1;
     }
 
+    private Integer getUserChoice(String msg){
+        MenuView.flashMessage(msg);
+        return getUserChoice();
+    }
 }
