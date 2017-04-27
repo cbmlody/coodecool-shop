@@ -23,6 +23,10 @@ public class CurrencyCalculator {
     public CurrencyCalculator(Currency chosenCurrency){
         setCurrencyData(chosenCurrency);
     }
+
+    public Currency getBaseCurrency() {
+        return baseCurrency;
+    }
     public void setCurrencyData(Currency chosenCurrency){
         baseCurrency = chosenCurrency;
         setRates();
