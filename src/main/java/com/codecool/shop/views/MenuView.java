@@ -49,4 +49,10 @@ public final class MenuView {
                 "  1. Payment\n" +
                 "  0. Back\n");
     }
+
+    public static void backOrAddToBasket(){
+        System.out.println("\nCHOOSE ACTION:\n"+
+                "  1. Add product to basket\n" +
+                "  Enter: Back\n");
+    }
 }
