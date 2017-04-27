@@ -21,6 +21,10 @@ public class CartItem {
         this.quantity = quantity;
     }
 
+    public void addToQuantity(Integer quantity){
+        this.quantity += quantity;
+    }
+
     public float getConvertedCost(){
         return product.getConvertedFloatPrice() * quantity;
     }
