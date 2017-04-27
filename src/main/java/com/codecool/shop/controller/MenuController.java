@@ -29,7 +29,8 @@ public class MenuController {
     private static Boolean quitSearchMenu = true;
 
 
-    public static void mainProgram() {
+    public void mainProgram() {
+        Boolean quitProgram = false;
         Integer userChoice = null;
         while (quitProgram) {
             try {
