@@ -32,5 +32,10 @@ public class ProductController {
         List<Product> productList = productDaoSqlite.getBy(supplier);
         productView.displayAll(productList);
     }
-
+    public void getByProductCategory(ProductCategory productCategory){
+        ProductView productView = new ProductView();
+        ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
+        List<Product> productList = productDaoSqlite.getBy(productCategory);
+        productView.displayAll(productList);
+    }
 }
