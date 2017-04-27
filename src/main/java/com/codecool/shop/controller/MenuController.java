@@ -25,20 +25,17 @@ public class MenuController {
     private ProductDaoSqlite productDao = new ProductDaoSqlite();
     private CartView cartView = new CartView();
 
-    private static Boolean quitCartMenu = true;
     private static Boolean quitSearchMenu = true;
 
 
     public void mainProgram() {
         Boolean quitProgram = false;
-        Integer userChoice = null;
+        Integer userChoice;
         while (!quitProgram) {
-            try {
-                MenuView.displayMain();
-                userChoice = getUserChoice();
-            } catch (InputMismatchException e) {
-                read.nextInt();
-            }
+
+            MenuView.displayMain();
+            userChoice = getUserChoice();
+
             switch (userChoice) {
                 case 1:
                     productMenu();
