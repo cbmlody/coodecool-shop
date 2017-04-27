@@ -39,4 +39,9 @@ public final class Menu {
                 "  0. Back\n");
     }
 
+    public static void displayCheckout() {
+        System.out.println("CHECKOUT\n" +
+                "  1. Payment\n" +
+                "  0. Back");
+    }
 }
