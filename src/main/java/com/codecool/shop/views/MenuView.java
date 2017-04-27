@@ -14,8 +14,8 @@ public final class MenuView {
 
     public static void displayMain() {
         System.out.println("\nMAIN MENU\n" +
-                "  1. Show products\n" +
-                "  2. Show Cart\n" +
+                "  1. Browse products\n" +
+                "  2. Cart Menu\n" +
                 "  3. Search\n" +
                 "  0. Exit\n");
     }
