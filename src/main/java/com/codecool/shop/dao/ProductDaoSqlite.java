@@ -47,7 +47,7 @@ public class ProductDaoSqlite implements ProductDao {
 
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
-        String query = "SELECT *FROM `products` WHERE supplierId = '"+productCategory.getId()+"'";
+        String query = "SELECT *FROM `products` WHERE categoryId = '"+productCategory.getId()+"'";
         return getByHelper(query);
     }
 
