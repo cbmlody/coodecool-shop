@@ -32,7 +32,7 @@ public class MenuController {
     public void mainProgram() {
         Boolean quitProgram = false;
         Integer userChoice = null;
-        while (quitProgram) {
+        while (!quitProgram) {
             try {
                 MenuView.displayMain();
                 userChoice = getUserChoice();
@@ -54,7 +54,7 @@ public class MenuController {
                         MenuView.displayCart();
                         Integer choice = getUserChoice();
                         if (choice == 0) {
-                            quitCartMenu = false;
+                            quitCartMenu = true;
                         }
                     }
                     break;
@@ -63,12 +63,12 @@ public class MenuController {
                         MenuView.displaySearch();
                         Integer choice = getUserChoice();
                         if (choice == 0) {
-                            quitSearchMenu = false;
+                            quitSearchMenu = true;
                         }
                     }
                     break;
                 case 0:
-                    quitProgram = false;
+                    quitProgram = true;
                     break;
                 default:
                     System.out.print("Wrong value!\n");
