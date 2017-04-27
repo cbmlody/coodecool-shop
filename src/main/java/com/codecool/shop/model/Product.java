@@ -58,6 +58,11 @@ public class Product extends BaseModel {
         return currencyCalculator.getBaseCurrency();
     }
 
+    public static void changeBaseCurrency(Currency currency){
+        currencyCalculator.setCurrencyData(currency);
+    }
+
+
     public ProductCategory getProductCategory() {
         return productCategory;
     }
