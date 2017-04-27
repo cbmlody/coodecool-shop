@@ -7,6 +7,11 @@ public final class MenuView {
         return MENU;
     }
 
+    public static void displayWelcome() {
+        System.out.println("WELCOME TO CC ONLINE SHOP\n\n" +
+                "  Please enter your currency (eg. PLN, USD, EUR): ");
+    }
+
     public static void displayMain() {
         System.out.println("MAIN MENU\n" +
                 "  1. Show products\n" +
