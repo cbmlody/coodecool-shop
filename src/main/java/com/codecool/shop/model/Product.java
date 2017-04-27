@@ -54,6 +54,10 @@ public class Product extends BaseModel {
         return currencyCalculator.calculatePrice(this.defaultCurrency, this.defaultPrice);
     }
 
+    public static Currency getBaseCurrency(){
+        return currencyCalculator.getBaseCurrency();
+    }
+
     public ProductCategory getProductCategory() {
         return productCategory;
     }
