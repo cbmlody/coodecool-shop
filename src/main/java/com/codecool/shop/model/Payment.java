@@ -15,5 +15,8 @@ public class Payment {
         this.price = price;
         this.currency = currency;
     }
+    boolean validatePayment(){
+        int randomNum = ThreadLocalRandom.current().nextInt(0, 101);
+        return randomNum < 80;
+    }
 }
-
