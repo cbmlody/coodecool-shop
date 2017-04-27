@@ -6,7 +6,7 @@ import java.util.List;
 
 public class SupplierView implements View<Supplier> {
     public void displayOne(Supplier supplier) {
-        System.out.format("%-3d | %-25s | %-40s",
+        System.out.format("%-3d | %-50s | %-40s\n",
                 supplier.getId(),
                 supplier.getName(),
                 supplier.getDescription());
@@ -14,7 +14,7 @@ public class SupplierView implements View<Supplier> {
 
     public void displayAll(List<Supplier> suppliers) {
         if (suppliers.size() > 0) {
-            System.out.format("%-3s | %-25s | %-40s", "ID", "NAME", "DESCRIPTION");
+            System.out.format("%-3s | %-50s | %-40s\n", "ID", "NAME", "DESCRIPTION");
             for (Supplier supplier : suppliers) {
                 displayOne(supplier);
             }

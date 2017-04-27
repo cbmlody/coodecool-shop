@@ -7,11 +7,11 @@ import java.util.List;
 public class ProductView implements View<Product> {
 
     public void displayOne(Product product) {
-        System.out.format("%-3d | %-75s | %-9.2f | %-3s | %-20s",
+        System.out.format("%-3d | %-75s | %-9.2f | %-3s | %-20s\n",
                 product.getId(),
                 product.getName(),
-                product.getDefaultPrice(),
-                product.getDefaultCurrency(),
+                product.getConvertedFloatPrice(),
+                Product.getBaseCurrency(),
                 product.getSupplier().getName());
     }
 
@@ -21,7 +21,6 @@ public class ProductView implements View<Product> {
             System.out.format("%-3s | %-75s | %-9s | %-3s | %-20s\n", "ID", "NAME", "PRICE", "CUR", "SUPPLIER");
             for (Product product : products) {
                 displayOne(product);
-                System.out.println();
             }
         } else {
             System.out.println("No items found...");
