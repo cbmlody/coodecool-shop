@@ -82,6 +82,18 @@ public class Product extends BaseModel {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Product product = (Product) obj;
+        return id == product.id;
+    }
+
+    @Override
     public String toString() {
         return String.format("id: %1$d, " +
                         "name: %2$s, " +
