@@ -28,6 +28,10 @@ public class Cart implements Iterable<CartItem>{
         cartItems.get(cartItemIndex).setQuantity(newQuantity);
     }
 
+    public int size(){
+        return cartItems.size();
+    }
+
     public Float getSum(){
         Float sum = 0f;
         for (CartItem i: cartItems){
