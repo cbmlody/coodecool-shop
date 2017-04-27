@@ -14,12 +14,16 @@ public class SupplierView implements View<Supplier> {
 
     public void displayAll(List<Supplier> suppliers) {
         if (suppliers.size() > 0) {
-            System.out.format("%-3s | %-50s | %-40s\n", "ID", "NAME", "DESCRIPTION");
+            showTableHead();
             for (Supplier supplier : suppliers) {
                 displayOne(supplier);
             }
         } else {
             System.out.println("No items found...");
         }
+    }
+
+    public void showTableHead(){
+        System.out.format("%-3s | %-50s | %-40s\n", "ID", "NAME", "DESCRIPTION");
     }
 }

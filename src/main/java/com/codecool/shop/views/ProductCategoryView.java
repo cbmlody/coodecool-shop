@@ -14,12 +14,16 @@ public class ProductCategoryView implements View<ProductCategory> {
 
     public void displayAll(List<ProductCategory> productCategories) {
         if (productCategories.size() > 0) {
-            System.out.format("%-3s | %-15s | %-20s\n", "ID", "NAME", "DESCRIPTION");
+            showTableHead();
             for (ProductCategory productCategory : productCategories) {
                 displayOne(productCategory);
             }
         } else {
             System.out.println("No items found...");
         }
+    }
+
+    public void showTableHead(){
+        System.out.format("%-3s | %-15s | %-20s\n", "ID", "NAME", "DESCRIPTION");
     }
 }
