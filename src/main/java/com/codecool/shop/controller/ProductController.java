@@ -1,5 +1,6 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.model.Supplier;
 import java.util.List;
 import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.model.Product;
@@ -19,4 +20,12 @@ public class ProductController {
         List<Product> productList = productDaoSqlite.getAll();
         productView.displayAll(productList);
     }
+    public void findProduct(int id){
+        ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
+        ProductView productView = new ProductView();
+        Product product = productDaoSqlite.find(id);
+        productView.displayOne(product);
+    }
+
+
 }
