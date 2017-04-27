@@ -26,6 +26,9 @@ public class ProductDaoSqlite implements ProductDao {
         String query = "SELECT * FROM `products` WHERE id = '" + id + "'";
         try {
             ResultSet resultSet = statement.executeQuery(query);
+            if (!resultSet.isBeforeFirst()){
+                return null;
+            }
             return productFromResultSet(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,7 +50,7 @@ public class ProductDaoSqlite implements ProductDao {
 
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
-        String query = "SELECT *FROM `products` WHERE supplierId = '"+productCategory.getId()+"'";
+        String query = "SELECT *FROM `products` WHERE categoryId = '"+productCategory.getId()+"'";
         return getByHelper(query);
     }
 

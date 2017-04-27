@@ -45,10 +45,10 @@ public final class DatabaseConnection {
             bufferedReader.close();
 
             String[] queries = stringBuilder.toString().split(";");
-
+            Statement statement = getStatement();
             for (String query : queries) {
                 if (!query.trim().equals("")) {
-                    getStatement().executeUpdate(query);
+                    statement.executeUpdate(query);
                 }
             }
 
