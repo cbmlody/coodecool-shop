@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class MenuController {
     private static Cart cart = new Cart();
-    private Scanner read = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
     private ProductCategoryView categoryView = new ProductCategoryView();
     private ProductCategoryDaoSqlite categoryDao = new ProductCategoryDaoSqlite();
     private SupplierDaoSqlite supplierDao = new SupplierDaoSqlite();
@@ -72,7 +72,6 @@ public class MenuController {
     }
     private Integer getUserChoice() {
         System.out.print("Choice: ");
-        Scanner scanner = new Scanner(System.in);
         if (scanner.hasNextInt())
             return scanner.nextInt();
         scanner.next();
