@@ -50,7 +50,7 @@ public final class DatabaseConnection {
 
             for (String query : queries) {
                 if (!query.trim().equals("")) {
-                    statement.executeUpdate(query);
+                    getStatement().executeUpdate(query);
                     System.out.println(">>" + query);
                 }
             }
@@ -74,7 +74,11 @@ public final class DatabaseConnection {
         }
     }
 
-    public Connection getConnection() {
-        return connection;
+    public Statement getStatement() {
+        try {
+            return connection.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } return null;
     }
 }

@@ -1,5 +1,7 @@
 package com.codecool.shop.views;
 
+import com.codecool.shop.model.CartItem;
+
 import java.util.List;
 
 public class CartView implements View<CartItem> {
