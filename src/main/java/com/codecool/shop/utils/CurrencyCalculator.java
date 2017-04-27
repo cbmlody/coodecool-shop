@@ -11,7 +11,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Currency;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Set;
 
 
@@ -53,9 +52,7 @@ public class CurrencyCalculator {
             JSONObject jsonObject = (JSONObject) parser.parse(inputLine);
             JSONObject rts = (JSONObject) jsonObject.get("rates");
             Set<String> keys = rts.keySet();
-            Iterator<String> i = keys.iterator();
-            while (i.hasNext()) {
-                String key = i.next();
+            for (String key : keys) {
                 Double doubleRate = (Double) rts.get(key);
                 float rate = doubleRate.floatValue();
                 rates.put(Currency.getInstance(key), rate);
