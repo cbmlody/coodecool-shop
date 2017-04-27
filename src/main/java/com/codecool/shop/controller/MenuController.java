@@ -41,13 +41,7 @@ public class MenuController {
             }
             switch (userChoice) {
                 case 1:
-                    while (quitProductMenu) {
-                        MenuView.displayProducts();
-                        Integer choice = getUserChoice();
-                        if (choice == 0) {
-                           quitProductMenu = false;
-                        }
-                    }
+                    productMenu();
                     break;
                 case 2:
                     while (quitCartMenu) {
