@@ -35,7 +35,6 @@ public class Cart implements Iterable<CartItem>{
     public Float getSum(){
         Float sum = 0f;
         for (CartItem i: cartItems){
-            System.out.println(i.getConvertedCost());
             sum += i.getConvertedCost();
         }
         return sum;
