@@ -50,6 +50,15 @@ public class Cart implements Iterable<CartItem>{
         return null;
     }
 
+    public Integer getIndexIfExists(int productId){
+        for (int i=0; i< size(); i++){
+            if (cartItems.get(i).getProduct().getId() == productId){
+                return i;
+            }
+        }
+        return null;
+    }
+
     @Override
     public Iterator<CartItem> iterator() {
         return cartItems.iterator();
