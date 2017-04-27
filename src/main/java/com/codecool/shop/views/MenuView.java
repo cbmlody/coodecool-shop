@@ -8,12 +8,12 @@ public final class MenuView {
     }
 
     public static void displayWelcome() {
-        System.out.println("WELCOME TO CC ONLINE SHOP\n\n" +
+        System.out.println("WELCOME TO CC ONLINE SHOP\n" +
                 "  Please enter your currency (eg. PLN, USD, EUR): ");
     }
 
     public static void displayMain() {
-        System.out.println("MAIN MENU\n" +
+        System.out.println("\nMAIN MENU\n" +
                 "  1. Show products\n" +
                 "  2. Show Cart\n" +
                 "  3. Search\n" +
@@ -21,15 +21,15 @@ public final class MenuView {
     }
 
     public static void displayProducts() {
-        System.out.println("PRODUCTS MENU\n" +
+        System.out.println("\nPRODUCTS MENU\n" +
                 "  1. Show all products\n" +
-                "  2. Show product categories\n" +
-                "  3. Show products from category\n" +
+                "  2. Show products by category\n" +
+                "  3. Show products by supplier\n" +
                 "  0. Back\n");
     }
 
     public static void displayCart() {
-        System.out.println("CART MENU\n" +
+        System.out.println("\nCART MENU\n" +
                 "  1. Show items in cart\n" +
                 "  2. Change quantity\n" +
                 "  3. Remove item from cart\n" +
@@ -38,14 +38,14 @@ public final class MenuView {
     }
 
     public static void displaySearch() {
-        System.out.println("SEARCH MENU\n" +
+        System.out.println("\nSEARCH MENU\n" +
                 "  1. Search by product category\n" +
                 "  2. Search by supplier\n" +
                 "  0. Back\n");
     }
 
     public static void displayCheckout() {
-        System.out.println("CHECKOUT\n" +
+        System.out.println("\nCHECKOUT\n" +
                 "  1. Payment\n" +
                 "  0. Back\n");
     }
