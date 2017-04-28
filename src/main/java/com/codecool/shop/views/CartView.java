@@ -32,7 +32,7 @@ public class CartView implements View<CartItem> {
         System.out.format("%-10s | %-10s | %-80s | %-20s | %-9s | %-9s\n", "QTY", "ID", "NAME", "SUPPLIER", "PRICE", "TOTAL");
         if (cart.size() > 0){
             cart.forEach(this::displayOne);
-            System.out.format("TOTAL AMOUNT: %11.2f %3s", cart.getSum(), Product.getBaseCurrency());
+            System.out.format("TOTAL AMOUNT: %11.2f %3s\n", cart.getSum(), Product.getBaseCurrency());
         } else {
             System.out.println("No items found...");
         }
