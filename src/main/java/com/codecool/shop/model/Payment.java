@@ -4,10 +4,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Payment {
     private String name;
-    private Integer cardNumber;
+    private String cardNumber;
     private boolean validate;
 
-    public Payment(String name, Integer cardNumber) {
+    public Payment(String name, String cardNumber) {
         this.name = name;
         this.cardNumber = cardNumber;
         this.validate = validatePayment();
