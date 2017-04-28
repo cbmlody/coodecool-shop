@@ -39,8 +39,7 @@ public final class MenuView {
 
     public static void displaySearch() {
         System.out.println("\nSEARCH MENU\n" +
-                "  1. Search by product category\n" +
-                "  2. Search by supplier\n" +
+                "  1. Search product by name\n" +
                 "  0. Back\n");
     }
 
@@ -59,6 +58,4 @@ public final class MenuView {
     public static void flashMessage(String msg){
         System.out.println(msg);
     }
-
-
 }
