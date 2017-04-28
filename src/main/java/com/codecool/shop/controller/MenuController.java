@@ -7,10 +7,7 @@ import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
-import com.codecool.shop.views.CartView;
-import com.codecool.shop.views.MenuView;
-import com.codecool.shop.views.ProductCategoryView;
-import com.codecool.shop.views.SupplierView;
+import com.codecool.shop.views.*;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -19,14 +16,12 @@ public class MenuController {
     private static Cart cart = new Cart();
     private Scanner read = new Scanner(System.in);
     private ProductCategoryView categoryView = new ProductCategoryView();
+    private ProductView productView = new ProductView();
     private ProductCategoryDaoSqlite categoryDao = new ProductCategoryDaoSqlite();
     private SupplierDaoSqlite supplierDao = new SupplierDaoSqlite();
     private SupplierView supplierView = new SupplierView();
     private ProductDaoSqlite productDao = new ProductDaoSqlite();
     private CartView cartView = new CartView();
-
-    private static Boolean quitCartMenu = true;
-    private static Boolean quitSearchMenu = true;
 
 
     public void mainProgram() {
@@ -53,13 +48,7 @@ public class MenuController {
                     }
                     break;
                 case 3:
-                    while (quitSearchMenu) {
-                        MenuView.displaySearch();
-                        Integer choice = getUserChoice();
-                        if (choice == 0) {
-                            quitSearchMenu = true;
-                        }
-                    }
+                    System.out.println("Search menu");
                     break;
                 case 0:
                     quitProgram = true;
@@ -160,4 +149,10 @@ public class MenuController {
 
     }
 
+    private void showProductsByName() {
+        MenuView.flashMessage("Please insert product name: ");
+        String userProductSearch = read.next();
+        MenuView.flashMessage("\nFOUND PRODUCTS CONTAINING YOUR PRODUCT NAME:");
+        ProductController.getInstance().getProductsByName(userProductSearch);
+    }
 }
