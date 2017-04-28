@@ -33,7 +33,6 @@ public class MenuController {
         while (!quitProgram) {
             MenuView.displayMain();
             userChoice = getUserChoice();
-
             switch (userChoice) {
                 case 1:
                     productMenu();
@@ -56,12 +55,13 @@ public class MenuController {
 
     private void getUserCurrency() {
         try {
+            System.out.print("Choice: ");
             String currChoice = scanner.next();
             if (currChoice != null) {
                 Product.changeBaseCurrency(Currency.getInstance(currChoice.toUpperCase()));
             }
         } catch (IllegalArgumentException e) {
-            System.out.println("Illegal currency type!");
+            System.out.println("Illegal currency type! Chosen default currency PLN");
         }
     }
 
