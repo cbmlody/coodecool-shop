@@ -1,4 +1,4 @@
-import com.codecool.shop.controller.MenuController;
+import com.codecool.shop.controller.MainMenuController;
 import com.codecool.shop.dao.DatabaseConnection;
 import java.sql.SQLException;
 
@@ -11,6 +11,6 @@ public class Main {
             e.printStackTrace();
             DatabaseConnection.getInstance().closeConnection();
         }
-        new MenuController().mainProgram();
+        new MainMenuController().runMenu();
     }
 }
