@@ -48,7 +48,7 @@ public class MenuController {
                     }
                     break;
                 case 3:
-                    System.out.println("Search menu");
+                    searchMenu();
                     break;
                 case 0:
                     quitProgram = true;
@@ -154,5 +154,21 @@ public class MenuController {
         String userProductSearch = read.next();
         MenuView.flashMessage("\nFOUND PRODUCTS CONTAINING YOUR PRODUCT NAME:");
         ProductController.getInstance().getProductsByName(userProductSearch);
+    }
+
+    private void searchMenu(){
+        Boolean quitSearchMenu = false;
+        while (!quitSearchMenu) {
+            MenuView.displaySearch();
+            Integer choice = getUserChoice();
+            if (choice == 0) {
+                quitSearchMenu = true;
+            } else if(choice == 1) {
+                showProductsByName();
+            }
+            if (choice > 0 && choice < 2) {
+                backOrAddToBasket();
+            }
+        }
     }
 }
