@@ -4,24 +4,20 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Payment {
     private String name;
-    private Integer cardnumber;
-    private Integer price;
-    private String currency;
+    private Integer cardNumber;
     private boolean validate;
 
-    public Payment(String name, Integer cardnumber, Integer price, String currency) {
+    public Payment(String name, Integer cardNumber) {
         this.name = name;
-        this.cardnumber = cardnumber;
-        this.price = price;
-        this.currency = currency;
+        this.cardNumber = cardNumber;
         this.validate = validatePayment();
     }
-    private boolean validatePayment(){
+    private boolean validatePayment() {
         int randomNum = ThreadLocalRandom.current().nextInt(0, 101);
         return randomNum < 70;
     }
 
-    public boolean isValidate() {
+    public boolean isValid() {
         return validate;
     }
 }
