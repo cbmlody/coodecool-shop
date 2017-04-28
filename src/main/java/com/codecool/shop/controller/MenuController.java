@@ -152,6 +152,8 @@ public class MenuController {
                 changeQuantity();
             } else if (choice == 3){
                 removeFromCart();
+            } else if (choice == 4) {
+                checkoutProcess();
             }
         }
     }
@@ -162,6 +164,26 @@ public class MenuController {
 
     private void removeFromCart(){
         editCart(true);
+    }
+
+    private void checkoutProcess() {
+        MenuView.flashMessage("Your cart: ");
+        cartView.displayCart(cart);
+        Boolean quitCartMenu = false;
+        while (!quitCartMenu) {
+            MenuView.flashMessage("0 - back, 1 - payment");
+            Integer choice = getUserChoice();
+            if (choice == 0) {
+                quitCartMenu = true;
+            } else if (choice == 1) {
+                paymentProcess();
+                quitCartMenu = true;
+            }
+        }
+        Integer actionChoice = getUserChoice();
+        if (actionChoice == 1){
+            addToBasketById();
+        }
     }
 
     private void editCart(Boolean remove){
