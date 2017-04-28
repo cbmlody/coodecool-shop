@@ -7,59 +7,41 @@ import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
-import com.codecool.shop.views.CartView;
-import com.codecool.shop.views.MenuView;
-import com.codecool.shop.views.ProductCategoryView;
-import com.codecool.shop.views.SupplierView;
+import com.codecool.shop.views.*;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuController {
     private static Cart cart = new Cart();
-    private Scanner read = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
     private ProductCategoryView categoryView = new ProductCategoryView();
+    private ProductView productView = new ProductView();
     private ProductCategoryDaoSqlite categoryDao = new ProductCategoryDaoSqlite();
     private SupplierDaoSqlite supplierDao = new SupplierDaoSqlite();
     private SupplierView supplierView = new SupplierView();
     private ProductDaoSqlite productDao = new ProductDaoSqlite();
     private CartView cartView = new CartView();
-
-    private static Boolean quitCartMenu = true;
     private static Boolean quitSearchMenu = true;
 
 
     public void mainProgram() {
         Boolean quitProgram = false;
-        Integer userChoice = null;
+        Integer userChoice;
         while (!quitProgram) {
-            try {
-                MenuView.displayMain();
-                userChoice = getUserChoice();
-            } catch (InputMismatchException e) {
-                read.nextInt();
-            }
+
+            MenuView.displayMain();
+            userChoice = getUserChoice();
+
             switch (userChoice) {
                 case 1:
                     productMenu();
                     break;
                 case 2:
-                    while (quitCartMenu) {
-                        MenuView.displayCart();
-                        Integer choice = getUserChoice();
-                        if (choice == 0) {
-                            quitCartMenu = true;
-                        }
-                    }
+                    cartMenu();
                     break;
                 case 3:
-                    while (quitSearchMenu) {
-                        MenuView.displaySearch();
-                        Integer choice = getUserChoice();
-                        if (choice == 0) {
-                            quitSearchMenu = true;
-                        }
-                    }
+                    searchMenu();
                     break;
                 case 0:
                     quitProgram = true;
@@ -72,7 +54,6 @@ public class MenuController {
     }
     private Integer getUserChoice() {
         System.out.print("Choice: ");
-        Scanner scanner = new Scanner(System.in);
         if (scanner.hasNextInt())
             return scanner.nextInt();
         scanner.next();
@@ -143,6 +124,54 @@ public class MenuController {
         }
     }
 
+    private void cartMenu() {
+        Boolean quitCartMenu = false;
+        while (!quitCartMenu) {
+            MenuView.displayCart();
+            Integer choice = getUserChoice();
+
+            if (choice > 0 & choice < 4) {
+                cartView.displayCart(cart);
+            }
+            if (choice == 0) {
+                quitCartMenu = true;
+            } else if (choice == 2) {
+                changeQuantity();
+            } else if (choice == 3){
+                removeFromCart();
+            }
+        }
+    }
+
+    private void changeQuantity(){
+        editCart(false);
+    }
+
+    private void removeFromCart(){
+        editCart(true);
+    }
+
+    private void editCart(Boolean remove){
+        if (cart.size() < 1) {
+            return;
+        }
+        Integer idChoice = getUserChoice("Please enter id of product you want to edit");
+        Integer cartItemIndex = cart.getIndexIfExists(idChoice);
+        if (cartItemIndex != null){
+            if (remove){
+                cart.remove(cartItemIndex);
+                MenuView.flashMessage("Item successfully deleted");
+            } else {
+                Integer quantity = getQuantity();
+                cart.changeQuantity(cartItemIndex, quantity);
+                MenuView.flashMessage("Quantity successfully updated");
+            }
+
+        } else {
+            MenuView.flashMessage("There's no item with id " + idChoice + " in your cart!");
+        }
+    }
+
     private void addToBasketById(){
         Integer productChoice = getUserChoice("Please enter product id to add products to cart");
         Product chosenProd = productDao.find(productChoice);
@@ -150,14 +179,41 @@ public class MenuController {
             productChoice = getUserChoice("Error, incorrect product id, please try again");
             chosenProd = productDao.find(productChoice);
         }
-        Integer quantity = getUserChoice("How many items would you like to purchase?");
-        while (quantity<1){
-            quantity = getUserChoice("Error, quantity has to be positive integer! Please try again!");
-        }
+        Integer quantity = getQuantity();
         cart.add(chosenProd, quantity);
         MenuView.flashMessage("Product added to cart! \nYour actual cart:");
         cartView.displayCart(cart);
 
     }
 
+    private void showProductsByName() {
+        MenuView.flashMessage("Please insert product name: ");
+        String userProductSearch = scanner.next();
+        MenuView.flashMessage("\nFOUND PRODUCTS CONTAINING YOUR PRODUCT NAME:");
+        ProductController.getInstance().getProductsByName(userProductSearch);
+    }
+
+    private void searchMenu(){
+        Boolean quitSearchMenu = false;
+        while (!quitSearchMenu) {
+            MenuView.displaySearch();
+            Integer choice = getUserChoice();
+            if (choice == 0) {
+                quitSearchMenu = true;
+            } else if(choice == 1) {
+                showProductsByName();
+            }
+            if (choice > 0 && choice < 2) {
+                backOrAddToBasket();
+            }
+        }
+    }
+
+    private Integer getQuantity(){
+        Integer quantity = getUserChoice("How many items would you like to purchase?");
+        while (quantity<1){
+            quantity = getUserChoice("Error, quantity has to be positive integer! Please try again!");
+        }
+        return quantity;
+    }
 }
