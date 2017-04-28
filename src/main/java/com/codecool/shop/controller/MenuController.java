@@ -40,6 +40,9 @@ public class MenuController {
                 case 3:
                     searchMenu();
                     break;
+                case 4:
+                    getUserCurrency();
+                    break;
                 case 0:
                     quitProgram = true;
                     break;
@@ -51,15 +54,20 @@ public class MenuController {
     }
 
     private void getUserCurrency() {
-        try {
-            System.out.print("Choice: ");
-            String currChoice = scanner.next();
-            if (currChoice != null) {
-                Product.changeBaseCurrency(Currency.getInstance(currChoice.toUpperCase()));
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Illegal currency type! Chosen default currency PLN");
+        MenuView.flashMessage(" Please choose your currency: ");
+        String[] currencies = new String[]{"PLN", "USD", "PHP", "GBP", "EUR"};
+        int i = 1;
+        for (;i<currencies.length + 1;i++){
+            System.out.println(i + "." + " " + currencies[i-1]);
         }
+        Integer currencyChoice = getUserChoice();
+
+        while (currencyChoice < 0 || currencyChoice > currencies.length + 1){
+            currencyChoice = getUserChoice("Incorrect input, please try again");
+        }
+        String chosenCurrency = currencies[currencyChoice - 1];
+        Product.changeBaseCurrency(Currency.getInstance(chosenCurrency));
+        MenuView.flashMessage("Prices are now shown in " + chosenCurrency);
     }
 
     private Integer getUserChoice() {
