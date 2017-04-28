@@ -9,7 +9,7 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.views.*;
 
-import java.util.InputMismatchException;
+import java.util.Currency;
 import java.util.Scanner;
 
 public class MenuController {
@@ -28,8 +28,9 @@ public class MenuController {
     public void mainProgram() {
         Boolean quitProgram = false;
         Integer userChoice;
+        MenuView.displayWelcome();
+        getUserCurrency();
         while (!quitProgram) {
-
             MenuView.displayMain();
             userChoice = getUserChoice();
 
@@ -52,6 +53,18 @@ public class MenuController {
             }
         }
     }
+
+    private void getUserCurrency() {
+        try {
+            String currChoice = scanner.next();
+            if (currChoice != null) {
+                Product.changeBaseCurrency(Currency.getInstance(currChoice.toUpperCase()));
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Illegal currency type!");
+        }
+    }
+
     private Integer getUserChoice() {
         System.out.print("Choice: ");
         if (scanner.hasNextInt())
