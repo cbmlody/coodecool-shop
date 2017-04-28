@@ -186,6 +186,17 @@ public class MenuController {
         }
     }
 
+    private void paymentProcess() {
+        String name = scanner.next();
+        Integer cardNumber = scanner.nextInt();
+        Payment payment = new Payment(name, cardNumber);
+        if (payment.isValid()) {
+            MenuView.flashMessage("Payment successful!");
+        } else {
+            MenuView.flashMessage("Something went wrong, try again!");
+        }
+    }
+
     private void editCart(Boolean remove){
         if (cart.size() < 1) {
             return;
