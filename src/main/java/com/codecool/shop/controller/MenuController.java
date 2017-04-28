@@ -3,10 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductCategoryDaoSqlite;
 import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.dao.SupplierDaoSqlite;
-import com.codecool.shop.model.Cart;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
+import com.codecool.shop.model.*;
 import com.codecool.shop.views.*;
 
 import java.util.Currency;
@@ -153,6 +150,7 @@ public class MenuController {
             } else if (choice == 3){
                 removeFromCart();
             } else if (choice == 4) {
+                MenuView.displayCart();
                 checkoutProcess();
             }
         }
@@ -169,26 +167,21 @@ public class MenuController {
     private void checkoutProcess() {
         MenuView.flashMessage("Your cart: ");
         cartView.displayCart(cart);
-        Boolean quitCartMenu = false;
-        while (!quitCartMenu) {
-            MenuView.flashMessage("0 - back, 1 - payment");
-            Integer choice = getUserChoice();
-            if (choice == 0) {
-                quitCartMenu = true;
-            } else if (choice == 1) {
-                paymentProcess();
-                quitCartMenu = true;
-            }
+        if (cart.size() < 1) {
+            return;
         }
-        Integer actionChoice = getUserChoice();
-        if (actionChoice == 1){
-            addToBasketById();
+        MenuView.flashMessage("0 - back, 1 - payment");
+        Integer choice = getUserChoice();
+        if (choice == 1) {
+            paymentProcess();
         }
     }
 
     private void paymentProcess() {
+        MenuView.flashMessage("Enter your name:");
         String name = scanner.next();
-        Integer cardNumber = scanner.nextInt();
+        MenuView.flashMessage("Enter your card number:");
+        String cardNumber = scanner.next();
         Payment payment = new Payment(name, cardNumber);
         if (payment.isValid()) {
             MenuView.flashMessage("Payment successful!");
