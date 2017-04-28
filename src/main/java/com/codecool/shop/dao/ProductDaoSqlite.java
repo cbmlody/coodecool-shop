@@ -54,6 +54,16 @@ public class ProductDaoSqlite implements ProductDao {
         return getByHelper(query);
     }
 
+    public List<Product> getBy(String name) {
+        String query = null;
+        if (name.length() > 3) {
+            query = "SELECT *FROM `products` WHERE name LIKE '%"+name+"%'";
+        } else {
+            query = "SELECT *FROM `products` WHERE name LIKE '"+name+"%'";
+        }
+        return getByHelper(query);
+    }
+
     private List<Product> getByHelper(String query) {
         List<Product> productList = new ArrayList<>();
         Statement statement = DatabaseConnection.getInstance().getStatement();
