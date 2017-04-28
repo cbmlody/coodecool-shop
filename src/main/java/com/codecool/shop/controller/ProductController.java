@@ -1,11 +1,12 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.model.Supplier;
-import java.util.List;
 import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
 import com.codecool.shop.views.ProductView;
+
+import java.util.List;
 
 public class ProductController {
     private static final ProductController INSTANCE = new ProductController();
@@ -36,6 +37,12 @@ public class ProductController {
         ProductView productView = new ProductView();
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
         List<Product> productList = productDaoSqlite.getBy(productCategory);
+        productView.displayAll(productList);
+    }
+    public void getProductsByname(String name) {
+        ProductView productView = new ProductView();
+        ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
+        List<Product> productList = productDaoSqlite.getBy(name);
         productView.displayAll(productList);
     }
 }
