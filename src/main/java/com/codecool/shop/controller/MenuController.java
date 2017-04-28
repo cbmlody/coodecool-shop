@@ -43,6 +43,9 @@ public class MenuController {
                 case 3:
                     searchMenu();
                     break;
+                case 4:
+                    getUserCurrency();
+                    break;
                 case 0:
                     quitProgram = true;
                     break;
