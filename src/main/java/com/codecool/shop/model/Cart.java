@@ -35,7 +35,6 @@ public class Cart implements Iterable<CartItem>{
     public Float getSum(){
         Float sum = 0f;
         for (CartItem i: cartItems){
-            System.out.println(i.getConvertedCost());
             sum += i.getConvertedCost();
         }
         return sum;
@@ -44,6 +43,15 @@ public class Cart implements Iterable<CartItem>{
     private Integer getIndexIfExists(Product product){
         for (int i=0; i< size(); i++){
             if (cartItems.get(i).getProduct().equals(product)){
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public Integer getIndexIfExists(int productId){
+        for (int i=0; i< size(); i++){
+            if (cartItems.get(i).getProduct().getId() == productId){
                 return i;
             }
         }
