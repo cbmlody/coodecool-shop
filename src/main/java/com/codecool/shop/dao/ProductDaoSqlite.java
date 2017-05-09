@@ -14,7 +14,17 @@ import java.util.List;
 public class ProductDaoSqlite implements ProductDao {
 
     @Override
-    public void add(Product product) {}
+    public void add(Product product) throws SQLException {
+        String query = "INSERT INTO `products`(name, defaultPrice, currency, description, categoryId," +
+                "supplierId) VALUES('"+product.getName()+"', '"+product.getDefaultPrice()+"', '"+product.getDefaultCurrency()+"'," +
+                " '"+product.getDescription()+"', '"+product.getProductCategory().getId()+"', '"+product.getSupplier().getId()+"')";
+        Statement statement = App.getApp().getConnection().createStatement();
+        try {
+            statement.execute(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void remove(int id) {}
