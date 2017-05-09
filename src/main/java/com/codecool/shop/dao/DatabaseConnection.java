@@ -9,15 +9,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public final class DatabaseConnection {
-    private static final DatabaseConnection INSTANCE = new DatabaseConnection();
     private Connection connection;
 
-    private DatabaseConnection() {
+    public DatabaseConnection() {
         this.openConnection();
-    }
-
-    public static DatabaseConnection getInstance() {
-        return INSTANCE;
     }
 
     public void openConnection() {
@@ -60,6 +55,10 @@ public final class DatabaseConnection {
             System.out.println("#########");
             System.out.println(stringBuilder.toString());
         }
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 
     public void closeConnection() {
