@@ -41,7 +41,7 @@ public class SupplierDaoSqlite implements SupplierDao {
         }
         return supplier;
     }
-    
+
     @Override
     public void remove(int id) throws SQLException {
         String query = "DELETE FROM `suppliers` WHERE id = '"+id+"'";
