@@ -12,7 +12,16 @@ import java.util.List;
 public class ProductCategoryDaoSqlite implements ProductCategoryDao{
 
     @Override
-    public void add(ProductCategory category) {}
+    public void add(ProductCategory category) throws SQLException {
+        String query = "INSERT INTO `product_categories`(name, department, description) VALUES('"+category.getName()+"'," +
+                " '"+category.getDepartment()+"', '"+category.getDescription()+"')";
+        Statement statement = App.getApp().getConnection().createStatement();
+        try {
+            statement.execute(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void remove(int id) {}
