@@ -1,5 +1,6 @@
 package com.codecool.shop.dao;
 
+import com.codecool.shop.App;
 import com.codecool.shop.model.Supplier;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,9 +14,9 @@ public class SupplierDaoSqlite implements SupplierDao {
     public void add(Supplier supplier) {}
 
     @Override
-    public Supplier find(int id){
+    public Supplier find(int id) throws SQLException {
         Supplier supplier = null;
-        Statement statement = DatabaseConnection.getInstance().getStatement();
+        Statement statement = App.getApp().getConnection().createStatement();
         String query = "SELECT * FROM `suppliers` WHERE id = '" + id + "'";
         try {
             ResultSet resultSet = statement.executeQuery(query);
@@ -36,9 +37,9 @@ public class SupplierDaoSqlite implements SupplierDao {
     public void remove(int id){}
 
     @Override
-    public List<Supplier> getAll(){
+    public List<Supplier> getAll() throws SQLException {
         List<Supplier> supplierList = new ArrayList<Supplier>();
-        Statement statement = DatabaseConnection.getInstance().getStatement();
+        Statement statement = App.getApp().getConnection().createStatement();
         String query = "SELECT * FROM `suppliers`";
         try {
             ResultSet resultSet = statement.executeQuery(query);
