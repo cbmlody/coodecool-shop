@@ -41,8 +41,17 @@ public class SupplierDaoSqlite implements SupplierDao {
         }
         return supplier;
     }
+    
     @Override
-    public void remove(int id){}
+    public void remove(int id) throws SQLException {
+        String query = "DELETE FROM `suppliers` WHERE id = '"+id+"'";
+        Statement statement = App.getApp().getConnection().createStatement();
+        try {
+            statement.execute(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public List<Supplier> getAll() throws SQLException {
