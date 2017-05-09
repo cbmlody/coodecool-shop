@@ -11,14 +11,6 @@ public abstract class BaseMenuController {
     static Cart cart = new Cart();
     private ProductDaoSqlite productDao = new ProductDaoSqlite();
 
-    public abstract void runMenu();
-    
-
-    Integer getUserChoice(String msg){
-        MenuView.flashMessage(msg);
-        return getUserChoice();
-    }
-
      Integer getQuantity(){
         Integer quantity = getUserChoice("How many items would you like to purchase?");
         while (quantity<1){
