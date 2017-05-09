@@ -20,7 +20,6 @@ public abstract class BaseMenuController {
     }
 
      void backOrAddToBasket(){
-        MenuView.backOrAddToBasket();
         Integer actionChoice = getUserChoice();
         if (actionChoice == 1){
             addToBasketById();
@@ -36,7 +35,5 @@ public abstract class BaseMenuController {
         }
         Integer quantity = getQuantity();
         cart.add(chosenProd, quantity);
-        MenuView.flashMessage("Product added to cart! \nYour actual cart:");
-        cartView.displayCart(cart);
     }
 }
