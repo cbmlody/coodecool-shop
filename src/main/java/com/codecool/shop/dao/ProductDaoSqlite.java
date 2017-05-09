@@ -27,7 +27,15 @@ public class ProductDaoSqlite implements ProductDao {
     }
 
     @Override
-    public void remove(int id) {}
+    public void remove(int id) throws SQLException {
+        String query = "DELETE FROM `products` WHERE id = '"+id+"'";
+        Statement statement = App.getApp().getConnection().createStatement();
+        try {
+            statement.execute(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public Product find(int id) throws SQLException {
