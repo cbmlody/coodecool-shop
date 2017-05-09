@@ -3,26 +3,16 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Product;
-import com.codecool.shop.views.CartView;
-import com.codecool.shop.views.MenuView;
 
 import java.util.Scanner;
 
 public abstract class BaseMenuController {
     Scanner scanner = new Scanner(System.in);
     static Cart cart = new Cart();
-    CartView cartView = new CartView();
     private ProductDaoSqlite productDao = new ProductDaoSqlite();
 
     public abstract void runMenu();
-
-    Integer getUserChoice() {
-        System.out.print("Choice: ");
-        if (scanner.hasNextInt())
-            return scanner.nextInt();
-        scanner.next();
-        return -1;
-    }
+    
 
     Integer getUserChoice(String msg){
         MenuView.flashMessage(msg);
