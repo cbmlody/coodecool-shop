@@ -18,13 +18,7 @@ public abstract class BaseMenuController {
         }
         return quantity;
     }
-
-     void backOrAddToBasket(){
-        Integer actionChoice = getUserChoice();
-        if (actionChoice == 1){
-            addToBasketById();
-        }
-    }
+    
 
     private void addToBasketById(){
         Integer productChoice = getUserChoice("Please enter product id to add products to cart");
