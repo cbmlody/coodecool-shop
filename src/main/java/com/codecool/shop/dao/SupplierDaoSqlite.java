@@ -11,7 +11,15 @@ import java.util.List;
 public class SupplierDaoSqlite implements SupplierDao {
 
     @Override
-    public void add(Supplier supplier) {}
+    public void add(Supplier supplier) throws SQLException {
+        String query = "INSERT INTO `suppliers`(name, description) VALUES('"+supplier.getName()+"', '"+supplier.getDescription()+"')";
+        Statement statement = App.getApp().getConnection().createStatement();
+        try {
+            statement.execute(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public Supplier find(int id) throws SQLException {
