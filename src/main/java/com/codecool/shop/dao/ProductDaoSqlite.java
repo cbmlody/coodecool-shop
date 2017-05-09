@@ -1,5 +1,6 @@
 package com.codecool.shop.dao;
 
+import com.codecool.shop.App;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -19,8 +20,8 @@ public class ProductDaoSqlite implements ProductDao {
     public void remove(int id) {}
 
     @Override
-    public Product find(int id) {
-        Statement statement = DatabaseConnection.getInstance().getStatement();
+    public Product find(int id) throws SQLException {
+        Statement statement = App.getApp().getConnection().createStatement();
         ProductCategoryDaoSqlite productCategoryDaoSqlite = new ProductCategoryDaoSqlite();
         SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
         String query = "SELECT * FROM `products` WHERE id = '" + id + "'";
@@ -37,24 +38,24 @@ public class ProductDaoSqlite implements ProductDao {
     }
 
     @Override
-    public List<Product> getAll() {
+    public List<Product> getAll() throws SQLException {
         String query = "SELECT * FROM `products`";
         return getByHelper(query);
     }
 
     @Override
-    public List<Product> getBy(Supplier supplier) {
+    public List<Product> getBy(Supplier supplier) throws SQLException {
         String query = "SELECT *FROM `products` WHERE supplierId = '" + supplier.getId() + "'";
         return getByHelper(query);
     }
 
     @Override
-    public List<Product> getBy(ProductCategory productCategory) {
+    public List<Product> getBy(ProductCategory productCategory) throws SQLException {
         String query = "SELECT *FROM `products` WHERE categoryId = '"+productCategory.getId()+"'";
         return getByHelper(query);
     }
 
-    public List<Product> getBy(String name) {
+    public List<Product> getBy(String name) throws SQLException {
         String query = null;
         if (name.length() > 3) {
             query = "SELECT *FROM `products` WHERE name LIKE '%"+name+"%'";
@@ -64,17 +65,15 @@ public class ProductDaoSqlite implements ProductDao {
         return getByHelper(query);
     }
 
-    private List<Product> getByHelper(String query) {
+    private List<Product> getByHelper(String query) throws SQLException {
         List<Product> productList = new ArrayList<>();
-        Statement statement = DatabaseConnection.getInstance().getStatement();
-        try {
+        Statement statement = App.getApp().getConnection().createStatement();
+
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 productList.add(productFromResultSet(resultSet));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         return productList;
     }
 

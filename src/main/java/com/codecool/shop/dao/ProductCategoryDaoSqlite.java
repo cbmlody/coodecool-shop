@@ -1,5 +1,6 @@
 package com.codecool.shop.dao;
 
+import com.codecool.shop.App;
 import com.codecool.shop.model.ProductCategory;
 
 import java.sql.ResultSet;
@@ -17,9 +18,9 @@ public class ProductCategoryDaoSqlite implements ProductCategoryDao{
     public void remove(int id) {}
 
     @Override
-    public ProductCategory find(int id) {
+    public ProductCategory find(int id) throws SQLException {
         ProductCategory productCategory = null;
-        Statement statement = DatabaseConnection.getInstance().getStatement();
+        Statement statement = App.getApp().getConnection().createStatement();
         String query = "SELECT * FROM `product_categories` WHERE id = '" + id + "'";
         try {
             ResultSet result = statement.executeQuery(query);
@@ -38,8 +39,8 @@ public class ProductCategoryDaoSqlite implements ProductCategoryDao{
     }
 
     @Override
-    public List<ProductCategory> getAll() {
-        Statement statement = DatabaseConnection.getInstance().getStatement();
+    public List<ProductCategory> getAll() throws SQLException{
+        Statement statement = App.getApp().getConnection().createStatement();
         String query = "SELECT * FROM `product_categories`";
         ArrayList<ProductCategory> categories = new ArrayList<>();
         try {

@@ -1,14 +1,19 @@
-import com.codecool.shop.dao.DatabaseConnection;
-import java.sql.SQLException;
+import com.codecool.shop.App;
 
 public class Main {
 
     public static void main(String[] args) {
-        try {
-            DatabaseConnection.getInstance().resetDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            DatabaseConnection.getInstance().closeConnection();
-        }
+        App.run();
+        final Thread mainThread = Thread.currentThread();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Closing db connection...");
+            App.getApp().closeConnection();
+            try {
+                mainThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }));
+
     }
 }
