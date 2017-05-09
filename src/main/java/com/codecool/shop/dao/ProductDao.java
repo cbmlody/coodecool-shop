@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ProductDao {
 
-    void add(Product product);
+    void add(Product product) throws SQLException;
     Product find(int id) throws SQLException;
     void remove(int id) throws SQLException ;
 
