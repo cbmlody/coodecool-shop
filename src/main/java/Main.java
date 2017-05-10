@@ -1,10 +1,26 @@
 import com.codecool.shop.App;
 
+import java.sql.SQLException;
+
 public class Main {
 
     public static void main(String[] args) {
-        App.run();
-        App.getApp().dispatchRoutes();
+        try {
+            App.run();
+
+        for (String s: args) {
+            if (s.equals("--init-db")){
+                App.getApp().resetDb();
+            } else if(s.equals("--migrate-db")){
+                App.getApp().migrateDb();
+            }
+        }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+
         final Thread mainThread = Thread.currentThread();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Closing db connection...");
