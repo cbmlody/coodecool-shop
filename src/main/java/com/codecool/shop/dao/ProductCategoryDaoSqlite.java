@@ -1,6 +1,7 @@
 package com.codecool.shop.dao;
 
 import com.codecool.shop.App;
+import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 
 import java.sql.ResultSet;
@@ -59,7 +60,7 @@ public class ProductCategoryDaoSqlite implements ProductCategoryDao{
     public List<ProductCategory> getAll() throws SQLException{
         Statement statement = App.getApp().getConnection().createStatement();
         String query = "SELECT * FROM `product_categories`";
-        ArrayList<ProductCategory> categories = new ArrayList<>();
+        List<ProductCategory> categories = new ArrayList<>();
         try {
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
@@ -69,14 +70,13 @@ public class ProductCategoryDaoSqlite implements ProductCategoryDao{
                         result.getString("department"),
                         result.getString("description"));
                 categories.add(category);
+                for (ProductCategory productCategory : categories) {
+                    productCategory.setProducts(new ProductDaoSqlite().getBy(productCategory));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return categories;
-    }
-    public static Integer getProductsCount(ProductCategory productCategory) throws SQLException {
-        Integer productsCount = new ProductDaoSqlite().getBy(productCategory).size();
-        return productsCount;
     }
 }
