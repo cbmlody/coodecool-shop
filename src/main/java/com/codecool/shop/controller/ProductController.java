@@ -1,6 +1,8 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.ProductCategoryDaoSqlite;
 import com.codecool.shop.dao.ProductDaoSqlite;
+import com.codecool.shop.dao.SupplierDaoSqlite;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -17,7 +19,7 @@ public class ProductController {
 
     public static ModelAndView getAllProducts(Request req, Response res) throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-        Map params = new HashMap();
+        Map params = new HashMap<>();
         params.put("productList", productDaoSqlite.getAll());
         return new ModelAndView(params, "product/index");
     }
@@ -27,18 +29,29 @@ public class ProductController {
         Product product = productDaoSqlite.find(id);
     }
 
-    public void getBySupplier(Supplier supplier) throws SQLException {
+    public static ModelAndView getBySupplier(Request req, Response res) throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-        List<Product> productList = productDaoSqlite.getBy(supplier);
+        SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
+        Integer supplierId = Integer.parseInt(req.params(":supplierid"));
+        Map params = new HashMap<>();
+        params.put("productsBySupplier", productDaoSqlite.getBy(supplierDaoSqlite.find(supplierId)));
+        return new ModelAndView(params, "product/index");
     }
 
-    public void getByProductCategory(ProductCategory productCategory) throws SQLException {
+    public static ModelAndView getByProductCategory(Request req, Response res) throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-        List<Product> productList = productDaoSqlite.getBy(productCategory);
+        ProductCategoryDaoSqlite productCategoryDaoSqlite = new ProductCategoryDaoSqlite();
+        Integer categoryId = Integer.parseInt(req.params(":categoryid"));
+        Map params = new HashMap<>();
+        params.put("productsByCategory", productDaoSqlite.getBy(productCategoryDaoSqlite.find(categoryId)));
+        return new ModelAndView(params, "product/index");
     }
 
-    public void getProductsByName(String name) throws SQLException {
+    public static ModelAndView getProductsByName(Request req, Response res) throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-        List<Product> productList = productDaoSqlite.getBy(name);
+        String name = req.queryParams("productName");
+        Map params = new HashMap<>();
+        params.put("productsByName", productDaoSqlite.getBy(name));
+        return new ModelAndView(params, "product/index");
     }
 }
