@@ -24,9 +24,12 @@ public class ProductController {
         return new ModelAndView(params, "product/index");
     }
 
-    public void findProduct(int id) throws SQLException {
+    public static ModelAndView getProductsBySearch(Request req, Response res) throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-        Product product = productDaoSqlite.find(id);
+        Map params = new HashMap<>();
+        String productSearchName = req.queryParams("search");
+        params.put("productsFoundBySearch", productDaoSqlite.getBy(productSearchName));
+        return new ModelAndView(params, "event/index");
     }
 
     public static ModelAndView getBySupplier(Request req, Response res) throws SQLException {
