@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static spark.Spark.get;
+import static spark.Spark.staticFileLocation;
 
 public class App {
     private static App INSTANCE;
@@ -28,7 +29,7 @@ public class App {
     }
 
     public void dispatchRoutes() {
-
+        staticFileLocation("/public");
         get("/product/supplier/:supplierid", (Request req, Response res) ->{
             return new ThymeleafTemplateEngine().render(ProductController.getBySupplier(req, res));
         });

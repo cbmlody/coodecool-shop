@@ -16,3 +16,7 @@
     margin-left: -15px;
     margin-right: -15px;
 }
+
+.item-panel-header {
+    min-height: 81px;
+}
