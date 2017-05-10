@@ -1,5 +1,6 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.ProductCategoryDaoSqlite;
 import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.dao.SupplierDaoSqlite;
 import com.codecool.shop.model.Product;
@@ -37,9 +38,13 @@ public class ProductController {
         return new ModelAndView(params, "product/index");
     }
 
-    public void getByProductCategory(ProductCategory productCategory) throws SQLException {
+    public static ModelAndView getByProductCategory(Request req, Response res) throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-        List<Product> productList = productDaoSqlite.getBy(productCategory);
+        ProductCategoryDaoSqlite productCategoryDaoSqlite = new ProductCategoryDaoSqlite();
+        Integer categoryId = Integer.parseInt(req.params(":categoryid"));
+        Map params = new HashMap<>();
+        params.put("productsByCategory", productDaoSqlite.getBy(productCategoryDaoSqlite.find(categoryId)));
+        return new ModelAndView(params, "product/index");
     }
 
     public void getProductsByName(String name) throws SQLException {
