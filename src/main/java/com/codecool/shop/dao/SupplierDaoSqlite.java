@@ -11,7 +11,15 @@ import java.util.List;
 public class SupplierDaoSqlite implements SupplierDao {
 
     @Override
-    public void add(Supplier supplier) {}
+    public void add(Supplier supplier) throws SQLException {
+        String query = "INSERT INTO `suppliers`(name, description) VALUES('"+supplier.getName()+"', '"+supplier.getDescription()+"')";
+        Statement statement = App.getApp().getConnection().createStatement();
+        try {
+            statement.execute(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public Supplier find(int id) throws SQLException {
@@ -33,8 +41,17 @@ public class SupplierDaoSqlite implements SupplierDao {
         }
         return supplier;
     }
+
     @Override
-    public void remove(int id){}
+    public void remove(int id) throws SQLException {
+        String query = "DELETE FROM `suppliers` WHERE id = '"+id+"'";
+        Statement statement = App.getApp().getConnection().createStatement();
+        try {
+            statement.execute(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public List<Supplier> getAll() throws SQLException {
