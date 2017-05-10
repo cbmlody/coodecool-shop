@@ -1,5 +1,6 @@
 package com.codecool.shop;
 
+import com.codecool.shop.controller.IndexController;
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.DatabaseConnection;
 import com.codecool.shop.dao.ProductCategoryDaoSqlite;
@@ -39,7 +40,7 @@ public class App {
         });
 
         get("/", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render(ProductController.getAllProducts(req, res) );
+            return new ThymeleafTemplateEngine().render(IndexController.getAllInfo(req, res));
         });
 
 

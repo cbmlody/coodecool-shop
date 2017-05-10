@@ -75,4 +75,8 @@ public class ProductCategoryDaoSqlite implements ProductCategoryDao{
         }
         return categories;
     }
+    public static Integer getProductsCount(ProductCategory productCategory) throws SQLException {
+        Integer productsCount = new ProductDaoSqlite().getBy(productCategory).size();
+        return productsCount;
+    }
 }

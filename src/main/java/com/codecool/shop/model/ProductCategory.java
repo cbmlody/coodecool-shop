@@ -38,6 +38,10 @@ public class ProductCategory extends BaseModel {
         this.products.add(product);
     }
 
+    public Integer getProductsCount() {
+        return this.products.size();
+    }
+
     public String toString() {
         return String.format(
                 "id: %1$d," +
