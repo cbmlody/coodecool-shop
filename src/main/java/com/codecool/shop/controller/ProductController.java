@@ -9,11 +9,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ProductController {
-    private static final ProductController INSTANCE = new ProductController();
-    private  ProductController(){}
-    public static ProductController getInstance() {
-        return INSTANCE;
-    }
 
     public void getAllProducts() throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
