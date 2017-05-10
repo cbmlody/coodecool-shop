@@ -28,10 +28,14 @@ public class App {
     }
 
     public void dispatchRoutes() {
+        get("/supplier/:supplierid", (Request req, Response res) ->{
+            return new ThymeleafTemplateEngine().render(ProductController.getBySupplier(req, res));
+        });
 
         get("/", (Request req, Response res) -> {
             return new ThymeleafTemplateEngine().render(ProductController.getAllProducts(req, res) );
         });
+
 
     }
 
