@@ -1,6 +1,7 @@
 package com.codecool.shop.dao;
 
 import com.codecool.shop.App;
+import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 
 import java.sql.ResultSet;
@@ -74,9 +75,5 @@ public class ProductCategoryDaoSqlite implements ProductCategoryDao{
             e.printStackTrace();
         }
         return categories;
-    }
-    public static Integer getProductsCount(ProductCategory productCategory) throws SQLException {
-        Integer productsCount = new ProductDaoSqlite().getBy(productCategory).size();
-        return productsCount;
     }
 }
