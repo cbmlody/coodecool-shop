@@ -53,14 +53,23 @@ public class App {
         return dbcon.getConnection();
     }
 
+    public void resetDb() throws SQLException {
+        dbcon.resetDatabase();
+    }
+
+    public void migrateDb() throws SQLException{
+        dbcon.migrateDb();
+    }
+
     public void closeConnection(){
         dbcon.closeConnection();
     }
 
-    public static void run(){
+    public static void run() throws SQLException {
         if (INSTANCE == null){
             INSTANCE = new App();
         }
     }
+
 
 }
