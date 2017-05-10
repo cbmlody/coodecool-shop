@@ -7,7 +7,7 @@ import com.codecool.shop.dao.ProductDaoSqlite;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import spark.Request;
 import spark.Response;
-
+import spark.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -30,8 +30,12 @@ public class App {
 
     public void dispatchRoutes() {
         staticFileLocation("/public");
-        get("/supplier/:supplierid", (Request req, Response res) ->{
+        get("/product/supplier/:supplierid", (Request req, Response res) ->{
             return new ThymeleafTemplateEngine().render(ProductController.getBySupplier(req, res));
+        });
+
+        get("/product/category/:categoryid", (Request req, Response res) ->{
+            return new ThymeleafTemplateEngine().render(ProductController.getByProductCategory(req, res));
         });
 
         get("/", (Request req, Response res) -> {
