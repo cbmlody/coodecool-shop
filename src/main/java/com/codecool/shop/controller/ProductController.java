@@ -4,15 +4,22 @@ import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductController {
 
-    public void getAllProducts() throws SQLException {
+    public static ModelAndView getAllProducts(Request req, Response res) throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-        List<Product> productList = productDaoSqlite.getAll();
+        Map params = new HashMap();
+        params.put("productList", productDaoSqlite.getAll());
+        return new ModelAndView(params, "product/index");
     }
 
     public void findProduct(int id) throws SQLException {
