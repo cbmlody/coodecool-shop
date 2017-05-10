@@ -4,6 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
         App.run();
+        App.getApp().dispatchRoutes();
         final Thread mainThread = Thread.currentThread();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Closing db connection...");
