@@ -32,7 +32,11 @@ public class App {
         get("/product/supplier/:supplierid", (Request req, Response res) ->{
             return new ThymeleafTemplateEngine().render(ProductController.getBySupplier(req, res));
         });
-        
+
+        get("/product/category/:categoryid", (Request req, Response res) ->{
+            return new ThymeleafTemplateEngine().render(ProductController.getByProductCategory(req, res));
+        });
+
         get("/", (Request req, Response res) -> {
             return new ThymeleafTemplateEngine().render(ProductController.getAllProducts(req, res) );
         });
