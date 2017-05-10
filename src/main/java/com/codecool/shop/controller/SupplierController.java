@@ -7,11 +7,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public final class SupplierController {
-    private static final SupplierController INSTANCE = new SupplierController();
-    private SupplierController() {}
-    public static SupplierController getInstance() {
-        return INSTANCE;
-    }
 
     public void getAllSuppliers() throws SQLException {
         SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
