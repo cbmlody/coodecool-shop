@@ -24,9 +24,11 @@ public class App {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void dispatchRoutes() {
 
         get("/", (Request req, Response res) -> {
-            System.out.println();
             return new ProductDaoSqlite().getAll();
         });
     }
