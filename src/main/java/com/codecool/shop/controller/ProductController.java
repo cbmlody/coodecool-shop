@@ -47,8 +47,11 @@ public class ProductController {
         return new ModelAndView(params, "product/index");
     }
 
-    public void getProductsByName(String name) throws SQLException {
+    public static ModelAndView getProductsByName(Request req, Response res) throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-        List<Product> productList = productDaoSqlite.getBy(name);
+        String name = req.queryParams("productName");
+        Map params = new HashMap<>();
+        params.put("productsByName", productDaoSqlite.getBy(name));
+        return new ModelAndView(params, "product/index");
     }
 }
