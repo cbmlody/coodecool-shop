@@ -1,13 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="../public/css/custom.css">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Online shop</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{~/css/custom.css}"/>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 </head>
@@ -22,7 +21,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">CoolShop</a>
+            <a class="navbar-brand" th:href="@{~/}" >CoolShop</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <form class="navbar-form navbar-left">
@@ -33,7 +32,7 @@
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </span>
-                        <input type="text" class="form-control" placeholder="Search for...">
+                        <input type="text" class="form-control" placeholder="Search for..."/>
                     </div>
                 </div>
             </form>
@@ -49,7 +48,7 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#">Cart
+                    <a th:href="@{~/cart}">Cart
                         <span class="glyphicon glyphicon-shopping-cart"></span>
                         <span class="text">1210,00 PLN</span>
                         <span class="badge">42</span>
@@ -83,12 +82,9 @@
                                 <h3 class="hidden-xs">Categories</h3>
                             </div>
                             <ul id="categories" class="list-group">
-                                <a href="#"><li class="list-group-item">New <span class="badge">12</span></li></a>
-                                <a href="#"><li class="list-group-item">New <span class="badge">5</span></li></a>
-                                <a href="#"><li class="list-group-item">New <span class="badge">14</span></li></a>
-                                <a href="#"><li class="list-group-item">New <span class="badge">3</span></li></a>
-                                <a href="#"><li class="list-group-item">New <span class="badge">1</span></li></a>
-                                <a href="#"><li class="list-group-item">New <span class="badge">0</span></li></a>
+                                <a th:href="@{/category/{id}(id=${category.id})}" th:each="category : ${productCategoriesList}">
+                                    <li class="list-group-item" th:text="${category.name}">New <span class="badge">12</span></li>
+                                </a>
                             </ul>
                         </div>
                     </div>
@@ -112,10 +108,7 @@
                                 <h3 class="hidden-xs">Suppliers</h3>
                             </div>
                             <ul id="Suppliers" class="list-group">
-                                <a href="#"><li class="list-group-item">New <span class="badge">12</span></li></a>
-                                <a href="#"><li class="list-group-item">New <span class="badge">5</span></li></a>
-                                <a href="#"><li class="list-group-item">New <span class="badge">1</span></li></a>
-                                <a href="#"><li class="list-group-item">New <span class="badge">0</span></li></a>
+                                <a><li class="list-group-item">New <span class="badge">0</span></li></a>
                             </ul>
                         </div>
                     </div>
@@ -126,12 +119,12 @@
             <div>
                 <h3 class="text-center">All products</h3>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4" th:each="product : ${productList}">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Product name</div>
-                    <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+                    <div class="panel-heading item-panel-header text-center" th:text="${product.name}">Product name</div>
+                    <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"/></div>
                     <div class="panel-footer justified">
-                        120,00 PLN
+                        <span th:text="${#numbers.formatDecimal(product.getConvertedFloatPrice(),1,2)} + ' ' + ${product.getBaseCurrency()}">120,00 PLN</span>
                         <div class="text-right"><button class="btn">ADD</button></div>
                     </div>
                 </div>
