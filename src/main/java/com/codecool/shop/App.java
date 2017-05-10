@@ -1,5 +1,6 @@
 package com.codecool.shop;
 
+import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.DatabaseConnection;
 import com.codecool.shop.dao.ProductCategoryDaoSqlite;
 import com.codecool.shop.dao.ProductDaoSqlite;
@@ -29,8 +30,9 @@ public class App {
     public void dispatchRoutes() {
 
         get("/", (Request req, Response res) -> {
-            return new ProductDaoSqlite().getAll();
+            return new ThymeleafTemplateEngine().render(ProductController.getAllProducts(req, res) );
         });
+
     }
 
     public static App getApp(){
