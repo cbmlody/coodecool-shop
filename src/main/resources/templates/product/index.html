@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit">
+                            <button class="btn btn-default" id="search-btn"  type="submit" th:disabled="true">
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </span>
@@ -160,6 +160,24 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous">
+</script>
+<script>
+    $(document).ready(function () {
+        var $searchBox = $("#search");
+        var $searchButton = $("#search-btn");
+
+        $searchBox.on('keydown', function () {
+            setTimeout(function () {   //calls click event after a certain time;
+                if ($searchBox.val().length >= 3) {
+                    $searchButton.prop('disabled', false);
+                } else {
+                    $searchButton.prop('disabled', true);
+                }
+            }, 100);
+        });
+
+    });
+
 </script>
 </body>
 </html>
