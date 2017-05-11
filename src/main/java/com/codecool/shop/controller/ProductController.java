@@ -44,6 +44,32 @@ public class ProductController {
         return new ModelAndView(params, "product/add");
     }
 
+    public static ModelAndView addProduct(Request req, Response res) throws SQLException {
+        String name = req.queryParams("name");
+        String price = req.queryParams("defaultprice");
+        String description = req.queryParams("description");
+        String category = req.queryParams("chooseCategory");
+        String supplier = req.queryParams("chooseSupplier");
+        if (name.isEmpty() || name.charAt(0) == ' ' || description.isEmpty() || description.charAt(0) == ' ' ||
+                supplier.isEmpty() || category.isEmpty() || price.isEmpty() || price.charAt(0) == ' ') {
+            Map params = new HashMap<>();
+            String error = "Inputs can't be empty!";
+            params.put("error", error);
+            params.put("productList", new ProductDaoSqlite().getAll());
+            params.put("productCategoryList", new ProductCategoryDaoSqlite().getAll());
+            params.put("productSupplierList", new SupplierDaoSqlite().getAll());
+            return new ModelAndView(params, "product/add");
+        } else {
+            Integer catId = Integer.parseInt(category);
+            Integer supId = Integer.parseInt(supplier);
+            float pricee = Float.parseFloat(price);
+            new ProductDaoSqlite().add(new Product(name, pricee, "PLN", description,
+                    new ProductCategoryDaoSqlite().find(catId), new SupplierDaoSqlite().find(supId)));
+            res.redirect("/");
+            return null;
+        }
+    }
+
     public static ModelAndView getBySupplier(Request req, Response res) throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
         SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
