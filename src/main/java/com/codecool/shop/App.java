@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 public class App {
@@ -43,7 +44,9 @@ public class App {
             return new ThymeleafTemplateEngine().render(IndexController.getAllInfo(req, res));
         });
 
-
+        post("/", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(ProductController.getProductsBySearch(req, res));
+        });
     }
 
     public static App getApp(){
