@@ -22,12 +22,6 @@ public class App {
 
     private App() {
         dbcon = new DatabaseConnection();
-
-        try {
-            dbcon.resetDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public void dispatchRoutes() {
