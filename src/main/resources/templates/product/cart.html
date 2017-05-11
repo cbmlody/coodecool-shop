@@ -83,36 +83,10 @@
                                 <h3 class="hidden-xs">Categories</h3>
                             </div>
                             <ul id="categories" class="list-group">
-                                <a th:href="@{~/category/{id}(id=${category.id})}" th:each="category : ${productCategoryList}">
+                                <a th:href="@{~/cart/history}">
                                     <div>
-                                        <li class="list-group-item" th:inline="text">[[${category.name}]] <span class="badge">[[${category.getProductsCount()}]]</span></li>
+                                        <li class="list-group-item">Cart history</li>
                                     </div>
-                                </a>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                                data-target="#suppliers-collapse" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a href="#" class="navbar-brand hidden-sm hidden-md hidden-lg">Suppliers</a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="suppliers-collapse">
-                        <div class="sidenav">
-                            <div class="row">
-                                <h3 class="hidden-xs">Suppliers</h3>
-                            </div>
-                            <ul id="Suppliers" class="list-group">
-                                <a th:href="@{~/category/{id}(id=${supplier.id})}" th:each="supplier : ${productSupplierList}">
-                                    <li class="list-group-item" th:text="${supplier.name}">New</li>
                                 </a>
                             </ul>
                         </div>
@@ -124,33 +98,40 @@
             <div>
                 <h3 th:text="${info}" class="text-center"></h3>
             </div>
-            <div th:each="product : ${productList}">
-                <div class="panel panel-primary">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <img th:src="@{~/img/render.png}" class="img-responsive" style="width:100%" alt="Image"/>
-                            </div>
-                            <div class="col-sm-7">
-                                <strong class="text-left" th:text="${product.name}">Product name</strong><br/>
-                            </div>
-                            <div class="col-sm-2 text-right">
-                                <button class="btn btn-primary">See Description</button>
-                                <h4 th:text="${#numbers.formatDecimal(product.getConvertedFloatPrice(),1,2)} + ' ' + ${product.getBaseCurrency()}">120,00 PLN</h4>
-                                <form class="form">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="number" name="quantity" id="quantity" class="form-control" placeholder="qty"/>
-                                            <input type="hidden" name="productid" th:value="${product.id}"/>
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-success" type="submit">Add</button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+            <div class="container-fluid">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Product name</th>
+                            <th>quantity</th>
+                            <th>option</th>
+                            <th>value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>alskjdsaldjkadadsa</td>
+                            <td>23</td>
+                            <td>
+                                <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+                            </td>
+                            <td class="text-right">123,45</td>
+                        </tr>
+                        <tr>
+                            <td>asdasdadsadasd</td>
+                            <td>11</td>
+                            <td>
+                                <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+                            </td>
+                            <td class="text-right">15,15</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container-fluid text-right">
+                    <h4>Total <b>123,65 PLN</b></h4>
+                    <button class="btn btn-success">Checkout</button>
                 </div>
             </div>
         </div>
