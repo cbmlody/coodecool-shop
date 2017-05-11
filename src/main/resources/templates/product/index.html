@@ -140,13 +140,13 @@
                                 <strong class="text-left" th:text="${product.name}">Product name</strong><br/>
                             </div>
                             <div class="col-sm-2 text-right">
-                                <button class="btn btn-primary">See Description</button>
+                                <button class="btn btn-primary btn-description">See Description</button>
                                 <h4 th:text="${#numbers.formatDecimal(product.getConvertedFloatPrice(),1,2)} + ' ' + ${product.getBaseCurrency()}">120,00 PLN</h4>
                                 <form th:action = "@{'~/basket/add/'+${product.id}}" method = "post">
                                     <div class="form-group">
                                         <div class="input-group">
                                             <input type="number" name="quantity" id="quantity" class="form-control" placeholder="qty"/>
-                                            <input type="hidden" name="productid" th:value="${product.id}"/>
+                                            <input type="hidden" name="productid" class="productid" th:value="${product.id}"/>
                                             <span class="input-group-btn">
                                                 <button class="btn btn-success" type="submit">Add</button>
                                             </span>
