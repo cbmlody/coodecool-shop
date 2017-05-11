@@ -44,6 +44,10 @@ public class App {
             return new ThymeleafTemplateEngine().render(ProductController.getByProductCategory(req, res));
         });
 
+        get("/product/:id", "application/json", (req, res) -> {
+            return ProductController.getProductJsonById(req);
+        });
+
         get("/", (Request req, Response res) -> {
             return new ThymeleafTemplateEngine().render(IndexController.getAllInfo(req, res));
         });
