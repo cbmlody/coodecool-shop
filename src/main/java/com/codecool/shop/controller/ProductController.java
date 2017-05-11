@@ -4,6 +4,7 @@ import com.codecool.shop.dao.ProductCategoryDaoSqlite;
 import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.dao.SupplierDaoSqlite;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.utils.JsonTransformer;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -12,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProductController {
+    private static JsonTransformer jsonTransformer = new JsonTransformer();
+
 
     public static ModelAndView getAllProducts(Request req, Response res) throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
@@ -94,5 +97,12 @@ public class ProductController {
         Map params = new HashMap<>();
         params.put("productsByName", productDaoSqlite.getBy(name));
         return new ModelAndView(params, "product/index");
+    }
+
+    public static String getProductJsonById(Request req) throws SQLException{
+        String stringId = req.params(":id");
+        Integer id = Integer.parseInt(stringId);
+        Product p = new ProductDaoSqlite().find(id);
+        return jsonTransformer.render(p);
     }
 }
