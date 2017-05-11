@@ -51,8 +51,8 @@
                 <li>
                     <a th:href="@{~/cart}">Cart
                         <span class="glyphicon glyphicon-shopping-cart"></span>
-                        <span class="text">1210,00 PLN</span>
-                        <span class="badge">42</span>
+                        <span class="text" th:text="${sum}">1210,00</span>
+                        <span class="badge" th:text="${count}">42</span>
                     </a>
                 </li>
                 <li>
@@ -137,7 +137,7 @@
                             <div class="col-sm-2 text-right">
                                 <button class="btn btn-primary">See Description</button>
                                 <h4 th:text="${#numbers.formatDecimal(product.getConvertedFloatPrice(),1,2)} + ' ' + ${product.getBaseCurrency()}">120,00 PLN</h4>
-                                <form class="form">
+                                <form th:action = "@{'~/basket/add/'+${product.id}}" method = "post">
                                     <div class="form-group">
                                         <div class="input-group">
                                             <input type="number" name="quantity" id="quantity" class="form-control" placeholder="qty"/>
