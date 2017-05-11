@@ -1,16 +1,21 @@
 package com.codecool.shop;
 
+import com.codecool.shop.controller.CartController;
 import com.codecool.shop.controller.IndexController;
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.DatabaseConnection;
 import com.codecool.shop.dao.ProductCategoryDaoSqlite;
 import com.codecool.shop.dao.ProductDaoSqlite;
+import com.codecool.shop.model.Cart;
+import com.codecool.shop.model.Product;
+import com.codecool.shop.model.Supplier;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import spark.Request;
 import spark.Response;
 import spark.*;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.*;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -26,6 +31,11 @@ public class App {
 
     public void dispatchRoutes() {
         staticFileLocation("/public");
+
+        post("/basket/add/:basketid", (Request req, Response res) ->{
+            return new ThymeleafTemplateEngine().render(CartController.addToBasket(req, res));
+        });
+
         get("/product/supplier/:supplierid", (Request req, Response res) ->{
             return new ThymeleafTemplateEngine().render(ProductController.getBySupplier(req, res));
         });
