@@ -25,7 +25,7 @@
             <a class="navbar-brand" th:href="@{~/}" >CoolShop</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
-            <form class="navbar-form navbar-left">
+            <form th:method="post" th:action="'/'" class="navbar-form navbar-left">
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-btn">
@@ -122,7 +122,7 @@
         </div>
         <div class="col-sm-9">
             <div>
-                <h3 class="text-center">All products</h3>
+                <h3 th:text="${info}" class="text-center"></h3>
             </div>
             <div th:each="product : ${productList}">
                 <div class="panel panel-primary">
