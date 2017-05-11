@@ -131,12 +131,23 @@
                             <div class="col-sm-3">
                                 <img th:src="@{~/img/render.png}" class="img-responsive" style="width:100%" alt="Image"/>
                             </div>
-                            <div class="col-sm-6">
-                                <strong class="text-left" th:text="${product.name}">Product name</strong>
+                            <div class="col-sm-7">
+                                <strong class="text-left" th:text="${product.name}">Product name</strong><br/>
                             </div>
-                            <div class="col-sm-3 justified">
+                            <div class="col-sm-2 text-right">
+                                <button class="btn btn-primary">See Description</button>
                                 <h4 th:text="${#numbers.formatDecimal(product.getConvertedFloatPrice(),1,2)} + ' ' + ${product.getBaseCurrency()}">120,00 PLN</h4>
-                                <div class="text-right"><button class="btn">ADD</button></div>
+                                <form class="form">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="number" name="quantity" id="quantity" class="form-control" placeholder="qty"/>
+                                            <input type="hidden" name="productid" th:value="${product.id}"/>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-success" type="submit">Add</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
