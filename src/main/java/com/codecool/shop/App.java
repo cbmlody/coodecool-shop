@@ -41,6 +41,18 @@ public class App {
         post("/", (Request req, Response res) -> {
             return new ThymeleafTemplateEngine().render(ProductController.getProductsBySearch(req, res));
         });
+
+        get("/add", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(ProductController.renderAddForm(req, res));
+        });
+
+        post("/add", (Request req, Response res) -> {
+            try {
+                return new ThymeleafTemplateEngine().render(ProductController.addProduct(req, res));
+            } catch (NullPointerException e) {
+                return null;
+            }
+        });
     }
 
     public static App getApp(){
