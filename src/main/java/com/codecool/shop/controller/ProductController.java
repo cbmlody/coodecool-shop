@@ -3,6 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductCategoryDaoSqlite;
 import com.codecool.shop.dao.ProductDaoSqlite;
 import com.codecool.shop.dao.SupplierDaoSqlite;
+import com.codecool.shop.model.Product;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -33,6 +34,14 @@ public class ProductController {
         params.put("productCategoryList", new ProductCategoryDaoSqlite().getAll());
         params.put("productSupplierList", new SupplierDaoSqlite().getAll());
         return new ModelAndView(params, "product/index");
+    }
+
+    public static ModelAndView renderAddForm(Request req, Response res) throws SQLException {
+        Map params = new HashMap<>();
+        params.put("productList", new ProductDaoSqlite().getAll());
+        params.put("productCategoryList", new ProductCategoryDaoSqlite().getAll());
+        params.put("productSupplierList", new SupplierDaoSqlite().getAll());
+        return new ModelAndView(params, "product/add");
     }
 
     public static ModelAndView getBySupplier(Request req, Response res) throws SQLException {
