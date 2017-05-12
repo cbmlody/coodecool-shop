@@ -4,22 +4,14 @@ import com.codecool.shop.controller.CartController;
 import com.codecool.shop.controller.IndexController;
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.DatabaseConnection;
-import com.codecool.shop.dao.ProductCategoryDaoSqlite;
-import com.codecool.shop.dao.ProductDaoSqlite;
-import com.codecool.shop.model.Cart;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.Supplier;
-import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import spark.Request;
 import spark.Response;
-import spark.*;
+import spark.template.thymeleaf.ThymeleafTemplateEngine;
+
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.*;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
-import static spark.Spark.staticFileLocation;
+import static spark.Spark.*;
 
 public class App {
     private static App INSTANCE;
@@ -36,12 +28,12 @@ public class App {
             return new ThymeleafTemplateEngine().render(CartController.addToBasket(req, res));
         });
 
-        get("/product/supplier/:supplierid", (Request req, Response res) ->{
-            return new ThymeleafTemplateEngine().render(ProductController.getBySupplier(req, res));
+        get("/supplier/:supplierid", (Request req, Response res) ->{
+            return new ThymeleafTemplateEngine().render(IndexController.getBySupplier(req, res));
         });
 
-        get("/product/category/:categoryid", (Request req, Response res) ->{
-            return new ThymeleafTemplateEngine().render(ProductController.getByProductCategory(req, res));
+        get("/category/:categoryid", (Request req, Response res) ->{
+            return new ThymeleafTemplateEngine().render(IndexController.getByCategory(req, res));
         });
 
         get("/product/:id", "application/json", (req, res) -> {
