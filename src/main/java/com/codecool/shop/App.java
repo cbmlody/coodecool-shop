@@ -32,6 +32,10 @@ public class App {
     public void dispatchRoutes() {
         staticFileLocation("/public");
 
+        get("/cart", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(CartController.renderCart(req, res));
+        });
+
         post("/basket/add/:basketid", (Request req, Response res) ->{
             return new ThymeleafTemplateEngine().render(CartController.addToBasket(req, res));
         });
