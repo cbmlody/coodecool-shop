@@ -51,7 +51,7 @@
                 <li>
                     <a th:href="@{~/cart}">Cart
                         <span class="glyphicon glyphicon-shopping-cart"></span>
-                        <span class="text" th:text="${sum}">1210,00</span>
+                        <span class="text" th:text="${#numbers.formatDecimal(sum,1,2)}">1210,00</span>
                         <span class="badge" th:text="${count}">42</span>
                     </a>
                 </li>
@@ -116,13 +116,13 @@
                             <td>
                                 <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
                             </td>
-                            <td class="text-right" th:text="${item.getProduct().getConvertedFloatPrice()}">0</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(item.getProduct().getConvertedFloatPrice(),1,2)}">0</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="container-fluid text-right">
-                    <h4>Total <b th:text="${sum}">0 PLN</b></h4>
+                    <h4>Total <b th:text="${#numbers.formatDecimal(sum, 1, 2)} + ' PLN'">0 PLN</b></h4>
                     <button class="btn btn-success">Checkout</button>
                 </div>
             </div>
