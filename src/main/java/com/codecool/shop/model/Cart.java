@@ -29,6 +29,10 @@ public class Cart implements Iterable<CartItem>{
     }
 
     public int size(){
+        return cartItems.size();
+    }
+
+    public int numOfitemsInCart(){
         Integer sum = 0;
         for (CartItem i: cartItems){
             sum += i.getQuantity();
