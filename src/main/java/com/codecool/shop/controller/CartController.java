@@ -31,5 +31,23 @@ public class CartController {
         res.redirect("/");
         return null;
     }
+    public static ModelAndView renderCart(Request req, Response res) throws SQLException {
+        Map params = new HashMap<>();
 
+        Cart cart = req.session().attribute("basket");
+        Float sumOfBasket;
+        Integer countItems;
+        if(cart == null){
+            countItems = 0;
+            sumOfBasket = 0f;
+        }
+        else{
+            countItems = cart.numOfitemsInCart();
+            sumOfBasket = cart.getSum();
+        }
+        params.put("count", countItems);
+        params.put("sum",sumOfBasket);
+        params.put("basket",cart);
+        return new ModelAndView(params, "product/cart");
+    }
 }

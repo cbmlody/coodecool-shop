@@ -51,8 +51,8 @@
                 <li>
                     <a th:href="@{~/cart}">Cart
                         <span class="glyphicon glyphicon-shopping-cart"></span>
-                        <span class="text">1210,00 PLN</span>
-                        <span class="badge">42</span>
+                        <span class="text" th:text="${sum}">1210,00</span>
+                        <span class="badge" th:text="${count}">42</span>
                     </a>
                 </li>
                 <li>
@@ -106,31 +106,23 @@
                             <th>Product name</th>
                             <th>quantity</th>
                             <th>option</th>
-                            <th>value</th>
+                            <th>Price per item</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>alskjdsaldjkadadsa</td>
-                            <td>23</td>
+                        <tr th:each="item: ${basket}">
+                            <td th:text="${item.getProduct().getName()}">alskjdsaldjkadadsa</td>
+                            <td th:text="${item.getQuantity()}">23</td>
                             <td>
                                 <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
                             </td>
-                            <td class="text-right">123,45</td>
-                        </tr>
-                        <tr>
-                            <td>asdasdadsadasd</td>
-                            <td>11</td>
-                            <td>
-                                <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
-                            </td>
-                            <td class="text-right">15,15</td>
+                            <td class="text-right" th:text="${item.getProduct().getConvertedFloatPrice()}">0</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="container-fluid text-right">
-                    <h4>Total <b>123,65 PLN</b></h4>
+                    <h4>Total <b th:text="${sum}">0 PLN</b></h4>
                     <button class="btn btn-success">Checkout</button>
                 </div>
             </div>
