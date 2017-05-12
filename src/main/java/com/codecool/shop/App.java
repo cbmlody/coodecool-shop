@@ -71,6 +71,10 @@ public class App {
                 return null;
             }
         });
+
+        get("/product/remove/:productid", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(CartController.removeProduct(req, res));
+        });
     }
 
     public static App getApp(){
