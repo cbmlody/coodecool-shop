@@ -50,4 +50,13 @@ public class CartController {
         params.put("basket",cart);
         return new ModelAndView(params, "product/cart");
     }
+
+    public static ModelAndView removeProduct(Request req, Response res) throws SQLException {
+        ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
+        Integer productId = Integer.parseInt(req.params(":productid"));
+        Cart cart = req.session().attribute("basket");
+        cart.remove(cart.getIndexIfExists(productId));
+        res.redirect("/cart");
+        return null;
+    }
 }
