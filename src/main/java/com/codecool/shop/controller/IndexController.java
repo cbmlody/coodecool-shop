@@ -14,6 +14,11 @@ import java.util.Map;
 
 public class IndexController {
     public static ModelAndView getAllInfo(Request req, Response res) throws SQLException{
+        if  (req.session().attribute("basket") == null){
+            Cart cart = new Cart();
+            req.session().attribute("basket",cart);
+        }
+
         Map params = new HashMap<>();
         Cart cart = req.session().attribute("basket");
         Float sumOfBasket;
@@ -23,11 +28,10 @@ public class IndexController {
             sumOfBasket = 0f;
         }
         else{
-            countItems = cart.size();
+            countItems = cart.numOfitemsInCart();
             sumOfBasket = cart.getSum();
         }
-        System.out.println(countItems);
-        params.put("count",countItems);
+        params.put("count", countItems);
         params.put("sum",sumOfBasket);
         params.put("productList", new ProductDaoSqlite().getAll());
         params.put("productCategoryList", new ProductCategoryDaoSqlite().getAll());

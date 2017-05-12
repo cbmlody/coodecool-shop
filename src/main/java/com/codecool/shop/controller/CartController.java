@@ -27,10 +27,6 @@ public class CartController {
         else {
             Cart cart = req.session().attribute("basket");
             cart.add(product,quantity);
-            cart.toString();
-            for (CartItem item:cart) {
-                System.out.println(item);
-            }
         }
         res.redirect("/");
         return null;
