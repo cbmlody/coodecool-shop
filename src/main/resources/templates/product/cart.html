@@ -111,10 +111,10 @@
                         </thead>
                         <tbody>
                         <tr th:each="item: ${basket}">
-                            <td th:text="${item.getProduct().getName()}">alskjdsaldjkadadsa</td>
+                            <td th:value="${item.getProduct().getId()}" th:text="${item.getProduct().getName()}">alskjdsaldjkadadsa</td>
                             <td th:text="${item.getQuantity()}">23</td>
                             <td>
-                                <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+                                <a th:href="@{~/product/remove/{id}(id=${item.getProduct().getId()})}"> <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a>
                             </td>
                             <td class="text-right" th:text="${item.getProduct().getConvertedFloatPrice()}">0</td>
                         </tr>
