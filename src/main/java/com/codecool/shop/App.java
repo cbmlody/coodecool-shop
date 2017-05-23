@@ -86,7 +86,7 @@ public class App {
         dbcon.migrateDb();
     }
 
-    public void closeConnection(){
+    public void closeConnection() throws SQLException {
         dbcon.closeConnection();
     }
 
