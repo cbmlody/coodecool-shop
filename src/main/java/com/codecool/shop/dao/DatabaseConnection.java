@@ -41,7 +41,7 @@ public final class DatabaseConnection {
         System.out.println("DONE!");
     }
 
-    public void migrateDb() throws SQLException{
+    public void migrateDb() throws SQLException {
         openConnection();
         String[] createTables= reader.getStringFromFile("/sqls/createTables.sql").split(";");
         Statement statement = connection.createStatement();
@@ -53,26 +53,12 @@ public final class DatabaseConnection {
         System.out.println("Done!");
     }
 
-
-
     public Connection getConnection() {
         return connection;
     }
 
-    public void closeConnection() {
-        try {
-            connection.close();
-            System.out.println("Connection terminated...");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Statement getStatement() {
-        try {
-            return connection.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } return null;
+    public void closeConnection() throws SQLException {
+        connection.close();
+        System.out.println("Connection terminated...");
     }
 }
