@@ -13,8 +13,8 @@ public final class DatabaseConnection {
     private String pathToDatabase;
 
     public DatabaseConnection(String pathToDatabase) {
-        this.pathToDatabase = pathToDatabase;
         this.reader =  new FileReader();
+        this.pathToDatabase = pathToDatabase;
     }
 
     public void openConnection() throws SQLException {
@@ -23,6 +23,7 @@ public final class DatabaseConnection {
     }
 
     public void resetDatabase() throws SQLException {
+        openConnection();
         String[] dropTables= reader.getStringFromFile("/sqls/dropTables.sql").split(";");
         String[] createTables= reader.getStringFromFile("/sqls/createTables.sql").split(";");
         String[] insertData = reader.getStringFromFile("/sqls/insertData.sql").split(";");
@@ -40,7 +41,8 @@ public final class DatabaseConnection {
         System.out.println("DONE!");
     }
 
-    public void migrateDb() throws SQLException {
+    public void migrateDb() throws SQLException{
+        openConnection();
         String[] createTables= reader.getStringFromFile("/sqls/createTables.sql").split(";");
         Statement statement = connection.createStatement();
         System.out.println("Creating Tables...");
