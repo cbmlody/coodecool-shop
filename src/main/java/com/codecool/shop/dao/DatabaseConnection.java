@@ -4,27 +4,22 @@ import com.codecool.shop.utils.FileReader;
 import com.sun.org.apache.xpath.internal.SourceTree;
 
 import java.io.BufferedReader;
-import java.io.File;
+import org.sqlite.JDBC;
 import java.sql.*;
 
 public final class DatabaseConnection {
     private Connection connection;
     private FileReader reader;
+    private String pathToDatabase;
 
-    public DatabaseConnection() {
-        this.openConnection();
+    public DatabaseConnection(String pathToDatabase) {
+        this.pathToDatabase = pathToDatabase;
         this.reader =  new FileReader();
     }
 
-    public void openConnection() {
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:src/main/database.db");
-            System.out.println("Connection established...");
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
+    public void openConnection() throws SQLException {
+        connection = DriverManager.getConnection(this.pathToDatabase);
+        System.out.println("Connection established...");
     }
 
     public void resetDatabase() throws SQLException {
@@ -45,7 +40,7 @@ public final class DatabaseConnection {
         System.out.println("DONE!");
     }
 
-    public void migrateDb() throws SQLException{
+    public void migrateDb() throws SQLException {
         String[] createTables= reader.getStringFromFile("/sqls/createTables.sql").split(";");
         Statement statement = connection.createStatement();
         System.out.println("Creating Tables...");
