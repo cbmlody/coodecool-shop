@@ -27,6 +27,17 @@ public final class DatabaseConnection {
         }
     }
 
+    public void openConnection(String path) {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:" + path);
+            System.out.println("Connection established...");
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
+
     public void resetDatabase() throws SQLException {
         String[] dropTables= reader.getStringFromFile("/sqls/dropTables.sql").split(";");
         String[] createTables= reader.getStringFromFile("/sqls/createTables.sql").split(";");
