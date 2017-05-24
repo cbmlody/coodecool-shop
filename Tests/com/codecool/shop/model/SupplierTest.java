@@ -34,7 +34,10 @@ class SupplierTest {
     }
 
     @Test
-
+    void testConstructorWithoutName() {
+        testSupplier = new Supplier(null, "description");
+        assertEquals(null, testSupplier.getName());
+    }
 
 
     @Test
