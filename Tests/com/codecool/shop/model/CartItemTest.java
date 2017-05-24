@@ -24,4 +24,10 @@ class CartItemTest {
         assertEquals(Product.class, testItem.getProduct().getClass());
     }
 
+    @Test
+    void testGetQuantity() {
+        Integer expected = 1;
+        assertEquals(expected, testItem.getQuantity());
+    }
+
 }
