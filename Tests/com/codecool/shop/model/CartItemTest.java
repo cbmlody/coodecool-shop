@@ -1,7 +1,6 @@
 package com.codecool.shop.model;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +29,6 @@ class CartItemTest {
         assertEquals((Integer) 1, testItem.getQuantity());
     }
 
-//    @Disabled
     @Test
     void testIsQuantityCanBeSmallerThanOne() {
         assertThrows(Exception.class, () -> testItem.setQuantity(0));
@@ -46,6 +44,12 @@ class CartItemTest {
     }
 
     @Test
+    void testAddToQuantity() {
+        testItem.addToQuantity(2);
+        assertEquals((Integer) 3, testItem.getQuantity());
+    }
+
+    @Test
     void testConvertCosts() {
         testItem.setQuantity(5);
         assertEquals(60.00f, testItem.getConvertedCost(), "Check with 5 products");
@@ -55,4 +59,8 @@ class CartItemTest {
 
     }
 
+    @Test
+    void testToString() {
+        assertEquals(String.class, testItem.toString().getClass());
+    }
 }
