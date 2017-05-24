@@ -17,8 +17,8 @@ public class App {
     private static App INSTANCE;
     private DatabaseConnection dbcon;
 
-    private App() {
-        dbcon = new DatabaseConnection("jdbc:sqlite:src/main/database.db");
+    private App(String path) {
+        dbcon = new DatabaseConnection(path);
     }
 
     public void dispatchRoutes() {
@@ -90,9 +90,9 @@ public class App {
         dbcon.closeConnection();
     }
 
-    public static void run() throws SQLException {
+    public static void run(String path) throws SQLException {
         if (INSTANCE == null){
-            INSTANCE = new App();
+            INSTANCE = new App(path);
         }
     }
 
