@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,18 +15,26 @@ import static org.junit.jupiter.api.Assertions.*;
 class SupplierTest {
     private Supplier testSupplier;
     private ArrayList<Product> testProductList;
+    private ProductCategory testCategory;
 
     @BeforeEach
     void setUp() {
     }
 
     @Test
-    void testCheckIfIDisGreaterThan0() {
+    void testCheckIfIdIsGreaterThan0() {
         assertThrows(NullPointerException.class, () ->
         testSupplier.setId(-1));
     }
+
     @Test
-    void setProducts() {
+    void testIfNameCanBeNull() {
+        assertThrows(NullPointerException.class, () ->
+                testSupplier = new Supplier(null, "whatever"));
+    }
+    @Test
+    void testSetProducts() {
+
     }
 
     @Test
