@@ -11,13 +11,17 @@ import static org.mockito.Mockito.mock;
  */
 class CartItemTest {
     CartItem testItem;
+    Product testProduct;
 
     @BeforeEach
     void setUp() {
-        testItem = new CartItem(mock(Product.class), 1);
+        testProduct = new Product("Test Product", 12.00f, "PLN", "any description", mock(ProductCategory.class), mock(Supplier.class));
+        testItem = new CartItem(testProduct, 1);
     }
 
     @Test
-    void
+    void testGetProduct() {
+        assertEquals(Product.class, testItem.getProduct().getClass());
+    }
 
 }
