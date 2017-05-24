@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            App.run();
+            App.run("jdbc:sqlite:src/main/database.db");
             App.getApp().dispatchRoutes();
         for (String s: args) {
             if (s.equals("--init-db")){
