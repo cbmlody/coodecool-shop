@@ -23,7 +23,8 @@ class SupplierTest {
 
     @Test
     void testConstructorCheckIfIdIsGreaterThan0() {
-        assertThrows(NullPointerException.class, () ->
+        testSupplier = new Supplier("name", "description");
+        assertThrows(IllegalArgumentException.class, () ->
                 testSupplier.setId(-1));
     }
 
