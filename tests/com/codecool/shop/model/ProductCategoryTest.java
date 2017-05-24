@@ -44,14 +44,17 @@ class ProductCategoryTest {
 
     @Test
     void testSetProducts() {
-        assertTrue(this.productCategoryWithId.getProductsCount() != null);
+        List<Product> products = new ArrayList<>();
+        Product product = new Product("name", 1.2f, "PLN", "name descr", this.productCategoryWithoutId, new Supplier("name", "descr"));
+        products.add(product);
+        productCategoryWithId.setProducts(products);
+        assertEquals(1 , (int)this.productCategoryWithId.getProductsCount());
     }
 
     @Test
     void testAddProduct() {
         Product product = new Product("name", 1.2f, "PLN", "name descr", this.productCategoryWithoutId, new Supplier("name", "descr"));
         this.productCategoryWithoutId.addProduct(product);
-        System.out.println(this.productCategoryWithoutId.getProductsCount());
         assertEquals(2, (int)this.productCategoryWithoutId.getProductsCount());
     }
 
