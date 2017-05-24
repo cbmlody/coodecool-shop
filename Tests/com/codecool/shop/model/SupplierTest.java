@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 /**
  * Created by mercutio on 24.05.17.
@@ -29,6 +30,11 @@ class SupplierTest {
     }
 
     @Test
+    void testConstructor() {
+        testSupplier = new Supplier("name", "surname");
+        assertEquals("name", testSupplier.getName());
+    }
+    @Test
     void testConstructorWithId() {
         testSupplier = new Supplier(1, "name", "description");
         assertEquals(1, testSupplier.getId());
@@ -43,11 +49,29 @@ class SupplierTest {
 
     @Test
     void testSetProducts() {
+        testCategory = new ProductCategory("name", "dep", "desc");
+        testSupplier = new Supplier("janusz", "description");
+        Product test1 = mock(Product.class);
+        Product test2 = mock(Product.class);
+        Product test3 = new Product(2, "name", 12.00f, "PLN", "testDesc", testCategory, testSupplier);
+        Product test4 = mock(Product.class);
+        ArrayList<Product> list = new ArrayList<>(Arrays.asList(test1, test2, test3, test4));
+        testSupplier.setProducts(list);
+        System.out.println(list.size());
+        System.out.println(testSupplier.getProducts().size());
+        assertEquals("id: 2, " +
+                "name: name, " +
+                "description: testDesc", testSupplier.getProducts().get(2).toString());
+
 
     }
 
     @Test
-    void getProducts() {
+    void testGetEmptyListOfProducts() {
+        testSupplier = new Supplier("name", "description");
+        assertEquals(0, testSupplier.getProducts().size());
+
+
     }
 
     @Test
@@ -61,12 +85,19 @@ class SupplierTest {
 
     @Test
     void testToString() {
-        testSupplier = new Supplier("something", "something else");
-        testSupplier.setId(1);
+        testSupplier = new Supplier(1,"something", "something else");
         assertEquals("id: 1, " +
                 "name: something, " +
                 "description: something else", testSupplier.toString());
 
+    }
+
+    @Test
+    void testToStringWithoutArgs() {
+        testSupplier = new Supplier(1, null, null);
+        assertEquals("id: 1, " +
+                "name: , " +
+                "description: ", testSupplier.toString());
     }
 
 }
