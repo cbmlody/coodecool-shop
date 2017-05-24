@@ -4,30 +4,26 @@ import com.codecool.shop.utils.FileReader;
 import com.sun.org.apache.xpath.internal.SourceTree;
 
 import java.io.BufferedReader;
-import java.io.File;
+import org.sqlite.JDBC;
 import java.sql.*;
 
 public final class DatabaseConnection {
     private Connection connection;
     private FileReader reader;
+    private String pathToDatabase;
 
-    public DatabaseConnection() {
-        this.openConnection();
+    public DatabaseConnection(String pathToDatabase) {
         this.reader =  new FileReader();
+        this.pathToDatabase = pathToDatabase;
     }
 
-    public void openConnection() {
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:src/main/database.db");
-            System.out.println("Connection established...");
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
+    public void openConnection() throws SQLException {
+        connection = DriverManager.getConnection(this.pathToDatabase);
+        System.out.println("Connection established...");
     }
 
     public void resetDatabase() throws SQLException {
+        openConnection();
         String[] dropTables= reader.getStringFromFile("/sqls/dropTables.sql").split(";");
         String[] createTables= reader.getStringFromFile("/sqls/createTables.sql").split(";");
         String[] insertData = reader.getStringFromFile("/sqls/insertData.sql").split(";");
@@ -45,7 +41,8 @@ public final class DatabaseConnection {
         System.out.println("DONE!");
     }
 
-    public void migrateDb() throws SQLException{
+    public void migrateDb() throws SQLException {
+        openConnection();
         String[] createTables= reader.getStringFromFile("/sqls/createTables.sql").split(";");
         Statement statement = connection.createStatement();
         System.out.println("Creating Tables...");
@@ -56,26 +53,12 @@ public final class DatabaseConnection {
         System.out.println("Done!");
     }
 
-
-
     public Connection getConnection() {
         return connection;
     }
 
-    public void closeConnection() {
-        try {
-            connection.close();
-            System.out.println("Connection terminated...");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Statement getStatement() {
-        try {
-            return connection.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } return null;
+    public void closeConnection() throws SQLException {
+        connection.close();
+        System.out.println("Connection terminated...");
     }
 }

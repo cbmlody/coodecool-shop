@@ -24,10 +24,10 @@ public class Main {
         final Thread mainThread = Thread.currentThread();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Closing db connection...");
-            App.getApp().closeConnection();
             try {
+                App.getApp().closeConnection();
                 mainThread.join();
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | SQLException e) {
                 e.printStackTrace();
             }
         }));
