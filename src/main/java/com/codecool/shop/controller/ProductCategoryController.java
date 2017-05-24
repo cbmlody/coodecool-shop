@@ -2,30 +2,24 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDaoSqlite;
 import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.views.ProductCategoryView;
-import java.util.List;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class ProductCategoryController {
 
-    private static final ProductCategoryController INSTANCE = new ProductCategoryController();
-
-    private ProductCategoryController() {
-    }
-
-    public static ProductCategoryController getInstance() {
-        return INSTANCE;
-    }
-
-    public void getAllProductCategories(){
-        ProductCategoryView productCategoryView = new ProductCategoryView();
+    public static ModelAndView getAllProductCategories(Request req, Response res) throws SQLException {
         ProductCategoryDaoSqlite productCategoryDaoSqlite = new ProductCategoryDaoSqlite();
-        List<ProductCategory> productCategoriesList = productCategoryDaoSqlite.getAll();
-        productCategoryView.displayAll(productCategoriesList);
+        Map params = new HashMap<>();
+        params.put("productCategoriesList", productCategoryDaoSqlite.getAll());
+        return new ModelAndView(params, "product/index");
     }
-    public void findCategory(int id){
-        ProductCategoryView productCategoryView = new ProductCategoryView();
+
+    public void findCategory(int id) throws SQLException {
         ProductCategoryDaoSqlite productCategoryDaoSqlite = new ProductCategoryDaoSqlite();
         ProductCategory productCategory = productCategoryDaoSqlite.find(id);
-        productCategoryView.displayOne(productCategory);
     }
 }

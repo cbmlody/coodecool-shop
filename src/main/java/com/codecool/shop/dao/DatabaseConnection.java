@@ -1,23 +1,19 @@
 package com.codecool.shop.dao;
 
+import com.codecool.shop.utils.FileReader;
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public final class DatabaseConnection {
-    private static final DatabaseConnection INSTANCE = new DatabaseConnection();
     private Connection connection;
+    private FileReader reader;
 
-    private DatabaseConnection() {
+    public DatabaseConnection() {
         this.openConnection();
-    }
-
-    public static DatabaseConnection getInstance() {
-        return INSTANCE;
+        this.reader =  new FileReader();
     }
 
     public void openConnection() {
@@ -32,34 +28,38 @@ public final class DatabaseConnection {
     }
 
     public void resetDatabase() throws SQLException {
-        String string;
-        StringBuilder stringBuilder = new StringBuilder();
-
-        try {
-            FileReader fileReader = new FileReader(new File("src/main/resources/script.sql"));
-
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            while ((string = bufferedReader.readLine()) != null) {
-                stringBuilder.append(string);
-            }
-            bufferedReader.close();
-
-            String[] queries = stringBuilder.toString().split(";");
-            Statement statement = getStatement();
-            for (String query : queries) {
+        String[] dropTables= reader.getStringFromFile("/sqls/dropTables.sql").split(";");
+        String[] createTables= reader.getStringFromFile("/sqls/createTables.sql").split(";");
+        String[] insertData = reader.getStringFromFile("/sqls/insertData.sql").split(";");
+        String[][] queries = {dropTables, createTables, insertData};
+        String[] infos = {"Dropping Tables...", "Creating Tables...", "Inserting data..."};
+        Statement statement = connection.createStatement();
+        System.out.println("Resetting database...");
+        for (int i = 0; i<queries.length; i++) {
+            System.out.println(infos[i]);
+            for (String query: queries[i])
                 if (!query.trim().equals("")) {
                     statement.executeUpdate(query);
                 }
-            }
-
-        } catch (Exception e) {
-            System.out.println("*** Error : " + e.toString());
-            System.out.println("*** ");
-            System.out.println("*** Error : ");
-            e.printStackTrace();
-            System.out.println("#########");
-            System.out.println(stringBuilder.toString());
         }
+        System.out.println("DONE!");
+    }
+
+    public void migrateDb() throws SQLException{
+        String[] createTables= reader.getStringFromFile("/sqls/createTables.sql").split(";");
+        Statement statement = connection.createStatement();
+        System.out.println("Creating Tables...");
+        for (String query: createTables)
+            if (!query.trim().equals("")) {
+                statement.executeUpdate(query);
+            }
+        System.out.println("Done!");
+    }
+
+
+
+    public Connection getConnection() {
+        return connection;
     }
 
     public void closeConnection() {

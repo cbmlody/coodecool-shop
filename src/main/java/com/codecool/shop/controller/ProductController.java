@@ -1,52 +1,108 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.ProductCategoryDaoSqlite;
 import com.codecool.shop.dao.ProductDaoSqlite;
+import com.codecool.shop.dao.SupplierDaoSqlite;
 import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
-import com.codecool.shop.views.ProductView;
-
-import java.util.List;
+import com.codecool.shop.utils.JsonTransformer;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProductController {
-    private static final ProductController INSTANCE = new ProductController();
-    private  ProductController(){}
-    public static ProductController getInstance() {
-        return INSTANCE;
+    private static JsonTransformer jsonTransformer = new JsonTransformer();
+
+
+    public static ModelAndView getAllProducts(Request req, Response res) throws SQLException {
+        ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
+        Map params = new HashMap<>();
+        params.put("productList", productDaoSqlite.getAll());
+        return new ModelAndView(params, "product/index");
     }
 
-    public void getAllProducts(){
-        ProductView productView = new ProductView();
+    public static ModelAndView getProductsBySearch(Request req, Response res) throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-        List<Product> productList = productDaoSqlite.getAll();
-        productView.displayAll(productList);
+        Map params = new HashMap<>();
+        String productSearch = req.queryParams("search");
+        if (productSearch.length() >= 3 && !productDaoSqlite.getBy(productSearch).isEmpty()) {
+            params.put("productList", productDaoSqlite.getBy(productSearch));
+        } else if (productSearch.length() == 0) {
+            params.put("productList", productDaoSqlite.getAll());
+        } else {
+            params.put("info", "Products not found...");
+        }
+        params.put("productCategoryList", new ProductCategoryDaoSqlite().getAll());
+        params.put("productSupplierList", new SupplierDaoSqlite().getAll());
+        return new ModelAndView(params, "product/index");
     }
 
-    public void findProduct(int id){
-        ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-        ProductView productView = new ProductView();
-        Product product = productDaoSqlite.find(id);
-        productView.displayOne(product);
+    public static ModelAndView renderAddForm(Request req, Response res) throws SQLException {
+        Map params = new HashMap<>();
+        params.put("productList", new ProductDaoSqlite().getAll());
+        params.put("productCategoryList", new ProductCategoryDaoSqlite().getAll());
+        params.put("productSupplierList", new SupplierDaoSqlite().getAll());
+        return new ModelAndView(params, "product/add");
     }
 
-    public void getBySupplier(Supplier supplier){
-        ProductView productView = new ProductView();
-        ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-        List<Product> productList = productDaoSqlite.getBy(supplier);
-        productView.displayAll(productList);
+    public static ModelAndView addProduct(Request req, Response res) throws SQLException {
+        String name = req.queryParams("name");
+        String price = req.queryParams("defaultprice");
+        String description = req.queryParams("description");
+        String category = req.queryParams("chooseCategory");
+        String supplier = req.queryParams("chooseSupplier");
+        if (name.isEmpty() || name.charAt(0) == ' ' || description.isEmpty() || description.charAt(0) == ' ' ||
+                supplier.isEmpty() || category.isEmpty() || price.isEmpty() || price.charAt(0) == ' ') {
+            Map params = new HashMap<>();
+            String error = "Inputs can't be empty!";
+            params.put("error", error);
+            params.put("productList", new ProductDaoSqlite().getAll());
+            params.put("productCategoryList", new ProductCategoryDaoSqlite().getAll());
+            params.put("productSupplierList", new SupplierDaoSqlite().getAll());
+            return new ModelAndView(params, "product/add");
+        } else {
+            Integer catId = Integer.parseInt(category);
+            Integer supId = Integer.parseInt(supplier);
+            float pricee = Float.parseFloat(price);
+            new ProductDaoSqlite().add(new Product(name, pricee, "PLN", description,
+                    new ProductCategoryDaoSqlite().find(catId), new SupplierDaoSqlite().find(supId)));
+            res.redirect("/");
+            return null;
+        }
     }
 
-    public void getByProductCategory(ProductCategory productCategory){
-        ProductView productView = new ProductView();
+    public static ModelAndView getBySupplier(Request req, Response res) throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-        List<Product> productList = productDaoSqlite.getBy(productCategory);
-        productView.displayAll(productList);
+        SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
+        Integer supplierId = Integer.parseInt(req.params(":supplierid"));
+        Map params = new HashMap<>();
+        params.put("productsBySupplier", productDaoSqlite.getBy(supplierDaoSqlite.find(supplierId)));
+        return new ModelAndView(params, "product/index");
     }
 
-    public void getProductsByName(String name) {
-        ProductView productView = new ProductView();
+    public static ModelAndView getByProductCategory(Request req, Response res) throws SQLException {
         ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-        List<Product> productList = productDaoSqlite.getBy(name);
-        productView.displayAll(productList);
+        ProductCategoryDaoSqlite productCategoryDaoSqlite = new ProductCategoryDaoSqlite();
+        Integer categoryId = Integer.parseInt(req.params(":categoryid"));
+        Map params = new HashMap<>();
+        params.put("productsByCategory", productDaoSqlite.getBy(productCategoryDaoSqlite.find(categoryId)));
+        return new ModelAndView(params, "product/index");
+    }
+
+    public static ModelAndView getProductsByName(Request req, Response res) throws SQLException {
+        ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
+        String name = req.queryParams("productName");
+        Map params = new HashMap<>();
+        params.put("productsByName", productDaoSqlite.getBy(name));
+        return new ModelAndView(params, "product/index");
+    }
+
+    public static String getProductJsonById(Request req) throws SQLException{
+        String stringId = req.params(":id");
+        Integer id = Integer.parseInt(stringId);
+        Product p = new ProductDaoSqlite().find(id);
+        return jsonTransformer.render(p);
     }
 }

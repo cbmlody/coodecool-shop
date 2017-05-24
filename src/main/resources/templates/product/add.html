@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" id="search-btn"  type="submit" th:disabled="true">
+                            <button class="btn btn-default" type="submit">
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </span>
@@ -37,11 +37,6 @@
                     </div>
                 </div>
             </form>
-            <div class="navbar-form navbar-left">
-                <div class="form-group">
-                    <a th:href="@{~/add}"><button class="btn btn-primary">Add Product</button></a>
-                </div>
-            </div>
             <ul class="nav navbar-nav navbar-right">
                 <li class="col-sm-3">
                     <div class="navbar-form navbar-right">
@@ -56,8 +51,8 @@
                 <li>
                     <a th:href="@{~/cart}">Cart
                         <span class="glyphicon glyphicon-shopping-cart"></span>
-                        <span class="text" th:text="${#numbers.formatDecimal(sum, 1, 2)}">1210,00</span>
-                        <span class="badge" th:text="${count}">42</span>
+                        <span class="text">1210,00 PLN</span>
+                        <span class="badge">42</span>
                     </a>
                 </li>
                 <li>
@@ -126,63 +121,53 @@
             </div>
         </div>
         <div class="col-sm-9">
-            <div>
-                <h3 th:text="${info}" class="text-center"></h3>
-            </div>
-            <div th:each="product : ${productList}">
-                <div class="panel panel-primary">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <img th:src="@{~/img/render.png}" class="img-responsive" style="width:100%" alt="Image"/>
-                            </div>
-                            <div class="col-sm-7">
-                                <strong class="text-left" th:text="${product.name}">Product name</strong><br/>
-                            </div>
-                            <div class="col-sm-2 text-right">
-                                <button class="btn btn-primary btn-description">See Description</button>
-                                <h4 th:text="${#numbers.formatDecimal(product.getConvertedFloatPrice(),1,2)} + ' ' + ${product.getBaseCurrency()}">120,00 PLN</h4>
-                                <form th:action = "@{'~/basket/add/'+${product.id}}" method = "post">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="number" name="quantity" id="quantity" min="1" class="form-control" placeholder="qty" required="required"/>
-                                            <input type="hidden" name="productid" class="productid" th:value="${product.id}"/>
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-success" type="submit">Add</button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+            <div class="container-fluid">
+                <h2>Add product</h2>
+                <form class="form-horizontal" th:method="post">
+                    <div class="form-group">
+                        <label for="name" class="control-label col-sm-2">Name:</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="name" name="name" placeholder="Product name"/>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="defaultprice" class="control-label col-sm-2">Price:</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="number" min="0.00" step="0.01" id="defaultprice" name="defaultprice" placeholder="0.00"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="control-label col-sm-2">Description:</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="description" name="description" placeholder="Description"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="chooseCategory">Category:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="chooseCategory" id="chooseCategory">
+                                <option name="category" th:each="category : ${productCategoryList}"  th:value="${category.getId()}" th:text="${category.getName()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="chooseSupplier">Supplier:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="chooseSupplier" id="chooseSupplier">
+                                <option name="supplier" th:each="supplier : ${productSupplierList}" th:value="${supplier.getId()}" th:text="${supplier.getName()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2">
+                            <button type="submit" class="btn btn-success">Add</button>
+                        </div>
+                    </div>
+                </form>
+                <div id="error">
+                    <h3 th:text="${error}"></h3>
                 </div>
             </div>
-        </div>
-    </div>
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="text-center" id="modal-title">Modal Header</h3>
-                </div>
-                <div class="modal-body">
-                    <h4>Category:</h4>
-                    <p id="modal-cat">Blabla</p>
-                    <h4>Supplier:</h4>
-                    <p id="modal-sup"></p>
-                    <h4>Description:</h4>
-                    <p id="modal-desc">Some text in the modal.</p>
-                </div>
-                <div class="modal-footer">
-                    <h4 class="pull-left" id="price">PRICE</h4>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>
@@ -191,7 +176,5 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous">
 </script>
-<script src="/js/main.js" th:href="@{~/js/main.js}"></script>
-
 </body>
 </html>
