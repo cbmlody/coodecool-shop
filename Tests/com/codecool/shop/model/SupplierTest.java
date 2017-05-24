@@ -22,16 +22,21 @@ class SupplierTest {
     }
 
     @Test
-    void testCheckIfIdIsGreaterThan0() {
+    void testConstructorCheckIfIdIsGreaterThan0() {
         assertThrows(NullPointerException.class, () ->
         testSupplier.setId(-1));
     }
 
     @Test
-    void testIfNameCanBeNull() {
-        assertThrows(NullPointerException.class, () ->
-                testSupplier = new Supplier(null, "whatever"));
+    void testConstructorWithId() {
+        testSupplier = new Supplier(1, "name", "description");
+        assertEquals(1, testSupplier.getId());
     }
+
+    @Test
+
+
+
     @Test
     void testSetProducts() {
 
