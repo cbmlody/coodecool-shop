@@ -4,9 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import org.mockito.Mockito.*;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -15,18 +13,18 @@ import static org.mockito.Mockito.mock;
  * Created by mercutio on 24.05.17.
  */
 class SupplierTest {
+    private Product mockProduct;
     private Supplier testSupplier;
-    private ArrayList<Product> testProductList;
-    private ProductCategory testCategory;
 
     @BeforeEach
     void setUp() {
+        mockProduct = mock(Product.class);
     }
 
     @Test
     void testConstructorCheckIfIdIsGreaterThan0() {
         assertThrows(NullPointerException.class, () ->
-        testSupplier.setId(-1));
+                testSupplier.setId(-1));
     }
 
     @Test
@@ -34,6 +32,7 @@ class SupplierTest {
         testSupplier = new Supplier("name", "surname");
         assertEquals("name", testSupplier.getName());
     }
+
     @Test
     void testConstructorWithId() {
         testSupplier = new Supplier(1, "name", "description");
@@ -49,20 +48,19 @@ class SupplierTest {
 
     @Test
     void testSetProducts() {
-        testCategory = new ProductCategory("name", "dep", "desc");
+        ProductCategory testCategory = new ProductCategory("name", "dep", "desc");
         testSupplier = new Supplier("janusz", "description");
-        Product test1 = mock(Product.class);
-        Product test2 = mock(Product.class);
+        Product test1 = mockProduct;
+        Product test2 = mockProduct;
         Product test3 = new Product(2, "name", 12.00f, "PLN", "testDesc", testCategory, testSupplier);
-        Product test4 = mock(Product.class);
-        ArrayList<Product> list = new ArrayList<>(Arrays.asList(test1, test2, test3, test4));
-        testSupplier.setProducts(list);
-        System.out.println(list.size());
-        System.out.println(testSupplier.getProducts().size());
+        Product test4 = mockProduct;
+        testSupplier.setProducts(new ArrayList<>(Arrays.asList(test1, test2, test3, test4)));
         assertEquals("id: 2, " +
                 "name: name, " +
-                "description: testDesc", testSupplier.getProducts().get(2).toString());
-
+                "defaultPrice: 12.000000, " +
+                "defaultCurrency: PLN, " +
+                "productCategory: name, " +
+                "supplier: janusz", testSupplier.getProducts().get(2).toString());
 
     }
 
@@ -85,7 +83,7 @@ class SupplierTest {
 
     @Test
     void testToString() {
-        testSupplier = new Supplier(1,"something", "something else");
+        testSupplier = new Supplier(1, "something", "something else");
         assertEquals("id: 1, " +
                 "name: something, " +
                 "description: something else", testSupplier.toString());
@@ -96,8 +94,8 @@ class SupplierTest {
     void testToStringWithoutArgs() {
         testSupplier = new Supplier(1, null, null);
         assertEquals("id: 1, " +
-                "name: , " +
-                "description: ", testSupplier.toString());
+                "name: null, " +
+                "description: null", testSupplier.toString());
     }
 
 }
