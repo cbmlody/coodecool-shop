@@ -24,6 +24,12 @@ class PaymentTest {
     void testValidatePaymentTrue() {
         when(testPayment.validatePayment()).thenReturn(true);
         assertTrue(testPayment.validatePayment());
+    }
 
-}
+    @Test
+    void testValidatePaymentFalse() {
+        when(testPayment.validatePayment()).thenReturn(false);
+        assertFalse(testPayment.validatePayment());
+
+    }
 }
