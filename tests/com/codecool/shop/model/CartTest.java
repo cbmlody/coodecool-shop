@@ -65,9 +65,9 @@ class CartTest {
 	public void testChangeQuantityInMinus(){
 		Cart cart = new Cart();
 		Product product = mock(Product.class);
-		cart.add(product,1);
+		cart.add(product,2);
 		cart.changeQuantity(0, -2);
-		assertEquals(0,cart.numOfitemsInCart());
+		assertEquals(1,cart.numOfitemsInCart());
 	}
 
 	@Test
@@ -93,13 +93,7 @@ class CartTest {
 		Product product = new Product(1,"testName", 100f, "PLN", "testDesc", mock(ProductCategory.class), mock(Supplier.class));
 		Cart cart = new Cart();
 		cart.add(product);
-		Integer index = 1;
+		Integer index = 0;
 		assertEquals(index, cart.getIndexIfExists(1));
-	}
-
-	@Test
-	public void testGetIterator(){
-		Cart cart = new Cart();
-		assertEquals(Iterator.class, cart.iterator());
 	}
 }

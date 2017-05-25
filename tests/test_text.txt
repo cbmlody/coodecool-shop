@@ -1,2 +1,31 @@
 Test Test Test;
 test, test, test;
+
+
+Product tests:
+
+Pros:
+   - Custom equals method
+   - Separate constructor with product id
+
+Cons:
+  -  Constructor (it contained logic that made creating product impossible when
+    ProductCategory or Supplier were null)
+   - setDefaultPrice - this method didn't contain validation of provided price, therefore
+    it was possible to enter negative value
+   - setPrice - this method didn't contain validation of provided price, therefore
+    it was possible to enter negative value
+
+
+Cart tests:
+Pros:
+    - clever add product method;
+    - good code structure;
+
+Cons:
+    - changeQuantity method enabled change of quantity below 0;
+    - getIndexIfExists - one private one public method may be a bit misleading;
+
+ProductDaoSqlite - no remarks. All tests passed.
+
+ProductController - no remarks. All tests passed.
