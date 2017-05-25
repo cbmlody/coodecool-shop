@@ -7,6 +7,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             App.run();
+            App.getApp().setConnection("jdbc:sqlite:src/main/database.db");
             App.getApp().dispatchRoutes();
         for (String s: args) {
             if (s.equals("--init-db")){
@@ -24,10 +25,10 @@ public class Main {
         final Thread mainThread = Thread.currentThread();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Closing db connection...");
-            App.getApp().closeConnection();
             try {
+                App.getApp().closeConnection();
                 mainThread.join();
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | SQLException e) {
                 e.printStackTrace();
             }
         }));

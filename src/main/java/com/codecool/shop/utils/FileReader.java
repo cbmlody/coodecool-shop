@@ -2,12 +2,13 @@ package com.codecool.shop.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class FileReader {
 
-    public String getStringFromFile(String pathToResource){
+    public String getStringFromFile(String pathToResource) {
         String string;
         StringBuilder stringBuilder = new StringBuilder();
         try{
@@ -19,10 +20,9 @@ public class FileReader {
                 stringBuilder.append(string);
             }
             bufferedReader.close();
-        } catch (IOException | URISyntaxException e){
-            e.printStackTrace();
+        } catch (IOException | URISyntaxException | NullPointerException e) {
+            System.out.println("THere is no file to read.");
         }
-
         return stringBuilder.toString();
     }
 }

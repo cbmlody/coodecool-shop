@@ -23,7 +23,6 @@ public final class DatabaseConnection {
     }
 
     public void resetDatabase() throws SQLException {
-        openConnection();
         String[] dropTables= reader.getStringFromFile("/sqls/dropTables.sql").split(";");
         String[] createTables= reader.getStringFromFile("/sqls/createTables.sql").split(";");
         String[] insertData = reader.getStringFromFile("/sqls/insertData.sql").split(";");
@@ -41,8 +40,7 @@ public final class DatabaseConnection {
         System.out.println("DONE!");
     }
 
-    public void migrateDb() throws SQLException{
-        openConnection();
+    public void migrateDb() throws SQLException {
         String[] createTables= reader.getStringFromFile("/sqls/createTables.sql").split(";");
         Statement statement = connection.createStatement();
         System.out.println("Creating Tables...");
@@ -53,26 +51,12 @@ public final class DatabaseConnection {
         System.out.println("Done!");
     }
 
-
-
     public Connection getConnection() {
         return connection;
     }
 
-    public void closeConnection() {
-        try {
-            connection.close();
-            System.out.println("Connection terminated...");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Statement getStatement() {
-        try {
-            return connection.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } return null;
+    public void closeConnection() throws SQLException {
+        connection.close();
+        System.out.println("Connection terminated...");
     }
 }
