@@ -2,17 +2,12 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.App;
 import com.codecool.shop.model.Cart;
-import com.codecool.shop.model.CartItem;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import spark.ModelAndView;
-import spark.Request;
 import spark.Session;
 
-import java.lang.ref.ReferenceQueue;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,14 +39,12 @@ class CartControllerTest {
     }
 
     @Test
-    void testIfAddToBasketAddsCorrectValue() throws SQLException {
-        when(this.req.queryParams("productid")).thenReturn("1");
-        when(this.req.queryParams("quantity")).thenReturn("1");
-        when(this.req.session()).thenReturn(mock(Session.class));
-        when(req.session().attribute("basket")).thenReturn(new Cart());
+    void testIfAddToBasketAddsCorrectQuantity() throws SQLException {
+        createTestBaket();
+        requestProductMock(1,3);
         CartController.addToBasket(this.req, this.res);
         Cart testCart = req.session().attribute("basket");
-        assertTrue(testCart.size() > 0);
+        assertTrue(testCart.size() == 3);
     }
 
     @Test
@@ -66,11 +59,9 @@ class CartControllerTest {
     void testIfrenderCartPassCorrectValueOfItemCounterWhenCartisNotEmpty() throws SQLException {
         when(this.req.session()).thenReturn(mock(Session.class));
         when(req.session().attribute("basket")).thenReturn(new Cart());
-        when(this.req.queryParams("productid")).thenReturn("2");
-        when(this.req.queryParams("quantity")).thenReturn("1");
+        requestProductMock(2,1);
         CartController.addToBasket(this.req, this.res);
-        when(this.req.queryParams("productid")).thenReturn("1");
-        when(this.req.queryParams("quantity")).thenReturn("1");
+        requestProductMock(3, 2);
         CartController.addToBasket(this.req, this.res);
         HashMap<String, Object> testMap = (HashMap<String, Object>) CartController.renderCart(this.req, this.res).getModel();
         Cart testCart = (Cart) testMap.get("basket");
@@ -79,19 +70,24 @@ class CartControllerTest {
 
     }
 
-//    @Test
-//    void testRemoveProduct() throws SQLException {
-//        when(this.req.queryParams("productid")).thenReturn("4");
-//        when(this.req.queryParams("quantity")).thenReturn("1");
-//        when(this.req.session()).thenReturn(mock(Session.class));
-//        when(req.session().attribute("basket")).thenReturn(new Cart());
-//        CartController.addToBasket(this.req, this.res);
-//        when(req.params(":productid")).thenReturn("4");
-//
-//
-//    }
+    @Test
+    void testRemoveProduct() throws SQLException {
+        when(this.req.queryParams("productid")).thenReturn("4");
+        when(this.req.queryParams("quantity")).thenReturn("1");
+        when(this.req.session()).thenReturn(mock(Session.class));
+        when(req.session().attribute("basket")).thenReturn(new Cart());
+        CartController.addToBasket(this.req, this.res);
+        when(req.params(":productid")).thenReturn("4");
 
-    void requestProductMocker(Integer productId, Integer quantity) {
+
+    }
+
+    void createTestBaket() {
+        when(this.req.session()).thenReturn(mock(Session.class));
+        when(req.session().attribute("basket")).thenReturn(new Cart());
+
+    }
+    void requestProductMock(Integer productId, Integer quantity) {
         when(this.req.queryParams("productid")).thenReturn(Integer.toString(productId));
         when(this.req.queryParams("quantity")).thenReturn(Integer.toString(quantity));
     }
