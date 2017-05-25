@@ -1,33 +1,17 @@
 package com.codecool.shop.dao;
 
-import static com.codecool.shop.App.run;
-import static org.junit.jupiter.api.Assertions.*;
-
-
 import com.codecool.shop.App;
+import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
-import org.junit.After;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import com.codecool.shop.model.Product;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.mock;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Created by michal on 23.05.17.
