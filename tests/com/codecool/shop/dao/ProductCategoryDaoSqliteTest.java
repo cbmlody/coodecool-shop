@@ -11,6 +11,7 @@ import java.util.List;
 
 import static java.lang.NullPointerException.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 
 class ProductCategoryDaoSqliteTest {
@@ -39,6 +40,15 @@ class ProductCategoryDaoSqliteTest {
         assertEquals("testDepartment", result.getString("department"));
         assertEquals("testDescription", result.getString("description"));
     }
+
+    @Test
+    void testAddProductCategoryToDatabaseThrowsSQLException() throws SQLException {
+        App.getApp().closeConnection();
+        assertThrows(SQLException.class, () -> {
+            this.productCategoryDaoSqlite.add(mock(ProductCategory.class));
+        });
+    }
+
 
     @Test
     void testRemoveProductCategoryFromDatabase() throws SQLException {
