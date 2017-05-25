@@ -57,8 +57,7 @@ class CartControllerTest {
 
     @Test
     void testIfrenderCartPassCorrectValueOfItemCounterWhenCartisNotEmpty() throws SQLException {
-        when(this.req.session()).thenReturn(mock(Session.class));
-        when(req.session().attribute("basket")).thenReturn(new Cart());
+        createTestBaket();
         requestProductMock(2,1);
         CartController.addToBasket(this.req, this.res);
         requestProductMock(3, 2);
@@ -72,12 +71,14 @@ class CartControllerTest {
 
     @Test
     void testRemoveProduct() throws SQLException {
-        when(this.req.queryParams("productid")).thenReturn("4");
-        when(this.req.queryParams("quantity")).thenReturn("1");
-        when(this.req.session()).thenReturn(mock(Session.class));
-        when(req.session().attribute("basket")).thenReturn(new Cart());
+        createTestBaket();
+        requestProductMock(4,1);
         CartController.addToBasket(this.req, this.res);
+        requestProductMock(1, 2);
+        CartController.addToBasket(this.req, this.res);
+        requestProductMock(2, 3);
         when(req.params(":productid")).thenReturn("4");
+
 
 
     }
