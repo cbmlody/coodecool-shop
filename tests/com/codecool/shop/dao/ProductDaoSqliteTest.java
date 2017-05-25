@@ -58,7 +58,7 @@ class ProductDaoSqliteTest {
     }
 
     @Test
-    void testGetAllAfterApplicationInitializationComponentType() throws SQLException {
+    void testGetAllComponentType() throws SQLException {
         ArrayList productList = new ArrayList<Product>();
         assertEquals(productList.getClass().getComponentType(), new ProductDaoSqlite().getAll().getClass().getComponentType());
     }
