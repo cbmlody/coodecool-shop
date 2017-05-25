@@ -38,6 +38,18 @@ class ProductControllerTest {
 	@Mock
 	private Request req = mock(Request.class);
 
+	@BeforeEach
+	void runApp() throws SQLException {
+		App.run();
+		App.getApp().setConnection("jdbc:sqlite:tests/test_database.db");
+		App.getApp().resetDb();
+	}
+
+	@AfterEach
+	void closeDb() throws SQLException{
+		App.getApp().closeConnection();
+	}
+
 	@Test
 	void testGetAllProducts() throws SQLException {
 		Map params = new HashMap<>();
@@ -105,17 +117,4 @@ class ProductControllerTest {
 		String json = ProductController.getProductJsonById(req);
 		assertTrue(json.contains("Atenolol"));
 	}
-
-	@BeforeEach
-	private void runApp() throws SQLException {
-		App.run();
-		App.getApp().setConnection("jdbc:sqlite:tests/test_database.db");
-		App.getApp().resetDb();
-	}
-
-	@AfterEach
-	private void closeDb() throws SQLException{
-		App.getApp().closeConnection();
-	}
-
 }
