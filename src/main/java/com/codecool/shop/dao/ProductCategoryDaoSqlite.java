@@ -26,7 +26,7 @@ public class ProductCategoryDaoSqlite implements ProductCategoryDao {
         Statement statement = App.getApp().getConnection().createStatement();
         statement.execute(query);
     }
-
+    
     @Override
     public ProductCategory find(int id) throws SQLException {
         ProductCategory productCategory = null;
