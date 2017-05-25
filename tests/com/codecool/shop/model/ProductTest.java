@@ -21,16 +21,21 @@ class ProductTest {
 
 	@Test
 	public void testProductConstructorWithoutIdProductCategoryAndSupplier(){
-		Product product = new Product("testName", 100f, "PLN", "testDesc", null, null);
-		assertEquals(Product.class, product.getClass());
+		try {
+			Product product = new Product("testName", 100f, "PLN", "testDesc", null, null);
+			assertEquals(Product.class, product.getClass());
+		} catch(NullPointerException e){
+			assertTrue(false);
+		}
 	}
 
 	@Test
-	public void testProductConstructorWithIncorrectCurrencyCode(){
-		Supplier supplier = new Supplier("testName","testDescription");
-		ProductCategory productCategory = new ProductCategory("testName", "testDepartment", "testDescription");
-		Product product = new Product(1,"testName", 100f, "ABC", "testDesc", productCategory, supplier);
-		assertEquals(Product.class, product.getClass());
+	public void testProductConstructorWithIncorrectCurrencyCode() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			Supplier supplier = new Supplier("testName", "testDescription");
+			ProductCategory productCategory = new ProductCategory("testName", "testDepartment", "testDescription");
+			Product product = new Product(1, "testName", 100f, "ABC", "testDesc", productCategory, supplier);
+		});
 	}
 
 	@Test
@@ -63,9 +68,8 @@ class ProductTest {
 	@Test
 	public void testSetMinusDefaultPrice(){
 		Product product = generateProductWithId();
-		product.setDefaultPrice(-20f);
 		assertThrows(IllegalArgumentException.class, () ->{
-			product.getDefaultPrice();
+			product.setDefaultPrice(-20f);
 		});
 	}
 
