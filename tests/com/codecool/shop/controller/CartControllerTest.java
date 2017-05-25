@@ -50,8 +50,8 @@ class CartControllerTest {
         when(this.req.session()).thenReturn(mock(Session.class));
         when(req.session().attribute("basket")).thenReturn(new Cart());
         CartController.addToBasket(this.req, this.res);
-        Cart maybeCart = req.session().attribute("basket");
-        assertTrue(maybeCart.size() > 0);
+        Cart testCart = req.session().attribute("basket");
+        assertTrue(testCart.size() > 0);
     }
 
     @Test
@@ -64,20 +64,36 @@ class CartControllerTest {
 
     @Test
     void testIfrenderCartPassCorrectValueOfItemCounterWhenCartisNotEmpty() throws SQLException {
-        when(this.req.queryParams("productid")).thenReturn("2");
-        when(this.req.queryParams("quantity")).thenReturn("2");
         when(this.req.session()).thenReturn(mock(Session.class));
         when(req.session().attribute("basket")).thenReturn(new Cart());
+        when(this.req.queryParams("productid")).thenReturn("2");
+        when(this.req.queryParams("quantity")).thenReturn("1");
+        CartController.addToBasket(this.req, this.res);
+        when(this.req.queryParams("productid")).thenReturn("1");
+        when(this.req.queryParams("quantity")).thenReturn("1");
         CartController.addToBasket(this.req, this.res);
         HashMap<String, Object> testMap = (HashMap<String, Object>) CartController.renderCart(this.req, this.res).getModel();
         Cart testCart = (Cart) testMap.get("basket");
-        assertEquals(1, testCart.size());
+        assertEquals(2, testCart.size());
 
 
     }
-//
+
 //    @Test
-//    void removeProduct() {
+//    void testRemoveProduct() throws SQLException {
+//        when(this.req.queryParams("productid")).thenReturn("4");
+//        when(this.req.queryParams("quantity")).thenReturn("1");
+//        when(this.req.session()).thenReturn(mock(Session.class));
+//        when(req.session().attribute("basket")).thenReturn(new Cart());
+//        CartController.addToBasket(this.req, this.res);
+//        when(req.params(":productid")).thenReturn("4");
+//
+//
 //    }
+
+    void requestProductMocker(Integer productId, Integer quantity) {
+        when(this.req.queryParams("productid")).thenReturn(Integer.toString(productId));
+        when(this.req.queryParams("quantity")).thenReturn(Integer.toString(quantity));
+    }
 
 }
