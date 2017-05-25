@@ -1,3 +1,5 @@
+package com.codecool.shop.utils;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

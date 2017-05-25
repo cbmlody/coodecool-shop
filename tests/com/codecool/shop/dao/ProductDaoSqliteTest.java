@@ -44,11 +44,12 @@ class ProductDaoSqliteTest {
 		return new Product("testName", 100f, "PLN", "testDesc", productCategory, supplier);
 	}
 
-	private App runApp() throws SQLException{
+	@BeforeEach
+	private void runApp() throws SQLException{
 		App app = App.getApp();
 		String testDbPath = "jdbc:sqlite:src/tests/testdb/testdatabase";
-		App.run(testDbPath);
-		return app;
+		App.run();
+		app.setConnection(testDbPath);
 	}
 
 
@@ -67,10 +68,6 @@ class ProductDaoSqliteTest {
 
 	@Test
 	void testGetAllAfterApplicationInitializationComponentType() throws SQLException{
-		App app = App.getApp();
-		String testDbPath = "jdbc:sqlite:src/tests/testdb/testdatabase";
-		App.run(testDbPath);
-		app.resetDb();
 		ArrayList productList = new ArrayList<Product>();
 		assertEquals(productList.getClass().getComponentType(), new ProductDaoSqlite().getAll().getClass().getComponentType());
 
@@ -84,8 +81,6 @@ class ProductDaoSqliteTest {
 //
 	@Test
 	void testAddProduct() throws SQLException {
-//		App app = runApp();
-//		app.resetDb();
 		ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
 		Product testProduct = generateProductWithoutId();
 		productDaoSqlite.add(testProduct);
