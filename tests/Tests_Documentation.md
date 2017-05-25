@@ -1,5 +1,25 @@
 **TEST DOCUMENTATIONS**
 
+
+**Main:**
+
+_REFACTOR:_
+
+- After App.run() App.getApp().setConnection method is needed to establish connection
+with given String pathToDatabase param.
+- App.getApp().closeConnection() method is moved to 'try' block to handle eventually
+SQLException.
+
+
+**App:**
+
+_REFACTOR:_
+
+- Field with DatabaseConnection instance added.
+- setConnection method added which establish connection from given String pathToDatabase param.
+- Handling eventually SQLException is moved to Main.java.
+
+
 **DatabaseConnection:**
 
 _REFACTOR:_
@@ -20,6 +40,7 @@ After test 'test_database.db' file is cleared.
 - Test resetDB creates empty database with given values. Test is creating new 
 'test_database.db' file using queries from 'resource/sqls' directory. 
 After test 'test_database.db' file is cleared.
+
 
 **SupplierDaoSqlite:**
 
@@ -44,8 +65,33 @@ _COMMENTS:_
 - Methods should have single responsibility. There should be methods for creating statement
 and separated for executing that statement.
 
+
 **BaseModel:**
 
 _TESTS:_
 
-- 
+- Test setId and getId by using that methods on BaseModel instance.
+- Test setName and getName by using that methods on BaseModel instance.
+- Test setDescription and getDescription by using that methods on BaseModel instance.
+- Test toString method by asserting expected String value with result of the method.
+
+
+**FileReader:**
+
+_TESTS:_
+
+- Test getString method with invalid 'pathToResource' param returns empty String object.
+- Test getString method with correct 'pathToResource' param returns expected String value.
+
+
+**JsonTransformer:**
+
+_REFACTOR:_
+
+- Comment out method not used in application.
+
+_TESTS:_
+
+- Test render method returns String with JSON format for given Product object.
+
+
