@@ -18,7 +18,6 @@ public class App {
     private DatabaseConnection dbcon;
 
     private App() {
-        dbcon = new DatabaseConnection("jdbc:sqlite:src/main/database.db");
     }
 
     public void dispatchRoutes() {
@@ -75,10 +74,10 @@ public class App {
 
     public void setConnection(String pathToDatabase) throws SQLException {
         dbcon = new DatabaseConnection(pathToDatabase);
+        dbcon.openConnection();
     }
 
     public Connection getConnection() throws SQLException {
-        dbcon.openConnection();
         return dbcon.getConnection();
     }
 
