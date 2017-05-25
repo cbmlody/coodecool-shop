@@ -87,6 +87,14 @@ class CartControllerTest {
 
     }
 
+    @Test
+    void testRemoveNonExistentProduct() throws SQLException {
+        createMockCart();
+        requestProductMock(5, 3);
+        CartController.addToBasket(this.req, this.res);
+        when(req.params(":productid")).thenReturn("4");
+        assertThrows(SQLException.class, () -> CartController.removeProduct(this.req, this.res));
+    }
     void createMockCart() {
         when(this.req.session()).thenReturn(mock(Session.class));
         when(req.session().attribute("basket")).thenReturn(new Cart());
