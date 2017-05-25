@@ -12,7 +12,8 @@ public class Payment {
         this.cardNumber = cardNumber;
         this.validate = validatePayment();
     }
-    private Boolean validatePayment() {
+
+    public Boolean validatePayment() {
         int randomNum = ThreadLocalRandom.current().nextInt(0, 101);
         return randomNum < 70;
     }
@@ -21,3 +22,4 @@ public class Payment {
         return validate;
     }
 }
+
