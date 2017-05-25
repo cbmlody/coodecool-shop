@@ -40,11 +40,11 @@ class CartControllerTest {
 
     @Test
     void testIfAddToBasketAddsCorrectQuantity() throws SQLException {
-        createTestBaket();
-        requestProductMock(1,3);
+        createMockCart();
+        requestProductMock(1,2);
         CartController.addToBasket(this.req, this.res);
         Cart testCart = req.session().attribute("basket");
-        assertTrue(testCart.size() == 3);
+        assertTrue(testCart.numOfitemsInCart() > 1);
     }
 
     @Test
@@ -57,33 +57,37 @@ class CartControllerTest {
 
     @Test
     void testIfrenderCartPassCorrectValueOfItemCounterWhenCartisNotEmpty() throws SQLException {
-        createTestBaket();
-        requestProductMock(2,1);
+        createMockCart();
+        requestProductMock(2,4);
         CartController.addToBasket(this.req, this.res);
         requestProductMock(3, 2);
         CartController.addToBasket(this.req, this.res);
         HashMap<String, Object> testMap = (HashMap<String, Object>) CartController.renderCart(this.req, this.res).getModel();
         Cart testCart = (Cart) testMap.get("basket");
-        assertEquals(2, testCart.size());
+        assertEquals(6, testCart.numOfitemsInCart());
 
 
     }
 
     @Test
     void testRemoveProduct() throws SQLException {
-        createTestBaket();
+        createMockCart();
         requestProductMock(4,1);
         CartController.addToBasket(this.req, this.res);
         requestProductMock(1, 2);
         CartController.addToBasket(this.req, this.res);
-        requestProductMock(2, 3);
+        requestProductMock(2, 1);
+        CartController.addToBasket(this.req, this.res);
         when(req.params(":productid")).thenReturn("4");
+        CartController.removeProduct(this.req, this.res);
+        Cart testCart = req.session().attribute("basket");
+        assertEquals(3, testCart.numOfitemsInCart());
 
 
 
     }
 
-    void createTestBaket() {
+    void createMockCart() {
         when(this.req.session()).thenReturn(mock(Session.class));
         when(req.session().attribute("basket")).thenReturn(new Cart());
 
