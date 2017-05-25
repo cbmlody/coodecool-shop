@@ -22,7 +22,7 @@ class SupplierTest {
     }
 
     @Test
-    void testConstructorCheckIfIdIsGreaterThan0() {
+    void testConstructorCheckIfIdIsLesserThan0() {
         testSupplier = new Supplier("name", "description");
         assertThrows(IllegalArgumentException.class, () ->
                 testSupplier.setId(-1));
