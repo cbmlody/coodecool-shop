@@ -12,9 +12,10 @@ public class Product extends BaseModel {
 
     public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
         super(name, description);
-        this.setPrice(defaultPrice, currencyString);
-        this.setSupplier(supplier);
-        this.setProductCategory(productCategory);
+        this.defaultPrice = defaultPrice;
+        this.defaultCurrency = Currency.getInstance(currencyString);
+        this.productCategory = productCategory;
+        this.supplier = supplier;
     }
 
     public Product(int id, String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
@@ -29,8 +30,12 @@ public class Product extends BaseModel {
         return defaultPrice;
     }
 
-    public void setDefaultPrice(float defaultPrice) {
-        this.defaultPrice = defaultPrice;
+    public void setDefaultPrice(float defaultPrice) throws IllegalArgumentException {
+        if(defaultPrice < 0){
+            throw new IllegalArgumentException("Default price must be above 0.");
+        } else {
+            this.defaultPrice = defaultPrice;
+        }
     }
 
     public Currency getDefaultCurrency() {
@@ -45,9 +50,13 @@ public class Product extends BaseModel {
         return String.valueOf(this.defaultPrice) + " " + this.defaultCurrency.toString();
     }
 
-    public void setPrice(float price, String currency) {
-        this.defaultPrice = price;
-        this.defaultCurrency = Currency.getInstance(currency);
+    public void setPrice(float price, String currency) throws IllegalArgumentException {
+        if(price < 0){
+            throw new IllegalArgumentException("Price must be above 0.");
+        } else {
+            this.defaultPrice = price;
+            this.defaultCurrency = Currency.getInstance(currency);
+        }
     }
 
     public float getConvertedFloatPrice(){
