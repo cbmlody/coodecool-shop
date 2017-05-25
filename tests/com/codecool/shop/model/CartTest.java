@@ -65,9 +65,9 @@ class CartTest {
 	public void testChangeQuantityInMinus(){
 		Cart cart = new Cart();
 		Product product = mock(Product.class);
-		cart.add(product,1);
+		cart.add(product,2);
 		cart.changeQuantity(0, -2);
-		assertEquals(0,cart.numOfitemsInCart());
+		assertEquals(1,cart.numOfitemsInCart());
 	}
 
 	@Test
