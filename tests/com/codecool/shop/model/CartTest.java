@@ -93,13 +93,7 @@ class CartTest {
 		Product product = new Product(1,"testName", 100f, "PLN", "testDesc", mock(ProductCategory.class), mock(Supplier.class));
 		Cart cart = new Cart();
 		cart.add(product);
-		Integer index = 1;
+		Integer index = 0;
 		assertEquals(index, cart.getIndexIfExists(1));
-	}
-
-	@Test
-	public void testGetIterator(){
-		Cart cart = new Cart();
-		assertEquals(Iterator.class, cart.iterator());
 	}
 }
