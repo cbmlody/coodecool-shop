@@ -39,6 +39,4 @@ public class ProductDaoSqliteTestRemoveGetByIncorrectId {
 		Product product = productDaoSqlite.find(300 );
 		assertEquals(null, product);
 	}
-
-
 }

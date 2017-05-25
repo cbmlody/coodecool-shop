@@ -40,8 +40,6 @@ public class ProductDaoSQliteTestFindByCorrectId {
 
 
 	private Product generateProductWithId() throws SQLException {
-		SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
-		ProductCategoryDaoSqlite productCategoryDaoSqlite = new ProductCategoryDaoSqlite();
 		Supplier supplier = new Supplier(10, "testName", "testDescr");
 		ProductCategory productCategory = new ProductCategory(10, "testName", "testDep", "testDescr");
 		return new Product(31,"testName", 100f, "PLN", "testDesc", productCategory, supplier);
