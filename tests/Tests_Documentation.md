@@ -49,3 +49,78 @@ and separated for executing that statement.
 _TESTS:_
 
 - 
+
+**Product:**
+
+
+_REFACTOR:_
+
+- Constructor method assigns parameters to attributes, setters were removed.
+- setPrice now validates price, if it is below 0 it throws Illegal Argument exception.
+- setDefaultPrice now validates price, if it is below 0 it throws Illegal Argument exception.
+
+_TESTS:_
+
+- Constructor method without provided Supplier and ProductCategory objects.
+- Constructor method with incorrect Currency code.
+- Constructor without provided id.
+- Constructor with provided all values.
+- All setters and getters including minus values passed into setPrice/setDefaultPrice.
+- Equals method.
+
+_COMMENTS:_
+- SetPrice and SetDefaultPrice should have validation of provided price value (ensure that no minus values are provided).
+- Constructor should not contain setters.
+
+
+**Cart:**
+
+
+_REFACTOR:_
+
+- ChangeQuantity method now validates provided new quantity ensuring that 1 is the lowest quantity.
+
+_TESTS:_
+
+- Test add product by passing new product.
+- Test remove product by passing id number of existing product (6).
+- Test change quantity by passing new value also negative value.
+- Test size.
+- Test GetSum by adding 3 test products to the cart.
+- Test GetIndexIfExists.
+
+_COMMENTS:_
+- ChangeQuantity should ensure that quantity is above 0. 
+
+**ProductDaoSqlite:**
+
+_TESTS:_
+
+- Test add new product.
+- Test find product by using existing id.
+- Test find product by using non-existing id.
+- Test getAll, getAllBySupplier, getAllByProductCategory, getByName.
+
+
+**ProductDaoSqlite:**
+
+_TESTS:_
+
+- Test add new product.
+- Test find product by using existing id.
+- Test find product by using non-existing id.
+- Test getAll, getAllBySupplier, getAllByProductCategory, getByName.
+
+
+**ProductController**
+
+_TESTS:_
+
+- Test getAllProductsBySearch given test product name existing in test database.
+- Test add product by passing test product.
+- Test renderAddForm by checking returning class.
+- Test getBySupplier by passing as argument test supplier existing in database.
+- Test getByProductCategory by passing as argument test product category existing in database.
+- Test getByProductName by providing test product name (one of the products existing in test database).
+- Test getProductJsonById by passing test id (belonging to existing product from test database) and checking whether 
+returned string contains name of test product (owning test id).
