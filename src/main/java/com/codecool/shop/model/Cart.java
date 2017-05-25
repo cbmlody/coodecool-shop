@@ -25,7 +25,7 @@ public class Cart implements Iterable<CartItem>{
     }
 
     public void changeQuantity(int cartItemIndex, int newQuantity){
-        if(newQuantity < 0) {
+        if(newQuantity < 1) {
             cartItems.get(cartItemIndex).setQuantity(1);
         } else {
             cartItems.get(cartItemIndex).setQuantity(newQuantity);
