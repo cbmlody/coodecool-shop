@@ -34,7 +34,6 @@ class CartItemTest {
         assertThrows(Exception.class, () -> testItem.setQuantity(0));
         assertThrows(Exception.class, () -> testItem.setQuantity(-1));
 
-
     }
 
     @Test
