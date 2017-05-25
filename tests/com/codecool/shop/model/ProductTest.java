@@ -31,15 +31,11 @@ class ProductTest {
 
 	@Test
 	public void testProductConstructorWithIncorrectCurrencyCode() {
-		try{
-		Supplier supplier = new Supplier("testName","testDescription");
-		ProductCategory productCategory = new ProductCategory("testName", "testDepartment", "testDescription");
-		Product product = new Product(1,"testName", 100f, "ABC", "testDesc", productCategory, supplier);
-		assertEquals(Product.class, product.getClass());
-		} catch(IllegalArgumentException e){
-			assertTrue(false);
-		}
-
+		assertThrows(IllegalArgumentException.class, () -> {
+			Supplier supplier = new Supplier("testName", "testDescription");
+			ProductCategory productCategory = new ProductCategory("testName", "testDepartment", "testDescription");
+			Product product = new Product(1, "testName", 100f, "ABC", "testDesc", productCategory, supplier);
+		});
 	}
 
 	@Test
@@ -72,9 +68,8 @@ class ProductTest {
 	@Test
 	public void testSetMinusDefaultPrice(){
 		Product product = generateProductWithId();
-		product.setDefaultPrice(-20f);
 		assertThrows(IllegalArgumentException.class, () ->{
-			product.getDefaultPrice();
+			product.setDefaultPrice(-20f);
 		});
 	}
 
