@@ -2,6 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.App;
 import com.codecool.shop.dao.ProductCategoryDaoSqlite;
+import com.codecool.shop.model.Supplier;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,11 +41,12 @@ class SupplierControllerTest {
     }
 
     @Test
-    void testIfGetAllSuppliersthrowsSqliteException() throws SQLException {
+    void testIfGetAllSuppliersThrowsSQLException() throws SQLException {
         App.getApp().closeConnection();
         assertThrows(SQLException.class, () -> SupplierController.getAllSuppliers(this.req, this.res));
 
     }
+
     @Test
     void testIfGetAllSuppliersTakesParametersFromSQLITE() throws SQLException {
         HashMap testMap = (HashMap) SupplierController.getAllSuppliers(this.req, this.res).getModel();
@@ -52,6 +54,11 @@ class SupplierControllerTest {
 
     }
 
-
+    @Test
+    void testIfFindThrowsSQLException() throws SQLException {
+        App.getApp().closeConnection();
+        assertThrows(SQLException.class, () -> this.supplierController.findSupplier(1));
+    }
 
 }
+
