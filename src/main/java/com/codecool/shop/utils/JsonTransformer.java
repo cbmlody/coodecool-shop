@@ -23,15 +23,15 @@ public class JsonTransformer implements ResponseTransformer {
         return gson.toJson(model);
     }
 
-    public JsonObject getJsonObject(String line){
-        return gson.fromJson(line, JsonObject.class);
-    }
+//    public JsonObject getJsonObject(String line){
+//        return gson.fromJson(line, JsonObject.class);
+//    }
 
-    public <T> List<T> parseToList(String obj, Class<T> classe){
-        return  gson.fromJson(obj, new TypeToken<List<T>>(){}.getType());
-    }
+//    public <T> List<T> parseToList(String obj, Class<T> classe){
+//        return  gson.fromJson(obj, new TypeToken<List<T>>(){}.getType());
+//    }
 
-    class ProductAdapter extends TypeAdapter<Product>{
+    private class ProductAdapter extends TypeAdapter<Product>{
         public Product read(JsonReader in) throws IOException {
             return null;
         }

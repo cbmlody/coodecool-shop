@@ -73,6 +73,10 @@ public class App {
         return INSTANCE;
     }
 
+    public void setConnection(String pathToDatabase) throws SQLException {
+        dbcon = new DatabaseConnection(pathToDatabase);
+    }
+
     public Connection getConnection() throws SQLException {
         dbcon.openConnection();
         return dbcon.getConnection();
