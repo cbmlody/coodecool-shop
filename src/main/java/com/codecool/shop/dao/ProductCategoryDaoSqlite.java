@@ -19,14 +19,14 @@ public class ProductCategoryDaoSqlite implements ProductCategoryDao {
         Statement statement = App.getApp().getConnection().createStatement();
         statement.execute(query);
     }
-
+    
     @Override
     public void remove(int id) throws SQLException {
         String query = "DELETE FROM `product_categories` WHERE id = '" + id + "'";
         Statement statement = App.getApp().getConnection().createStatement();
         statement.execute(query);
     }
-    
+
     @Override
     public ProductCategory find(int id) throws SQLException {
         ProductCategory productCategory = null;
