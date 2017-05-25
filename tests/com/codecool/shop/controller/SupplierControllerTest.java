@@ -21,6 +21,8 @@ import static org.mockito.Mockito.mock;
  */
 class SupplierControllerTest {
     private SupplierController supplierController;
+    spark.Request req;
+    spark.Response res;
 
     @BeforeEach
     void setUp() throws SQLException {
@@ -28,6 +30,8 @@ class SupplierControllerTest {
         App.getApp().setConnection("jdbc:sqlite:tests/test_database.db");
         App.getApp().resetDb();
         this.supplierController = new SupplierController();
+        this.req = mock(spark.Request.class);
+        this.res = mock(spark.Response.class);
     }
 
     @AfterEach
@@ -36,10 +40,14 @@ class SupplierControllerTest {
     }
 
     @Test
+    void testIfGetAllSuppliersthrowsSqliteException() throws SQLException {
+        App.getApp().closeConnection();
+        assertThrows(SQLException.class, () -> SupplierController.getAllSuppliers(this.req, this.res));
+
+    }
+    @Test
     void testIfGetAllSuppliersTakesParametersFromSQLITE() throws SQLException {
-        spark.Request req = mock(spark.Request.class);
-        Response res = mock(spark.Response.class);
-        HashMap testMap = (HashMap) SupplierController.getAllSuppliers(req, res).getModel();
+        HashMap testMap = (HashMap) SupplierController.getAllSuppliers(this.req, this.res).getModel();
         assertTrue(testMap.size() > 0);
 
     }
