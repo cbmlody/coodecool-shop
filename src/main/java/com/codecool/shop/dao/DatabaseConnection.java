@@ -22,19 +22,7 @@ public final class DatabaseConnection {
         System.out.println("Connection established...");
     }
 
-    public void openConnection(String path) {
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + path);
-            System.out.println("Connection established...");
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-    }
-
     public void resetDatabase() throws SQLException {
-        openConnection();
         String[] dropTables= reader.getStringFromFile("/sqls/dropTables.sql").split(";");
         String[] createTables= reader.getStringFromFile("/sqls/createTables.sql").split(";");
         String[] insertData = reader.getStringFromFile("/sqls/insertData.sql").split(";");
@@ -53,7 +41,6 @@ public final class DatabaseConnection {
     }
 
     public void migrateDb() throws SQLException {
-        openConnection();
         String[] createTables= reader.getStringFromFile("/sqls/createTables.sql").split(";");
         Statement statement = connection.createStatement();
         System.out.println("Creating Tables...");
