@@ -25,26 +25,8 @@ class ProductDaoSqliteTest {
 
 	private ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
 
-    private Product generateProductWithId() throws SQLException {
-        Supplier supplier = new Supplier(10, "testName", "testDescr");
-        ProductCategory productCategory = new ProductCategory(10, "testName", "testDep", "testDescr");
-        return new Product(31,"testName", 100f, "PLN", "testDesc", productCategory, supplier);
-    }
-
-	@BeforeEach
-	private void runApp() throws SQLException {
-		App.run();
-		App.getApp().setConnection("jdbc:sqlite:tests/test_database.db");
-		App.getApp().resetDb();
-	}
-
-	@AfterEach
-	private void closeDb() throws SQLException{
-		App.getApp().closeConnection();
-	}
-
 	@Test
-	void testGetAllAfterApplicationInitByCategory() throws SQLException {
+	void testGetAllByCategory() throws SQLException {
 		ProductCategory productCategory = new ProductCategory(1,"Skin Care", "Health",
 				"auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio");
 		List<Product> productList = productDaoSqlite.getBy(productCategory);
@@ -52,7 +34,7 @@ class ProductDaoSqliteTest {
 	}
 
     @Test
-    void testGetAllAfterApplicationInitBySupplier() throws SQLException {
+    void testGetAllBySupplier() throws SQLException {
         Supplier supplier = new Supplier(1, "Apotex Corp.", "cras non velit nec nisi vulputate nonummy " +
                 "maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque");
         List<Product> productList = productDaoSqlite.getBy(supplier);
@@ -70,22 +52,9 @@ class ProductDaoSqliteTest {
     }
 
     @Test
-    void testGetAllAfterApplicationInit() throws SQLException {
-        List <Product> productList = productDaoSqlite.getAll();
-        assertEquals(30, productList.size());
-    }
-
-    @Test
     void testGetAll() throws SQLException {
         List<Product> productList = productDaoSqlite.getAll();
         assertEquals(30, productList.size());
-    }
-
-    @Test
-    void testGetAllBeforeApplicationInitialization(){
-        assertThrows(SQLException.class, () -> {
-            new ProductDaoSqlite().getAll();
-        });
     }
 
     @Test
@@ -95,16 +64,22 @@ class ProductDaoSqliteTest {
     }
 
     @Test
-    void testGetAllAfterApplicationInitByName() throws SQLException {
+    void testGetByName() throws SQLException {
         List<Product> product = productDaoSqlite.getBy("Atenolol");
         assertEquals("Atenolol", product.get(0).getName());
     }
     @Test
-    public void testRemoveProductFromTestDB() throws SQLException {
+    void testRemoveProductFromTestDB() throws SQLException {
         productDaoSqlite.remove(6);
         Product product = productDaoSqlite.find(6);
         assertEquals(null, product);
     }
+
+	@Test
+	void testFindProductWithCorrectId() throws SQLException {
+		Product product = productDaoSqlite.find(1 );
+		assertEquals("Dr.Jart CC Essence Balm 02 Medium - Deep", product.getName());
+	}
 
     @Test
     void testFindProductWithIncorrectId() throws SQLException {
@@ -112,5 +87,22 @@ class ProductDaoSqliteTest {
         assertEquals(null, product);
     }
 
+	private Product generateProductWithId() throws SQLException {
+		Supplier supplier = new Supplier(10, "testName", "testDescr");
+		ProductCategory productCategory = new ProductCategory(10, "testName", "testDep", "testDescr");
+		return new Product(31,"testName", 100f, "PLN", "testDesc", productCategory, supplier);
+	}
+
+	@BeforeEach
+	private void runApp() throws SQLException {
+		App.run();
+		App.getApp().setConnection("jdbc:sqlite:tests/test_database.db");
+		App.getApp().resetDb();
+	}
+
+	@AfterEach
+	private void closeDb() throws SQLException{
+		App.getApp().closeConnection();
+	}
 
 }
