@@ -20,12 +20,14 @@ class PaymentTest {
     void setUp() {
         testPayment = mock(Payment.class);
     }
+
     @Test
     @DisplayName("This test is for code coverage :)")
     void testValidatePayment() {
         testPayment = new Payment("payMeMoniez", "MOOOORE moniez");
         assertTrue(testPayment.isValid() || !testPayment.isValid());
     }
+
     @Test
     void testValidatePaymentTrue() {
         when(testPayment.validatePayment()).thenReturn(true);
