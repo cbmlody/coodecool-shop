@@ -1,14 +1,19 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.App;
+import com.codecool.shop.model.Cart;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import spark.Request;
+import spark.Session;
 
+import java.lang.ref.ReferenceQueue;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by mercutio on 25.05.17.
@@ -35,15 +40,22 @@ class CartControllerTest {
     }
 
     @Test
-    void addToBasket() {
+    void testIfAddToBasketAddsCorrectValue() throws SQLException {
+        when(this.req.queryParams("productid")).thenReturn("1");
+        when(this.req.queryParams("quantity")).thenReturn("1");
+        when(this.req.session()).thenReturn(mock(Session.class));
+        when(req.session().attribute("basket")).thenReturn(new Cart());
+        CartController.addToBasket(this.req, this.res);
+        Cart maybeCart = req.session().attribute("basket");
+        assertTrue(maybeCart.size() > 0);
     }
 
-    @Test
-    void renderCart() {
-    }
-
-    @Test
-    void removeProduct() {
-    }
+//    @Test
+//    void renderCart() {
+//    }
+//
+//    @Test
+//    void removeProduct() {
+//    }
 
 }
