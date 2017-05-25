@@ -4,11 +4,14 @@ import com.codecool.shop.App;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -20,48 +23,94 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ProductDaoSqliteTest {
 
-	private Product generateProductWithoutId() throws SQLException {
-		SupplierDaoSqlite supplierDaoSqlite = new SupplierDaoSqlite();
-		ProductCategoryDaoSqlite productCategoryDaoSqlite = new ProductCategoryDaoSqlite();
-		Supplier supplier = supplierDaoSqlite.find(1);
-		ProductCategory productCategory = productCategoryDaoSqlite.find(1);
-		return new Product("testName", 100f, "PLN", "testDesc", productCategory, supplier);
-	}
+	private ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
+
+    private Product generateProductWithId() throws SQLException {
+        Supplier supplier = new Supplier(10, "testName", "testDescr");
+        ProductCategory productCategory = new ProductCategory(10, "testName", "testDep", "testDescr");
+        return new Product(31,"testName", 100f, "PLN", "testDesc", productCategory, supplier);
+    }
 
 	@BeforeEach
-	private void runApp() throws SQLException{
-		App app = App.getApp();
-		String testDbPath = "jdbc:sqlite:src/tests/testdb/testdatabase";
+	private void runApp() throws SQLException {
 		App.run();
-		app.setConnection(testDbPath);
+		App.getApp().setConnection("jdbc:sqlite:tests/test_database.db");
+		App.getApp().resetDb();
 	}
 
+	@AfterEach
 	private void closeDb() throws SQLException{
-		App app = App.getApp();
-		app.closeConnection();
+		App.getApp().closeConnection();
 	}
 
 	@Test
-	void testGetAllBeforeApplicationInitialization(){
-		assertThrows(SQLException.class, () -> {
-			new ProductDaoSqlite().getAll();
-		});
+	void testGetAllAfterApplicationInitByCategory() throws SQLException {
+		ProductCategory productCategory = new ProductCategory(1,"Skin Care", "Health",
+				"auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio");
+		List<Product> productList = productDaoSqlite.getBy(productCategory);
+		assertEquals(4, productList.size());
 	}
 
-	@Test
-	void testGetAllAfterApplicationInitializationComponentType() throws SQLException{
-		ArrayList productList = new ArrayList<Product>();
-		assertEquals(productList.getClass().getComponentType(), new ProductDaoSqlite().getAll().getClass().getComponentType());
+    @Test
+    void testGetAllAfterApplicationInitBySupplier() throws SQLException {
+        Supplier supplier = new Supplier(1, "Apotex Corp.", "cras non velit nec nisi vulputate nonummy " +
+                "maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque");
+        List<Product> productList = productDaoSqlite.getBy(supplier);
+        assertEquals(5, productList.size());
+    }
 
-	}
+    @Test
+    void testAddProduct() throws SQLException {
+        Product testProduct = generateProductWithId();
+        productDaoSqlite.add(testProduct);
+        String testQuery = "SELECT * FROM `products` WHERE id = 31";
+        ResultSet resultSet = App.getApp().getConnection().createStatement().executeQuery(testQuery);
+        assertEquals("testName", resultSet.getString("name"));
+        assertEquals("testDesc", resultSet.getString("description"));
+    }
 
-	@Test
-	void testAddProduct() throws SQLException {
-		ProductDaoSqlite productDaoSqlite = new ProductDaoSqlite();
-		Product testProduct = generateProductWithoutId();
-		productDaoSqlite.add(testProduct);
-		System.out.println(productDaoSqlite.find(31));
-		assertEquals(31, productDaoSqlite.getAll().size());
-	}
+    @Test
+    void testGetAllAfterApplicationInit() throws SQLException {
+        List <Product> productList = productDaoSqlite.getAll();
+        assertEquals(30, productList.size());
+    }
+
+    @Test
+    void testGetAll() throws SQLException {
+        List<Product> productList = productDaoSqlite.getAll();
+        assertEquals(30, productList.size());
+    }
+
+    @Test
+    void testGetAllBeforeApplicationInitialization(){
+        assertThrows(SQLException.class, () -> {
+            new ProductDaoSqlite().getAll();
+        });
+    }
+
+    @Test
+    void testGetAllAfterApplicationInitializationComponentType() throws SQLException {
+        ArrayList productList = new ArrayList<Product>();
+        assertEquals(productList.getClass().getComponentType(), new ProductDaoSqlite().getAll().getClass().getComponentType());
+    }
+
+    @Test
+    void testGetAllAfterApplicationInitByName() throws SQLException {
+        List<Product> product = productDaoSqlite.getBy("Atenolol");
+        assertEquals("Atenolol", product.get(0).getName());
+    }
+    @Test
+    public void testRemoveProductFromTestDB() throws SQLException {
+        productDaoSqlite.remove(6);
+        Product product = productDaoSqlite.find(6);
+        assertEquals(null, product);
+    }
+
+    @Test
+    void testFindProductWithIncorrectId() throws SQLException {
+        Product product = productDaoSqlite.find(300 );
+        assertEquals(null, product);
+    }
+
 
 }

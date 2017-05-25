@@ -2,7 +2,6 @@ package com.codecool.shop.dao;
 
 import com.codecool.shop.App;
 import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,8 +38,5 @@ public class ProductDaoSQLiteTestGetBySupplier {
 		List<Product> productList = productDaoSqlite.getBy(supplier);
 		assertEquals(5, productList.size());
 	}
-
-
-
 
 }
